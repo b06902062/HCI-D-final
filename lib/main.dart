@@ -27,9 +27,9 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  int _panelIndex = 1;
+  int _panelIndex = 0;
   List<Widget> _panelOption = <Widget>[
-    HomeWidget(),
+    HomePage(),
     SearchWidget(),
     Icon(Icons.person, size: 200.0,),
   ];

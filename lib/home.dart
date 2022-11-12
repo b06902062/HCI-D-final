@@ -1,325 +1,151 @@
 import 'package:flutter/material.dart';
 
+Widget animeCard(String imageSrc) {
+  return Container(
+    height: 150,  // 155 = 150 animeCard height + 5 bottom margin
+    width: 110,
+    clipBehavior: Clip.hardEdge,
+    margin: const EdgeInsets.only(left: 8.5, top: 0, right: 8.5, bottom: 0),  // 150 = 150 animeCard height + 0 bottom margin
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      color: Color.fromARGB(0, 244, 67, 54),
+    ),
+    child: Image.asset(
+      imageSrc,
+      fit: BoxFit.fill,
+    ),
+  );
+}
 
-class HomeWidget extends StatelessWidget {
+Widget recommendationText(String text) {
+  return Container(
+    padding: const EdgeInsets.only(left: 10.0, top: 5.0, right: 10.0, bottom: 3.0),
+    child: Text(
+      text,
+      style: const TextStyle(
+          fontSize: 16, color: Color(0xFFD9D9D9), fontWeight: FontWeight.bold),
+    ),
+  );
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    // Figma Flutter Generator HomeWidget - FRAME
-    return Container(
-        width: 360,
-        height: 800,
-        decoration: BoxDecoration(
-          color : Color.fromRGBO(60, 60, 60, 1),
-        ),
-        child: Stack(
-            children: <Widget>[
-              Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Container(
-                      width: 360,
-                      height: 1160,
-                      decoration: BoxDecoration(
-                        color : Color.fromRGBO(60, 60, 60, 1),
-                      ),
-                      child: Stack(
-                          children: <Widget>[
-                            Positioned(
-                                top: 10,
-                                left: 10,
-                                child: Container(
-                                    width: 340,
-                                    height: 950,
-
-                                    child: Stack(
-                                        children: <Widget>[
-                                          Positioned(
-                                              top: 0,
-                                              left: 0,
-                                              child: Text('1')
-                                          ),Positioned(
-                                              top: 185,
-                                              left: 0,
-                                              child: Text('2')
-                                          ),Positioned(
-                                              top: 370,
-                                              left: 0,
-                                              child: Text('3')
-                                          ),Positioned(
-                                              top: 555,
-                                              left: 0,
-                                              child: Text('4')
-                                          ),Positioned(
-                                              top: 740,
-                                              left: 0,
-                                              child: Text('5')
-                                          ),Positioned(
-                                              top: 925,
-                                              left: 0,
-                                              child: Text('6')
-                                          ),
-                                        ]
-                                    )
-                                )
-                            ),Positioned(
-                                top: 35,
-                                left: 0,
-                                child: Container(
-                                    width: 360,
-                                    height: 1075,
-
-                                    child: Stack(
-                                        children: <Widget>[
-                                          Positioned(
-                                              top: 0,
-                                              left: 0,
-                                              child: Container(
-                                                  width: 360,
-                                                  height: 150,
-                                                  decoration: BoxDecoration(
-
-                                                  ),
-                                                  child: Stack(
-                                                      children: <Widget>[
-                                                        Positioned(
-                                                            top: 0,
-                                                            left: 20,
-                                                            child: Text('7')
-                                                        ),Positioned(
-                                                            top: 0,
-                                                            left: 147,
-                                                            child: Text('8')
-                                                        ),Positioned(
-                                                            top: 0,
-                                                            left: 274,
-                                                            child: Text('9')
-                                                        ),Positioned(
-                                                            top: 0,
-                                                            left: 401,
-                                                            child: Text('10')
-                                                        ),Positioned(
-                                                            top: 0,
-                                                            left: 528,
-                                                            child: Text('11')
-                                                        ),
-                                                      ]
-                                                  )
-                                              )
-                                          ),Positioned(
-                                              top: 185,
-                                              left: 20,
-                                              child: Container(
-                                                  width: 340,
-                                                  height: 150,
-                                                  decoration: BoxDecoration(
-
-                                                  ),
-                                                  child: Stack(
-                                                      children: <Widget>[
-                                                        Positioned(
-                                                            top: -4.547473508864641e-13,
-                                                            left: 0,
-                                                            child: Text('12')
-                                                        ),Positioned(
-                                                            top: 0,
-                                                            left: 381,
-                                                            child: Text('13')
-                                                        ),Positioned(
-                                                            top: -4.547473508864641e-13,
-                                                            left: 127,
-                                                            child: Text('14')
-                                                        ),Positioned(
-                                                            top: 0,
-                                                            left: 254,
-                                                            child: Text('15')
-                                                        ),
-                                                      ]
-                                                  )
-                                              )
-                                          ),Positioned(
-                                              top: 370,
-                                              left: 20,
-                                              child: Container(
-                                                  width: 340,
-                                                  height: 150,
-                                                  decoration: BoxDecoration(
-
-                                                  ),
-                                                  child: Stack(
-                                                      children: <Widget>[
-                                                        Positioned(
-                                                            top: 0,
-                                                            left: 0,
-                                                            child: Container(
-                                                                width: 491,
-                                                                height: 150,
-
-                                                                child: Stack(
-                                                                    children: <Widget>[
-                                                                      Positioned(
-                                                                          top: 0,
-                                                                          left: 0,
-                                                                          child: Text('16')
-                                                                      ),Positioned(
-                                                                          top: 0,
-                                                                          left: 127,
-                                                                          child: Text('17')
-                                                                      ),Positioned(
-                                                                          top: 0,
-                                                                          left: 254,
-                                                                          child: Text('18')
-                                                                      ),Positioned(
-                                                                          top: 0,
-                                                                          left: 381,
-                                                                          child: Text('19')
-                                                                      ),
-                                                                    ]
-                                                                )
-                                                            )
-                                                        ),
-                                                      ]
-                                                  )
-                                              )
-                                          ),Positioned(
-                                              top: 555,
-                                              left: 20,
-                                              child: Container(
-                                                  width: 340,
-                                                  height: 150,
-                                                  decoration: BoxDecoration(
-
-                                                  ),
-                                                  child: Stack(
-                                                      children: <Widget>[
-                                                        Positioned(
-                                                            top: 0,
-                                                            left: 0,
-                                                            child: Container(
-                                                                width: 364,
-                                                                height: 150,
-
-                                                                child: Stack(
-                                                                    children: <Widget>[
-                                                                      Positioned(
-                                                                          top: 0,
-                                                                          left: 127,
-                                                                          child: Text('20')
-                                                                      ),Positioned(
-                                                                          top: 0,
-                                                                          left: 0,
-                                                                          child: Text('21')
-                                                                      ),Positioned(
-                                                                          top: 0,
-                                                                          left: 254,
-                                                                          child: Text('22')
-                                                                      ),
-                                                                    ]
-                                                                )
-                                                            )
-                                                        ),
-                                                      ]
-                                                  )
-                                              )
-                                          ),Positioned(
-                                              top: 740,
-                                              left: 17,
-                                              child: Container(
-                                                  width: 343,
-                                                  height: 150,
-                                                  decoration: BoxDecoration(
-
-                                                  ),
-                                                  child: Stack(
-                                                      children: <Widget>[
-                                                        Positioned(
-                                                            top: 0,
-                                                            left: 0,
-                                                            child: Container(
-                                                                width: 491,
-                                                                height: 150.00006103515625,
-
-                                                                child: Stack(
-                                                                    children: <Widget>[
-                                                                      Positioned(
-                                                                          top: 0.00005829334259033203,
-                                                                          left: 127,
-                                                                          child: Text('23')
-                                                                      ),Positioned(
-                                                                          top: 0,
-                                                                          left: 254,
-                                                                          child: Text('24')
-                                                                      ),Positioned(
-                                                                          top: 0,
-                                                                          left: 381,
-                                                                          child: Text('25')
-                                                                      ),Positioned(
-                                                                          top: 0.00005829334259033203,
-                                                                          left: 0,
-                                                                          child: Text('26')
-                                                                      ),
-                                                                    ]
-                                                                )
-                                                            )
-                                                        ),
-                                                      ]
-                                                  )
-                                              )
-                                          ),Positioned(
-                                              top: 925,
-                                              left: 20,
-                                              child: Container(
-                                                  width: 340,
-                                                  height: 150,
-                                                  decoration: BoxDecoration(
-
-                                                  ),
-                                                  child: Stack(
-                                                      children: <Widget>[
-                                                        Positioned(
-                                                            top: 0,
-                                                            left: 0,
-                                                            child: Container(
-                                                                width: 364,
-                                                                height: 150,
-
-                                                                child: Stack(
-                                                                    children: <Widget>[
-                                                                      Positioned(
-                                                                          top: 0,
-                                                                          left: 0,
-                                                                          child: Text('27')
-                                                                      ),Positioned(
-                                                                          top: 0,
-                                                                          left: 127,
-                                                                          child: Text('28')
-                                                                      ),Positioned(
-                                                                          top: 0,
-                                                                          left: 254,
-                                                                          child: Text('29')
-                                                                      ),
-                                                                    ]
-                                                                )
-                                                            )
-                                                        ),
-                                                      ]
-                                                  )
-                                              )
-                                          ),
-                                        ]
-                                    )
-                                )
-                            ),
-                          ]
-                      )
-                  )
-              ),Positioned(
-                  top: 760,
-                  left: 0,
-                  child: Text('1')
+    return Scaffold(
+      backgroundColor: const Color(0xFF3C3C3C),
+      body: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              recommendationText("| Trending Now 〉"),
+              Container(
+                color: Color.fromARGB(0, 255, 193, 7),
+                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
+                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
+                child: ListView(
+                  clipBehavior: Clip.none,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    animeCard("images/anime1.png"),
+                    animeCard("images/anime2.png"),
+                    animeCard("images/anime3.png"),
+                    animeCard("images/anime4.png"),
+                    animeCard("images/anime5.png"),
+                  ],
+                ),
               ),
-            ]
-        )
+              recommendationText("| Recommended to You 〉"),
+              Container(
+                color: const Color.fromARGB(0, 255, 193, 7),
+                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
+                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
+                child: ListView(
+                  clipBehavior: Clip.none,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    animeCard("images/anime6.png"),
+                    animeCard("images/anime7.png"),
+                    animeCard("images/anime8.png"),
+                    animeCard("images/anime9.png"),
+                    animeCard("images/anime10.png"),
+                  ],
+                ),
+              ),
+              recommendationText("| This Season 〉"),
+              Container(
+                color: const Color.fromARGB(0, 255, 193, 7),
+                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
+                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
+                child: ListView(
+                  clipBehavior: Clip.none,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    animeCard("images/anime11.png"),
+                    animeCard("images/anime12.png"),
+                    animeCard("images/anime13.png"),
+                    animeCard("images/anime14.png"),
+                    animeCard("images/anime15.png"),
+                  ],
+                ),
+              ),
+              recommendationText("| Since you like Attack on Titan 〉"),
+              Container(
+                color: const Color.fromARGB(0, 255, 193, 7),
+                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
+                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
+                child: ListView(
+                  clipBehavior: Clip.none,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    animeCard("images/anime16.png"),
+                    animeCard("images/anime17.png"),
+                    animeCard("images/anime18.png"),
+                    animeCard("images/anime19.png"),
+                    animeCard("images/anime20.png"),
+                  ],
+                ),
+              ),
+              recommendationText("| Since you like comedy 〉"),
+              Container(
+                color: const Color.fromARGB(0, 255, 193, 7),
+                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
+                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
+                child: ListView(
+                  clipBehavior: Clip.none,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    animeCard("images/anime21.png"),
+                    animeCard("images/anime1.png"),
+                    animeCard("images/anime2.png"),
+                    animeCard("images/anime3.png"),
+                    animeCard("images/anime4.png"),
+                  ],
+                ),
+              ),
+              recommendationText("| Since you like school 〉"),
+              Container(
+                color: const Color.fromARGB(0, 255, 193, 7),
+                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
+                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
+                child: ListView(
+                  clipBehavior: Clip.none,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    animeCard("images/anime5.png"),
+                    animeCard("images/anime6.png"),
+                    animeCard("images/anime7.png"),
+                    animeCard("images/anime8.png"),
+                    animeCard("images/anime9.png"),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
-        
