@@ -11,7 +11,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Hello Flutter',
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        // fontFamily: 'NotoSans',
+        primarySwatch: Colors.blueGrey,
       ),
       home: NavigationPage(),
       debugShowCheckedModeBanner: false,
@@ -27,11 +28,11 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  int _panelIndex = 0;
+  int _panelIndex = 1;
   List<Widget> _panelOption = <Widget>[
     HomePage(),
     SearchWidget(),
-    Icon(Icons.person, size: 200.0,),
+    Container(color: Colors.blueGrey.shade900,),
   ];
   void _onItemTap(int index) {
     setState(() => _panelIndex = index);
@@ -42,9 +43,9 @@ class _NavigationPageState extends State<NavigationPage> {
     return Scaffold(
         body: _panelOption.elementAt(_panelIndex),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color.fromRGBO(30, 30, 30, 1),
-          selectedItemColor: Color.fromRGBO(255, 255, 255, 1),
-          unselectedItemColor: Color.fromRGBO(127, 127, 127, 1),
+          backgroundColor: Colors.blueGrey.shade700,
+          selectedItemColor: Colors.blueGrey.shade100,
+          unselectedItemColor: Colors.blueGrey.shade900,
           showSelectedLabels: false,
           showUnselectedLabels: false,
 

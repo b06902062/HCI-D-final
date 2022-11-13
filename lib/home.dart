@@ -22,8 +22,8 @@ Widget recommendationText(String text) {
     padding: const EdgeInsets.only(left: 10.0, top: 5.0, right: 10.0, bottom: 3.0),
     child: Text(
       text,
-      style: const TextStyle(
-          fontSize: 16, color: Color(0xFFD9D9D9), fontWeight: FontWeight.bold),
+      style: TextStyle(
+          fontSize: 16, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold),
     ),
   );
 }
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF3C3C3C),
+      backgroundColor: Colors.blueGrey.shade900,
       body: Container(
         child: SingleChildScrollView(
           child: Column(

@@ -11,9 +11,9 @@ class SearchWidget extends StatefulWidget {
 Widget tagButton(tagName, func) {
   return OutlinedButton(
     style: TextButton.styleFrom(
-      primary: Colors.teal,
+      primary: Colors.teal.shade400,
       padding: EdgeInsets.all(0),
-      side: BorderSide(color: Colors.teal, width: 2),
+      side: BorderSide(color: Colors.teal.shade400, width: 2),
       shape: StadiumBorder(),
     ),
     onPressed: func,
@@ -46,7 +46,7 @@ Widget animeBlock(data) {
     height: 160,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
-      color: Color.fromRGBO(230, 240, 250, 1),
+      color: Colors.blueGrey.shade100,
     ),
     child: ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -116,8 +116,8 @@ Widget animeBlock(data) {
               child: Container(
                 width: 30,
                 height: 30,
-                decoration: const BoxDecoration(
-                  color: Colors.yellow,
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey.shade100,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(50),
                   ),
@@ -125,7 +125,7 @@ Widget animeBlock(data) {
                 child: Stack(children: [Positioned(
                   left: 5,
                   bottom: 2,
-                  child: Text('1', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  child: Text('1', style: TextStyle(color: Colors.blueGrey.shade900, fontWeight: FontWeight.bold, fontSize: 20)),
                 ),],),
               )
           ),
@@ -135,8 +135,8 @@ Widget animeBlock(data) {
             right: 5,
             child: Row(
               children: [
-                Icon(FontAwesomeIcons.solidStar, color: Colors.yellow, size: 16),
-                Text(' 9.7', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Icon(FontAwesomeIcons.solidStar, color: Colors.yellowAccent.shade700, size: 16),
+                Text(' 9.7', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'NotoSans')),
               ],
             ),
           ),
@@ -158,7 +158,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromRGBO(60, 60, 60, 1),
+      color: Colors.blueGrey.shade900,
       child: Column(
         children: [
           // search bar
@@ -167,14 +167,14 @@ class _SearchWidgetState extends State<SearchWidget> {
             height: 40,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Color.fromRGBO(217, 217, 217, 1),
+              color: Colors.blueGrey.shade100,
             ),
             child: Stack(
               alignment: Alignment.center,
               children: [
                 Positioned(
                   left: 10,
-                  child: Text('spy', style: TextStyle(fontSize: 16)),
+                  child: Text('spy', style: TextStyle(fontSize: 16),),
                 ),
                 Positioned(
                   right: 5,
@@ -184,7 +184,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                         _showResult = true;
                       });
                     },
-                    icon: Icon(Icons.search)
+                    icon: Icon(Icons.search, color: Colors.blueGrey.shade900)
                   ),
                 ),
               ],
@@ -208,7 +208,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                             //TODO: show filter
                           });
                         },
-                        icon: Icon(FontAwesomeIcons.filter, color: Color.fromRGBO(217, 217, 217, 1),),
+                        icon: Icon(FontAwesomeIcons.filter, color: Colors.blueGrey.shade100),
                       ),
                       // tags button
                       Wrap(
@@ -241,7 +241,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                               // TODO: show sorter
                             });
                           },
-                          icon: Icon(FontAwesomeIcons.sort, color: Color.fromRGBO(217, 217, 217, 1),)
+                          icon: Icon(FontAwesomeIcons.sort, color: Colors.blueGrey.shade100,)
                       ),
                     ]
                   ),
