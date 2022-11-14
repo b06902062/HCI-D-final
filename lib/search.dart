@@ -1,36 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'utility.dart';
 
 class SearchWidget extends StatefulWidget {
   const SearchWidget({super.key});
 
   @override
   _SearchWidgetState createState() => _SearchWidgetState();
-}
-
-Widget tagButton(tagName, func) {
-  return OutlinedButton(
-    style: TextButton.styleFrom(
-      primary: Colors.teal.shade400,
-      padding: EdgeInsets.all(0),
-      side: BorderSide(color: Colors.teal.shade400, width: 2),
-      shape: StadiumBorder(),
-    ),
-    onPressed: func,
-    child: Text(tagName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
-  );
-}
-
-Widget sortButton(sortName, func) {
-  return ElevatedButton(
-    style: TextButton.styleFrom(
-      primary: Colors.white,
-      padding: EdgeInsets.all(0),
-      shape: StadiumBorder(),
-    ),
-    onPressed: (){},
-    child: Text(sortName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
-  );
 }
 
 Widget animeBlock(data) {
@@ -55,7 +31,24 @@ Widget animeBlock(data) {
         children: [
           // description
           Positioned(
-            left: 115,
+            left: 120,
+            top: 85,
+            bottom: 5,
+            right: 5,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.blueGrey.shade50
+              ),
+              child: Container(
+                margin: EdgeInsets.all(5),
+                child: Text(Description, style: TextStyle(fontSize: 12)),
+              )
+            ),
+          ),
+          // information
+          Positioned(
+            left: 120,
             top: 5,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -80,23 +73,12 @@ Widget animeBlock(data) {
                       ],
                     ),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 3),
                   Wrap(
                     spacing: 5,
                     children: (Tags as List).map((name) =>
                       tagButton(name, (){})
                     ).toList(),
-                  ),
-                  SizedBox(height: 5),
-                  DecoratedBox(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        child: Text(Description, style: TextStyle(fontSize: 12)),
-                      )
                   ),
                 ]
             )
@@ -104,10 +86,7 @@ Widget animeBlock(data) {
           //Image
           Positioned(
             left: 5,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset('SPYxFamily.jpeg', height: 150),
-            )
+            child: animeCard('assets/images/SPY.jpeg'),
           ),
           // ranking
           Positioned(
@@ -152,8 +131,9 @@ class _SearchWidgetState extends State<SearchWidget> {
   var _sortStatus = {'score': true, 'time': false, 'popularity': false};
   var _animeList = [
     {'Id': 1, 'Name': 'SPY x FAMIlY', 'Author': 'Tatsuya Endo', 'Director': 'Kazuhiro Furuhashi', 'Tags': ['comedy', 'family'],
-    'Description': 'A spy on an undercover mission gets married and adopts a child as part of his cover. His wife and daughter have secrets of their ...    '}
+    'Description': 'A spy on an undercover mission gets married and adopts a child as part of his cover. His wife and daughter have secrets of their own, and all three must strive to keep together.'}
   ];
+  var changline = ' ';
 
   @override
   Widget build(BuildContext context) {
