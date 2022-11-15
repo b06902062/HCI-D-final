@@ -5,7 +5,7 @@ Widget recommendationRow(String title, List<String> filePaths) {
   return  Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(title, style: TextStyle(fontSize: 24, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
+      Text(title, style: TextStyle(fontSize: 22, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
       SizedBox(height: 8),
       Container(
         height: 150,  // = animeCard height
@@ -14,12 +14,13 @@ Widget recommendationRow(String title, List<String> filePaths) {
           scrollDirection: Axis.horizontal,
           children: filePaths.map((fp) =>
               Container(
-                padding: EdgeInsets.only(left: 8),
+                padding: EdgeInsets.only(left: 16),
                 child: animeCard(fp),
               )
           ).toList(),
         ),
       ),
+      SizedBox(height: 12),
     ]
   );
 }

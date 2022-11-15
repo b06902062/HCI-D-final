@@ -2,122 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'utility.dart';
 
-Widget animeBlock(data) {
-  var Id = data['Id'];
-  var Name = data['Name'];
-  var Author = data['Author'];
-  var Director = data['Director'];
-  var Tags = data['Tags'];
-  var Description = data['Description'];
-
-  return Container(
-    margin: EdgeInsets.only(top:10, left: 10, right:10),
-    height: 160,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: Colors.blueGrey.shade100,
-    ),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // description
-          Positioned(
-            left: 120,
-            top: 85,
-            bottom: 5,
-            right: 5,
-            child: DecoratedBox(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.blueGrey.shade50
-                ),
-                child: Container(
-                  margin: EdgeInsets.all(5),
-                  child: Text(Description, style: TextStyle(fontSize: 12)),
-                )
-            ),
-          ),
-          // information
-          Positioned(
-              left: 120,
-              top: 5,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Author: ',
-                        style: TextStyle(fontSize: 12),
-                        children: <TextSpan>[
-                          TextSpan(text: Author, style: TextStyle(decoration: TextDecoration.underline, fontSize: 12)),
-                        ],
-                      ),
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Director: ',
-                        style: TextStyle(fontSize: 12),
-                        children: <TextSpan>[
-                          TextSpan(text: Director, style: TextStyle(decoration: TextDecoration.underline, fontSize: 12)),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 3),
-                    Wrap(
-                      spacing: 5,
-                      children: (Tags as List).map((name) =>
-                          tagButton(name, (){})
-                      ).toList(),
-                    ),
-                  ]
-              )
-          ),
-          //Image
-          Positioned(
-            left: 5,
-            child: animeCard('assets/images/SPY.jpeg'),
-          ),
-          // ranking
-          Positioned(
-              left: 0,
-              bottom: 0,
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: Colors.blueGrey.shade100,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(50),
-                  ),
-                ),
-                child: Stack(children: [Positioned(
-                  left: 5,
-                  bottom: 2,
-                  child: Text('1', style: TextStyle(color: Colors.blueGrey.shade900, fontWeight: FontWeight.bold, fontSize: 20)),
-                ),],),
-              )
-          ),
-          // star
-          Positioned(
-            top: 5,
-            right: 5,
-            child: Row(
-              children: [
-                Icon(FontAwesomeIcons.solidStar, color: Colors.yellowAccent.shade700, size: 16),
-                Text(' 9.7', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'NotoSans')),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
 class SearchWidget extends StatefulWidget {
   const SearchWidget({super.key});
 
@@ -126,11 +10,36 @@ class SearchWidget extends StatefulWidget {
 }
 
 class _SearchWidgetState extends State<SearchWidget> {
-  var _tagStatus = {'comedy': true, 'adventure': true, 'action': false, 'school': false, 'monster': false};
+  var _tagStatus = {'comedy': false, 'adventure': false, 'action': true, 'school': false, 'monster': false};
   var _sortStatus = {'score': true, 'time': false, 'popularity': false};
+  var searchBarText = 'type here to search';
   var _animeList = [
-    {'Id': 1, 'Name': 'SPY x FAMIlY', 'Author': 'Tatsuya Endo', 'Director': 'Kazuhiro Furuhashi', 'Tags': ['comedy', 'family'],
-    'Description': 'A spy on an undercover mission gets married and adopts a child as part of his cover. His wife and daughter have secrets of their own, and all three must strive to keep together.'}
+    {
+      'Name': 'SPY x FAMIlY', 'Author': 'Tatsuya Endo', 'Director': 'Kazuhiro Furuhashi',
+      'Tags': ['action', 'comedy', 'school'], 'Cover': 'assets/images/SPYxFamily.jpeg', 'Score': 8.6,
+      'Description': 'A spy on an undercover mission gets married and adopts a child as part of his cover. His wife and daughter have secrets of their own, and all three must strive to keep together.',
+    },
+    {
+      'Name': 'Chainsaw Man', 'Author': 'Tatsuki Fujimoto', 'Director': 'Ryu Nakayama',
+      'Tags': ['adventure', 'action', 'monster'], 'Cover': 'assets/images/ChainsawMan.jpg', 'Score': 8.8,
+      'Description': 'Following a betrayal, a young man left for the dead is reborn as a powerful devil-human hybrid after merging with his pet devil and is soon enlisted into an organization dedicated to hunting devils.',
+    },
+    {
+      'Name': 'Attack on Titan', 'Author': 'Author: Hajime Isayama', 'Director': 'Tetsurô Araki',
+      'Tags': ['monster', 'action', 'adventure'], 'Cover': 'assets/images/AttackOnTitan.jpg', 'Score': 9.0,
+      'Description': 'After his hometown is destroyed and his mother is killed, young Eren Jaeger vows to cleanse the earth of the giant humanoid Titans that have brought humanity to the brink of extinction.',
+    },
+    {
+      'Name': 'Demon Slayer', 'Author': 'Koyoharu Gotōge', 'Director': 'Sotozaki Haruo',
+      'Tags': ['action', 'monster', 'adventure'], 'Cover': 'assets/images/DemonSlayer.jpg', 'Score': 8.7,
+      'Description': 'A family is attacked by demons and only two members survive - Tanjiro and his sister Nezuko, who is turning into a demon slowly. Tanjiro sets out to become a demon slayer to avenge his family and cure his sister.',
+    },
+    {
+      'Name': 'My Hero Academia', 'Author': 'Kôhei Horikoshi', 'Director': 'Kenji Nagasaki',
+      'Tags': ['action', 'adventure', 'school'], 'Cover': 'assets/images/MyHeroAcademia.jpg', 'Score': 8.4,
+      'Description': 'A superhero-loving boy without any powers is determined to enroll in a prestigious hero academy and learn what it really means to be a hero.',
+    },
+    // {'Name': '', 'Author': '', 'Director': '', 'Tags': [], 'Cover': 'assets/images/', 'Score': 0, 'Description': '',},
   ];
 
   @override
@@ -144,7 +53,7 @@ class _SearchWidgetState extends State<SearchWidget> {
             margin: EdgeInsets.only(top:8, left: 8, right:8),
             height: 56,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12),
               color: Colors.blueGrey.shade100,
             ),
             child: Row(
@@ -157,13 +66,13 @@ class _SearchWidgetState extends State<SearchWidget> {
                   },
                   icon: Icon(Icons.search, color: Colors.blueGrey.shade900)
                 ),
-                Text('spy', style: TextStyle(fontSize: 16),),
+                Text(searchBarText, style: TextStyle(fontSize: 16),),
               ],
             ),
           ),
           // filter, sorter
           Container(
-            margin: EdgeInsets.only(top:12, left: 8, right: 8),
+            margin: EdgeInsets.only(top:12, left: 8, right: 8, bottom: 12),
             height: 24,
             child: Stack(
               alignment: Alignment.center,
@@ -220,8 +129,17 @@ class _SearchWidgetState extends State<SearchWidget> {
               ],
             ),
           ),
-          // anime block
-          animeBlock(_animeList[0]),
+          // anime list
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.all(0),
+              itemCount: _animeList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return animeBlock(_animeList[index]);
+              },
+              separatorBuilder: (BuildContext context, int index) => const Divider(),
+            ),
+          ),
         ],
       )
     );

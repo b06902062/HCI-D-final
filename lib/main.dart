@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Hello Flutter',
       theme: ThemeData(
-        // fontFamily: 'NotoSans',
+        fontFamily: 'NotoSans',
         primarySwatch: Colors.blueGrey,
       ),
       home: NavigationPage(),
