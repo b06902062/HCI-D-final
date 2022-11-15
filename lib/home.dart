@@ -1,150 +1,109 @@
 import 'package:flutter/material.dart';
+import 'utility.dart';
 
-Widget animeCard(String imageSrc) {
-  return Container(
-    height: 150,  // 155 = 150 animeCard height + 5 bottom margin
-    width: 110,
-    clipBehavior: Clip.hardEdge,
-    margin: const EdgeInsets.only(left: 8.5, top: 0, right: 8.5, bottom: 0),  // 150 = 150 animeCard height + 0 bottom margin
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: Color.fromARGB(0, 244, 67, 54),
-    ),
-    child: Image.asset(
-      imageSrc,
-      fit: BoxFit.fill,
-    ),
+Widget recommendationRow(String title, List<String> filePaths) {
+  return  Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(title, style: TextStyle(fontSize: 24, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
+      SizedBox(height: 8),
+      Container(
+        height: 150,  // = animeCard height
+        child: ListView(
+          clipBehavior: Clip.none,
+          scrollDirection: Axis.horizontal,
+          children: filePaths.map((fp) =>
+              Container(
+                padding: EdgeInsets.only(left: 8),
+                child: animeCard(fp),
+              )
+          ).toList(),
+        ),
+      ),
+    ]
   );
 }
 
-Widget recommendationText(String text) {
-  return Container(
-    padding: const EdgeInsets.only(left: 10.0, top: 5.0, right: 10.0, bottom: 3.0),
-    child: Text(
-      text,
-      style: TextStyle(
-          fontSize: 16, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold),
-    ),
-  );
-}
-
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  var recommendations = [
+    {
+      'title': "| Trending Now 〉",
+      'results': [
+        "assets/images/anime1.png",
+        "assets/images/anime2.png",
+        "assets/images/anime3.png",
+        "assets/images/anime4.png",
+        "assets/images/anime5.png"
+      ]
+    },
+    {
+      'title': "| Recommended to You 〉",
+      'results': [
+        "assets/images/anime6.png",
+        "assets/images/anime7.png",
+        "assets/images/anime8.png",
+        "assets/images/anime9.png",
+        "assets/images/anime10.png"
+      ]
+    },
+    {
+      'title': "| This Season 〉",
+      'results': [
+        "assets/images/anime11.png",
+        "assets/images/anime12.png",
+        "assets/images/anime13.png",
+        "assets/images/anime14.png",
+        "assets/images/anime15.png"
+      ]
+    },
+    {
+      'title': "| Since you like Attack on Titan 〉",
+      'results': [
+        "assets/images/anime16.png",
+        "assets/images/anime17.png",
+        "assets/images/anime18.png",
+        "assets/images/anime19.png",
+        "assets/images/anime20.png"
+      ]
+    },
+    {
+      'title': "| Since you like comedy 〉",
+      'results': [
+        "assets/images/anime21.png",
+        "assets/images/anime1.png",
+        "assets/images/anime2.png",
+        "assets/images/anime3.png",
+        "assets/images/anime4.png"
+      ]
+    },
+    {
+      'title': "| Since you like school 〉",
+      'results': [
+        "assets/images/anime5.png",
+        "assets/images/anime6.png",
+        "assets/images/anime7.png",
+        "assets/images/anime8.png",
+        "assets/images/anime9.png"
+      ]
+    },
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blueGrey.shade900,
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              recommendationText("| Trending Now 〉"),
-              Container(
-                color: Color.fromARGB(0, 255, 193, 7),
-                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
-                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
-                child: ListView(
-                  clipBehavior: Clip.none,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    animeCard("assets/images/anime1.png"),
-                    animeCard("assets/images/anime2.png"),
-                    animeCard("assets/images/anime3.png"),
-                    animeCard("assets/images/anime4.png"),
-                    animeCard("assets/images/anime5.png"),
-                  ],
-                ),
-              ),
-              recommendationText("| Recommended to You 〉"),
-              Container(
-                color: const Color.fromARGB(0, 255, 193, 7),
-                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
-                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
-                child: ListView(
-                  clipBehavior: Clip.none,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    animeCard("assets/images/anime6.png"),
-                    animeCard("assets/images/anime7.png"),
-                    animeCard("assets/images/anime8.png"),
-                    animeCard("assets/images/anime9.png"),
-                    animeCard("assets/images/anime10.png"),
-                  ],
-                ),
-              ),
-              recommendationText("| This Season 〉"),
-              Container(
-                color: const Color.fromARGB(0, 255, 193, 7),
-                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
-                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
-                child: ListView(
-                  clipBehavior: Clip.none,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    animeCard("assets/images/anime11.png"),
-                    animeCard("assets/images/anime12.png"),
-                    animeCard("assets/images/anime13.png"),
-                    animeCard("assets/images/anime14.png"),
-                    animeCard("assets/images/anime15.png"),
-                  ],
-                ),
-              ),
-              recommendationText("| Since you like Attack on Titan 〉"),
-              Container(
-                color: const Color.fromARGB(0, 255, 193, 7),
-                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
-                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
-                child: ListView(
-                  clipBehavior: Clip.none,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    animeCard("assets/images/anime16.png"),
-                    animeCard("assets/images/anime17.png"),
-                    animeCard("assets/images/anime18.png"),
-                    animeCard("assets/images/anime19.png"),
-                    animeCard("assets/images/anime20.png"),
-                  ],
-                ),
-              ),
-              recommendationText("| Since you like comedy 〉"),
-              Container(
-                color: const Color.fromARGB(0, 255, 193, 7),
-                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
-                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
-                child: ListView(
-                  clipBehavior: Clip.none,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    animeCard("assets/images/anime21.png"),
-                    animeCard("assets/images/anime1.png"),
-                    animeCard("assets/images/anime2.png"),
-                    animeCard("assets/images/anime3.png"),
-                    animeCard("assets/images/anime4.png"),
-                  ],
-                ),
-              ),
-              recommendationText("| Since you like school 〉"),
-              Container(
-                color: const Color.fromARGB(0, 255, 193, 7),
-                height: 150,  // 150 = 150 animeCard height + 0 bottom margin
-                margin: const EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0, bottom: 0),
-                child: ListView(
-                  clipBehavior: Clip.none,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    animeCard("assets/images/anime5.png"),
-                    animeCard("assets/images/anime6.png"),
-                    animeCard("assets/images/anime7.png"),
-                    animeCard("assets/images/anime8.png"),
-                    animeCard("assets/images/anime9.png"),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+    return Container(
+      color: Colors.blueGrey.shade900,
+      child: ListView(
+        padding: const EdgeInsets.all(12),
+        children: recommendations.map((recommendation)=>
+          recommendationRow(recommendation['title'] as String, recommendation['results'] as List<String>)
+        ).toList(),
       ),
     );
   }

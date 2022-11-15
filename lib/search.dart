@@ -2,13 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'utility.dart';
 
-class SearchWidget extends StatefulWidget {
-  const SearchWidget({super.key});
-
-  @override
-  _SearchWidgetState createState() => _SearchWidgetState();
-}
-
 Widget animeBlock(data) {
   var Id = data['Id'];
   var Name = data['Name'];
@@ -36,52 +29,52 @@ Widget animeBlock(data) {
             bottom: 5,
             right: 5,
             child: DecoratedBox(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.blueGrey.shade50
-              ),
-              child: Container(
-                margin: EdgeInsets.all(5),
-                child: Text(Description, style: TextStyle(fontSize: 12)),
-              )
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.blueGrey.shade50
+                ),
+                child: Container(
+                  margin: EdgeInsets.all(5),
+                  child: Text(Description, style: TextStyle(fontSize: 12)),
+                )
             ),
           ),
           // information
           Positioned(
-            left: 120,
-            top: 5,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Author: ',
-                      style: TextStyle(fontSize: 12),
-                      children: <TextSpan>[
-                        TextSpan(text: Author, style: TextStyle(decoration: TextDecoration.underline, fontSize: 12)),
-                      ],
+              left: 120,
+              top: 5,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text.rich(
+                      TextSpan(
+                        text: 'Author: ',
+                        style: TextStyle(fontSize: 12),
+                        children: <TextSpan>[
+                          TextSpan(text: Author, style: TextStyle(decoration: TextDecoration.underline, fontSize: 12)),
+                        ],
+                      ),
                     ),
-                  ),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Director: ',
-                      style: TextStyle(fontSize: 12),
-                      children: <TextSpan>[
-                        TextSpan(text: Director, style: TextStyle(decoration: TextDecoration.underline, fontSize: 12)),
-                      ],
+                    Text.rich(
+                      TextSpan(
+                        text: 'Director: ',
+                        style: TextStyle(fontSize: 12),
+                        children: <TextSpan>[
+                          TextSpan(text: Director, style: TextStyle(decoration: TextDecoration.underline, fontSize: 12)),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 3),
-                  Wrap(
-                    spacing: 5,
-                    children: (Tags as List).map((name) =>
-                      tagButton(name, (){})
-                    ).toList(),
-                  ),
-                ]
-            )
+                    SizedBox(height: 3),
+                    Wrap(
+                      spacing: 5,
+                      children: (Tags as List).map((name) =>
+                          tagButton(name, (){})
+                      ).toList(),
+                    ),
+                  ]
+              )
           ),
           //Image
           Positioned(
@@ -125,15 +118,20 @@ Widget animeBlock(data) {
   );
 }
 
+class SearchWidget extends StatefulWidget {
+  const SearchWidget({super.key});
+
+  @override
+  _SearchWidgetState createState() => _SearchWidgetState();
+}
+
 class _SearchWidgetState extends State<SearchWidget> {
-  bool _showResult = false;
   var _tagStatus = {'comedy': true, 'adventure': true, 'action': false, 'school': false, 'monster': false};
   var _sortStatus = {'score': true, 'time': false, 'popularity': false};
   var _animeList = [
     {'Id': 1, 'Name': 'SPY x FAMIlY', 'Author': 'Tatsuya Endo', 'Director': 'Kazuhiro Furuhashi', 'Tags': ['comedy', 'family'],
     'Description': 'A spy on an undercover mission gets married and adopts a child as part of his cover. His wife and daughter have secrets of their own, and all three must strive to keep together.'}
   ];
-  var changline = ' ';
 
   @override
   Widget build(BuildContext context) {
@@ -143,37 +141,30 @@ class _SearchWidgetState extends State<SearchWidget> {
         children: [
           // search bar
           Container(
-            margin: EdgeInsets.only(top:10, left: 10, right:10),
-            height: 40,
+            margin: EdgeInsets.only(top:8, left: 8, right:8),
+            height: 56,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.blueGrey.shade100,
             ),
-            child: Stack(
-              alignment: Alignment.center,
+            child: Row(
               children: [
-                Positioned(
-                  left: 10,
-                  child: Text('spy', style: TextStyle(fontSize: 16),),
+                IconButton(
+                  onPressed: (){
+                    setState(() {
+                      // TODO: Search function
+                    });
+                  },
+                  icon: Icon(Icons.search, color: Colors.blueGrey.shade900)
                 ),
-                Positioned(
-                  right: 5,
-                  child: IconButton(
-                    onPressed: (){
-                      setState(() {
-                        _showResult = true;
-                      });
-                    },
-                    icon: Icon(Icons.search, color: Colors.blueGrey.shade900)
-                  ),
-                ),
+                Text('spy', style: TextStyle(fontSize: 16),),
               ],
             ),
           ),
           // filter, sorter
           Container(
-            margin: EdgeInsets.only(top:10, left: 10, right:10),
-            height: 30,
+            margin: EdgeInsets.only(top:12, left: 8, right: 8),
+            height: 24,
             child: Stack(
               alignment: Alignment.center,
               children: [

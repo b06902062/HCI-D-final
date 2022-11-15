@@ -28,11 +28,12 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  int _panelIndex = 1;
+  int _panelIndex = 0;
   List<Widget> _panelOption = <Widget>[
     HomePage(),
     SearchWidget(),
-    Container(color: Colors.blueGrey.shade900,),
+    Container(color: Colors.blueGrey.shade900),
+    Container(color: Colors.blueGrey.shade900),
   ];
   void _onItemTap(int index) {
     setState(() => _panelIndex = index);
@@ -43,6 +44,7 @@ class _NavigationPageState extends State<NavigationPage> {
     return Scaffold(
         body: _panelOption.elementAt(_panelIndex),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.blueGrey.shade700,
           selectedItemColor: Colors.blueGrey.shade100,
           unselectedItemColor: Colors.blueGrey.shade900,
@@ -55,6 +57,7 @@ class _NavigationPageState extends State<NavigationPage> {
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
             BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search'),
+            BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: 'list'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile'),
           ],
         ),
