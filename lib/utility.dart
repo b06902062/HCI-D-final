@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /*
-  Overview
-  animeCard (String imageSrc) { return anime cover }
-  tagButton (String tagName, func) { return OutlineButton with text tagName and Onpressed func }
-  sortButton (String sortName, func) { return ElevatedButton with text sortName and Onpressed func }
+  Class:
+    - AnimeInfo(7 variables)
+    - AnimeProfile(AnimeInfo animeInfo)
+
+  Widgets:
+    - animeCard (String imageSrc) { return anime cover in height 150 and border-radius 4 }
+    - tagButton (String tagName, func) { return OutlineButton with text tagName and Onpressed func }
+    - sortButton (String sortName, func) { return ElevatedButton with text sortName and Onpressed func }
+    - animeBlock(AnimeInfo data, BuildContext context) { return a anime block in search page }
+
+  Tricks:
+    - MediaQuery.of(context).size.width - get the screen size
  */
 
 class AnimeInfo {
@@ -65,6 +73,25 @@ Widget sortButton(String sortName, func) {
         onPressed: (){},
         child: Text(sortName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
       )
+  );
+}
+
+Widget clickableBlockWithLabel(Icon icon, String display, String label, func) {
+  return  GestureDetector(
+    onTap: func,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            icon,
+            Text(display),
+          ],
+        ),
+        Text(label),
+      ],
+    ),
   );
 }
 
@@ -146,27 +173,6 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
             left: 8,
             child: animeCard('assets/images/${data.Cover}'),
           ),
-          //ranking seems not needed
-          /*Positioned(
-              left: 0,
-              bottom: 0,
-              child: Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: Colors.blueGrey.shade100,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(50),
-                  ),
-                ),
-                child: Stack(children: [Positioned(
-                  left: 5,
-                  bottom: 2,
-                  child: Text('1', style: TextStyle(color: Colors.blueGrey.shade900, fontWeight: FontWeight.bold, fontSize: 20)),
-                ),],),
-              )
-          ),
-          */
           // star
           Positioned(
             top: 8,
@@ -194,6 +200,25 @@ class AnimeProfile extends StatefulWidget {
 }
 
 class _AnimeProfileState extends State<AnimeProfile> {
+  Widget _title(String title){
+    return Container(
+      margin: EdgeInsets.only(left: 12),
+      height: 36,
+      decoration: BoxDecoration(
+        color: Colors.blueGrey.shade300,
+        border: Border(left: BorderSide(color: Colors.blueGrey, width: 4))
+      ),
+      alignment: Alignment.centerLeft,
+      child: Row(
+        children: [
+          SizedBox(width: 4,),
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+          Icon(Icons.chevron_right, color: Colors.blueGrey,)
+        ],
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,8 +230,8 @@ class _AnimeProfileState extends State<AnimeProfile> {
       ),
       body: ListView(
         children: [
-          SizedBox(height: 16,),
           // Fake Cover
+          SizedBox(height: 16,),
           Container(
             margin: EdgeInsets.only(left: 32, right: 32),
             height: 240,
@@ -217,46 +242,48 @@ class _AnimeProfileState extends State<AnimeProfile> {
             child: Center(child: Text('Cover'),),
           ),
           SizedBox(height: 16,),
-          // Author, Director, and Tags
+
+          // Author, Director
           Row(
             children: [
-              SizedBox(width: 16,),
+              SizedBox(width: 12,),
               SizedBox(
-                width: MediaQuery.of(context).size.width/2-16,
                 child: Text.rich(
                   TextSpan(
                     text: 'Author: ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     children: <TextSpan>[
-                      TextSpan(text: widget.animeInfo.Author, style: TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.normal, fontSize: 12)),
+                      TextSpan(text: widget.animeInfo.Author, style: TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.normal)),
                     ],
                   ),
                 ),
               ),
+              SizedBox(width: 16,),
               SizedBox(
-                width: MediaQuery.of(context).size.width/2-16,
+                // width: MediaQuery.of(context).size.width/2-16,
                 child: Text.rich(
                   TextSpan(
                     text: 'Director: ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     children: <TextSpan>[
-                      TextSpan(text: widget.animeInfo.Director, style: TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.normal, fontSize: 12)),
+                      TextSpan(text: widget.animeInfo.Director, style: TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.normal)),
                     ],
                   ),
                 ),
               ),
-              SizedBox(width: 16,),
             ],
           ),
           SizedBox(height: 12),
+
+          // Tags
           Row(
             children: [
-              SizedBox(width: 16,),
+              SizedBox(width: 12,),
               SizedBox(
                 child: Text.rich(
                   TextSpan(
                     text: 'Tags: ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -268,9 +295,61 @@ class _AnimeProfileState extends State<AnimeProfile> {
               ),
             ]
           ),
+          SizedBox(height: 12),
 
+          // Description
+          Container(
+            margin: EdgeInsets.only(left: 12, right: 12),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: Colors.blueGrey.shade50
+              ),
+              child: Container(
+                margin: EdgeInsets.all(5),
+                child: Text(widget.animeInfo.Description),
+              )
+            ),
+          ),
+          SizedBox(height: 12),
 
+          // Four Icons
+          Row(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width/4,
+                child: clickableBlockWithLabel(Icon(Icons.star_border), '${widget.animeInfo.Score} (2k+)', 'AniRate', (){}),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width/4,
+                child: clickableBlockWithLabel(Icon(Icons.heart_broken), '1285', 'Favorite', (){}),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width/4,
+                child: clickableBlockWithLabel(Icon(Icons.playlist_add_outlined), '', 'Add to List', (){}),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width/4,
+                child: clickableBlockWithLabel(Icon(Icons.share), '', 'Share', (){}),
+              )
+            ],
+          ),
+          SizedBox(height: 16),
 
+          // Platforms
+          _title('Platforms'),
+          SizedBox(height: 16),
+
+          // Casts & Staff
+          _title('Casts & Staff'),
+          SizedBox(height: 16),
+
+          // Episodes
+          // _title('Episodes'),
+          // SizedBox(height: 16),
+
+          // Comments
+          _title('Comments'),
           SizedBox(height: 1000,),
           Text('end'),
         ],

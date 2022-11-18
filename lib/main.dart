@@ -28,6 +28,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // reference https://karthikponnam.medium.com/flutter-pageview-withbottomnavigationbar-fb4c87580f6a
+
   int _panelIndex = 0;
 
   List<Widget> _panelOption = <Widget>[
