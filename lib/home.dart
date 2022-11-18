@@ -8,14 +8,14 @@ Widget recommendationRow(String title, List<String> filePaths) {
       Text(title, style: TextStyle(fontSize: 22, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
       SizedBox(height: 8),
       Container(
-        height: 150,  // = animeCard height
+        height: 150,  // = imageCard height
         child: ListView(
           clipBehavior: Clip.none,
           scrollDirection: Axis.horizontal,
           children: filePaths.map((fp) =>
               Container(
                 padding: EdgeInsets.only(left: 16),
-                child: animeCard(fp),
+                child: imageCard(fp),
               )
           ).toList(),
         ),

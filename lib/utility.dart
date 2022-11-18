@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
     - AnimeProfile(AnimeInfo animeInfo)
 
   Widgets:
-    - animeCard (String imageSrc) { return anime cover in height 150 and border-radius 4 }
+    - imageCard (String imageSrc, height: 150, width: 110) { return anime cover in height 150 and border-radius 4 }
     - tagButton (String tagName, func) { return OutlineButton with text tagName and Onpressed func }
     - sortButton (String sortName, func) { return ElevatedButton with text sortName and Onpressed func }
     - animeBlock(AnimeInfo data, BuildContext context) { return a anime block in search page }
@@ -28,13 +28,13 @@ class AnimeInfo {
   AnimeInfo(this.Name, this.Author, this.Director, this.Tags, this.Cover, this.Score, this.Description);
 }
 
-Widget animeCard(String imageSrc) {
+Widget imageCard(String imageSrc, {double height: 150, double width: 110, double radius: 4}) {
   return Container(
-    height: 150,  // 155 = 150 animeCard height + 5 bottom margin
-    width: 110,
+    height: height,
+    width: width,
     clipBehavior: Clip.hardEdge,
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(4),
+      borderRadius: BorderRadius.circular(radius),
     ),
     child: Image.asset(
       imageSrc,
@@ -171,7 +171,7 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
           //Image
           Positioned(
             left: 8,
-            child: animeCard('assets/images/${data.Cover}'),
+            child: imageCard('assets/images/${data.Cover}'),
           ),
           // star
           Positioned(
@@ -338,11 +338,55 @@ class _AnimeProfileState extends State<AnimeProfile> {
 
           // Platforms
           _title('Platforms'),
+          SizedBox(height: 12),
+          Container(
+            height: 108,
+            child: ListView(
+              clipBehavior: Clip.none,
+              scrollDirection: Axis.horizontal,
+              children: ['amazon.png', 'anigamer.png', 'disney.jpg', 'HBO.png', 'netflix.png'].map((fp) =>
+                Container(
+                  padding: EdgeInsets.only(left: 12),
+                  child: imageCard('assets/images/${fp}', height: 108, width: 108),
+                )
+              ).toList(),
+            ),
+          ),
           SizedBox(height: 16),
 
           // Casts & Staff
           _title('Casts & Staff'),
-          SizedBox(height: 16),
+          SizedBox(height: 12),
+          Container(
+            // FIX: take off fix height
+            height: 162,
+            child: ListView(
+              clipBehavior: Clip.none,
+              scrollDirection: Axis.horizontal,
+              children: ['dfjkaljf jdfisljs', 'erwefiajf', 'jijsdifjsl', 'dsjifjal', 'dsfishjh'].map((name) =>
+                  Container(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Column(
+                      children: [
+                        imageCard('assets/images/person.jpg', height: 108, width: 108, radius: 59),
+                        Text.rich(
+                          TextSpan(
+                            text: name,
+                            style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
+                          )
+                        ),
+                        Text.rich(
+                            TextSpan(
+                              text: 'as ${name}',
+                              style: TextStyle(fontWeight: FontWeight.w300),
+                            )
+                        )
+                      ],
+                    ),
+                  )
+              ).toList(),
+            ),
+          ),
 
           // Episodes
           // _title('Episodes'),
@@ -350,8 +394,41 @@ class _AnimeProfileState extends State<AnimeProfile> {
 
           // Comments
           _title('Comments'),
-          SizedBox(height: 1000,),
-          Text('end'),
+          // rating star https://stackoverflow.com/questions/46637566/how-to-create-rating-star-bar-properly
+          SizedBox(height: 12),
+          Container(
+            margin: EdgeInsets.only(left: 16, right: 16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: 8,),
+                Row(
+                  children: [
+                    SizedBox(width: 8,),
+                    imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
+                    // TODO: add rating star
+                  ],
+                ),
+                SizedBox(height: 8,),
+                Container(
+                  width: MediaQuery.of(context).size.width-48,
+                  child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Leave your comment and rating',
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8,),
+              ],
+            ),
+          ),
+          SizedBox(height: 200,)
         ],
       )
     );
