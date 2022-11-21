@@ -434,3 +434,21 @@ class _AnimeProfileState extends State<AnimeProfile> {
     );
   }
 }
+
+class Social{
+  final String Media;
+  final String Url;
+
+  Social(this.Media, this.Url);
+}
+
+class PersonalInfo{
+  final String Name;
+  final String Photo;
+  final String Description;
+  final int Follower;
+  final int Following;
+  final List<Social> Media;
+
+  PersonalInfo(this.Name, this.Photo, this.Description, this.Follower, this.Following, this.Media);
+}

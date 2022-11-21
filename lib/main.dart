@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'search.dart';
+import 'profile.dart';
 import 'utility.dart';
 
 void main() => runApp(MyApp());
@@ -36,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HomePage(),
     SearchWidget(),
     Container(color: Colors.blueGrey.shade900),
-    Container(color: Colors.blueGrey.shade900),
+    ProfilePage(),
   ];
 
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
