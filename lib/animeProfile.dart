@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'utility.dart';
 
 class AnimeProfile extends StatefulWidget {
@@ -11,20 +12,58 @@ class AnimeProfile extends StatefulWidget {
 }
 
 class _AnimeProfileState extends State<AnimeProfile> {
+  double _user_rating = -1;
+  bool _user_favorite = false;
+  var _user_comment = '';
+  var _others_comments = [
+    {
+      'Name': 'Daan Aniki', 'Title': 'Historic Anime',
+      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
+      'Score': 9, 'Likes': 137,
+    },{
+      'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
+      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
+      'Score': 9, 'Likes': 113,
+    },{
+      'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
+      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
+      'Score': 9, 'Likes': 113,
+    },{
+      'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
+      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
+      'Score': 9, 'Likes': 113,
+    },
+  ];
+  final ScrollController _controller = ScrollController();
+  GlobalKey _comment_key = GlobalKey();
+
+  //reference https://stackoverflow.com/questions/43485529/programmatically-scrolling-to-the-end-of-a-listview
+  //reference https://stackoverflow.com/questions/54291245/get-y-position-of-container-on-flutter
+  void _scrollDown() {
+    RenderBox box = _comment_key.currentContext?.findRenderObject() as RenderBox;
+    Offset position = box.localToGlobal(Offset.zero);
+    double y = position.dy;
+    _controller.animateTo(
+      _controller.position.pixels+y-100,
+      duration: Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
+
   Widget _title(String title){
     return Container(
         margin: EdgeInsets.only(left: 12),
         height: 36,
         decoration: BoxDecoration(
             color: Colors.blueGrey.shade300,
-            border: Border(left: BorderSide(color: Colors.blueGrey, width: 4))
+            border: Border(left: BorderSide(color: Colors.blueGrey.shade900, width: 4))
         ),
         alignment: Alignment.centerLeft,
         child: Row(
           children: [
             SizedBox(width: 4,),
             Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            Icon(Icons.chevron_right, color: Colors.blueGrey,)
+            Icon(Icons.navigate_next, color: Colors.blueGrey.shade900,)
           ],
         )
     );
@@ -35,11 +74,12 @@ class _AnimeProfileState extends State<AnimeProfile> {
     return Scaffold(
         backgroundColor: Colors.blueGrey.shade100,
         appBar: AppBar(
-          backgroundColor: Colors.blueGrey.shade700,
+          backgroundColor: Colors.blueGrey.shade900,
           centerTitle: true,
           title: Text('${widget.animeInfo.Name}'),
         ),
         body: ListView(
+          controller: _controller,
           children: [
             // Fake Cover
             SizedBox(height: 16,),
@@ -129,11 +169,19 @@ class _AnimeProfileState extends State<AnimeProfile> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
-                  child: clickableBlockWithLabel(Icon(Icons.star_border), '', '${widget.animeInfo.Score} (2k+)', (){}),
+                  child: clickableBlockWithLabel(_user_rating==-1? Icon(Icons.star_border):Icon(Icons.star, color: specialTeal,), '',
+                      '${widget.animeInfo.Score} (2k+)', _scrollDown
+                  ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
-                  child: clickableBlockWithLabel(Icon(Icons.favorite_border), '', '1285', (){}),
+                  child: clickableBlockWithLabel(_user_favorite? Icon(Icons.favorite, color: specialIndigo,):Icon(Icons.favorite_border), '',
+                      '1285', (){
+                        setState(() {
+                          _user_favorite = !_user_favorite;
+                        });
+                      }
+                  ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
@@ -204,14 +252,16 @@ class _AnimeProfileState extends State<AnimeProfile> {
             // SizedBox(height: 16),
 
             // Comments
+            Container(key: _comment_key,),
             _title('Comments'),
-            // rating star https://stackoverflow.com/questions/46637566/how-to-create-rating-star-bar-properly
+            // reference https://pub.dev/packages/flutter_rating_bar
             SizedBox(height: 12),
+            // user comment
             Container(
               margin: EdgeInsets.only(left: 16, right: 16),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.white,
+                borderRadius: BorderRadius.circular(4),
+                color: Colors.blueGrey.shade50,
               ),
               child: Column(
                 children: [
@@ -220,12 +270,51 @@ class _AnimeProfileState extends State<AnimeProfile> {
                     children: [
                       SizedBox(width: 8,),
                       imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
-                      // TODO: add rating star
+                      // rating star
+                      // TODO: discuss thesis statement
+                      Expanded(
+                        child: Column(
+                          // alignment: Alignment.center,
+                          children: [
+                            RatingBar.builder(
+                              initialRating: 0,
+                              minRating: 0,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: specialTeal,
+                              ),
+                              onRatingUpdate: (rating) {
+                                setState(() {
+                                  _user_rating = rating;
+                                });
+                              },
+                            ),
+                            Container(
+                              color: Colors.white,
+                              margin: EdgeInsets.only(top: 8, left: 40, right: 40),
+                              child: TextField(
+                                maxLines: 1,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Thesis statement (optional)',
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.all(4),
+                                ),
+                              ),
+                            ),
+                          ]
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(height: 8,),
                   Container(
                     width: MediaQuery.of(context).size.width-48,
+                    color: Colors.white,
                     child: TextField(
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
@@ -239,7 +328,21 @@ class _AnimeProfileState extends State<AnimeProfile> {
                 ],
               ),
             ),
-            SizedBox(height: 200,)
+            SizedBox(height: 8),
+            Container(
+              margin: EdgeInsets.only(left: 16, right: 16),
+              alignment: Alignment.centerRight,
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.black, width: 2,),
+                ),
+              ),
+              child: Text('2k+ comments', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+            ),
+            Column(
+              children: _others_comments.map((comment) => otherUserComment(comment)).toList(),
+            ),
+            SizedBox(height: 8),
           ],
         )
     );

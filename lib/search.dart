@@ -39,7 +39,7 @@ class _SearchWidgetState extends State<SearchWidget> {
           SizedBox(height: 8),
           // search bar
           Container(
-            margin: EdgeInsets.only(left: 8, right:8),
+            margin: EdgeInsets.only(left: 16, right: 16),
             height: 48,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),

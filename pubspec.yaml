@@ -1,5 +1,5 @@
-name: untitled
-description: A new Flutter project.
+name: AniRate
+description: HCI+D Final.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -31,7 +31,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  font_awesome_flutter: any
+  flutter_rating_bar: ^4.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

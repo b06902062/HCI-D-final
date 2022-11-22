@@ -109,7 +109,7 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
       );
     },
     child: Container(
-      margin: EdgeInsets.only(left: 8, right:8),
+      margin: EdgeInsets.only(left: 16, right: 16),
       height: 166,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
@@ -130,7 +130,7 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
                     color: Colors.blueGrey.shade50
                 ),
                 child: Container(
-                  margin: EdgeInsets.all(5),
+                  margin: EdgeInsets.all(6),
                   child: Text(data.Description, style: TextStyle(fontSize: 12)),
                 )
             ),
@@ -191,6 +191,86 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
           ),
         ],
       ),
+    ),
+  );
+}
+
+Widget otherUserComment(data) {
+  //TODO: create class for comment data
+  return Container(
+    margin: EdgeInsets.only(top: 12, left: 16, right:16),
+    padding: EdgeInsets.all(8),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(4),
+      color: Colors.blueGrey.shade50,
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // image
+        imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
+        SizedBox(width: 8,),
+        Expanded(
+          child: Column(
+            children: [
+              // Name, Title and Star
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(data['Name'], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
+                  Row(
+                    children: [
+                      Icon(Icons.star, color: specialTeal, size: 20),
+                      Text(' ${data['Score']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      Text('/10', style: TextStyle(fontSize: 16)),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 4,),
+              // Comment
+              Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.white,
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.all(6),
+                    child: Text(data['Comment'], style: TextStyle(fontSize: 12)),
+                  )
+              ),
+              SizedBox(height: 4,),
+              //TODO: discuss about the new design
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(width: 0,),
+                  Row(
+                    children: [
+                      Icon(Icons.thumb_up_alt_outlined, size: 20),
+                      Text(' ${data['Likes']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.thumb_down_alt_outlined, size: 20),
+                      Text('  ${data['Likes']-100}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.reply, size: 20),
+                      Text(' reply', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     ),
   );
 }
