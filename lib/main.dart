@@ -42,9 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
-      BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
+      BottomNavigationBarItem(icon: Icon(Icons.home,), label: 'home'),
       BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search'),
-      BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: 'list'),
+      BottomNavigationBarItem(icon: Icon(Icons.view_list), label: 'list'),
       BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile'),
     ];
   }

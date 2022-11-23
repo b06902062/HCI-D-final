@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'utility.dart';
 
 class SearchWidget extends StatefulWidget {
@@ -37,10 +36,11 @@ class _SearchWidgetState extends State<SearchWidget> {
       color: Colors.blueGrey.shade900,
       child: Column(
         children: [
+          SizedBox(height: 8),
           // search bar
           Container(
-            margin: EdgeInsets.only(top:8, left: 8, right:8),
-            height: 56,
+            margin: EdgeInsets.only(left: 16, right: 16),
+            height: 48,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: Colors.blueGrey.shade100,
@@ -59,10 +59,11 @@ class _SearchWidgetState extends State<SearchWidget> {
               ],
             ),
           ),
+          SizedBox(height: 8),
           // filter, sorter
           Container(
-            margin: EdgeInsets.only(top:12, left: 8, right: 8, bottom: 12),
-            height: 24,
+            margin: EdgeInsets.only(left: 8, right: 8),
+            height: 36,
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -77,11 +78,12 @@ class _SearchWidgetState extends State<SearchWidget> {
                             //TODO: show filter
                           });
                         },
-                        icon: Icon(FontAwesomeIcons.filter, color: Colors.blueGrey.shade100),
+                        iconSize: 28,
+                        icon: Icon(Icons.sort, color: Colors.blueGrey.shade100),
                       ),
                       // tags button
                       Wrap(
-                        spacing: 5,
+                        spacing: 4,
                         children: _tagStatus.entries.where((e)=>e.value).map((e) =>
                           tagButton(
                             e.key,
@@ -99,7 +101,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                     children: [
                       // sorts button
                       Wrap(
-                        spacing: 5,
+                        spacing: 4,
                         children: _sortStatus.entries.where((e)=>e.value).map((e) =>
                           sortButton(e.key, (){})
                         ).toList(),
@@ -110,7 +112,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                               // TODO: show sorter
                             });
                           },
-                          icon: Icon(FontAwesomeIcons.sort, color: Colors.blueGrey.shade100,)
+                          iconSize: 28,
+                          icon: Icon(Icons.import_export, color: Colors.blueGrey.shade100,)
                       ),
                     ]
                   ),
@@ -118,6 +121,7 @@ class _SearchWidgetState extends State<SearchWidget> {
               ],
             ),
           ),
+          SizedBox(height: 8),
           // anime list
           Expanded(
             child: ListView.separated(
