@@ -11,7 +11,8 @@ class SearchWidget extends StatefulWidget {
 class _SearchWidgetState extends State<SearchWidget> {
   var _typeTagStatus = {'comedy': false, 'adventure': false, 'action': true, 'school': false, 'monster': false, 'monster1': true, 'monster2': true, 'monster3': true};
   var _statusTagStatus = {'in progress': false, 'ended': false, 'new season': true};
-  var _sortStatus = {'score': true, 'time': false, 'popularity': false};
+  var _sortStatus = ['score', 'time', 'popularity'];
+  int _sortStatusIndex = 0;
   var searchBarText = 'type here to search';
   var _animeList = [
     AnimeInfo('SPY x FAMILY', 'Tatsuya Endo', 'Kazuhiro Furuhashi', ['action', 'comedy', 'school'], 'SPYxFamily.jpeg', 8.6,
@@ -128,30 +129,20 @@ class _SearchWidgetState extends State<SearchWidget> {
                       // sorts button
                       Wrap(
                         spacing: 4,
-                        children: _sortStatus.entries.where((e)=>e.value).map((e) =>
-                          sortButton(e.key, (){})
-                        ).toList(),
+                        children: [
+                          sortButton(_sortStatus[_sortStatusIndex], (){
+                            setState(() {
+                              _sortStatusIndex += 1; 
+                              _sortStatusIndex %= _sortStatus.length;
+                            });
+                          })
+                        ]
                       ),
                       IconButton(
                           onPressed: (){
                             setState(() {
-                              // TODO: show sorter
-                              showDialog(
-                                context: context,
-                                barrierColor: Colors.black54,
-                                barrierDismissible: true,
-                                barrierLabel: 'Label',
-                                builder: (BuildContext context) {
-                                  return StatefulBuilder(
-                                    builder: (BuildContext context, StateSetter setState) {
-                                      return sorterPanel(context, setState);
-                                    }
-                                  );
-                                },
-                              ).then((value) {
-                                  setState((){});
-                                }
-                              );
+                              // TODO: reverse sorter
+                              
                             });
                           },
                           iconSize: 28,
@@ -292,77 +283,6 @@ class _SearchWidgetState extends State<SearchWidget> {
       );
   }
 
-  Widget sorterPanel(BuildContext context, StateSetter setState) {
-    return 
-      Stack(
-      // alignment: Alignment(-1, -1),
-        children: [
-          Positioned(
-            left: 0,
-            top: 40,
-            child: Container(
-              // height: 170,
-              width: 360,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular(10),
-                // color: Colors.green,
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    height: 30,
-                    color: Color.fromARGB(255, 30, 30, 30),
-                    alignment: Alignment.centerRight,
-                    padding:
-                        EdgeInsets.only(right: 10),
-                    child: Icon(
-                      Icons.import_export,
-                      color:
-                          Colors.blueGrey.shade100,
-                      size: 28,
-                    ),
-                  ),
-                  Container(
-                    // height: 140,
-                    color: Colors.blueGrey.shade900,
-                    child: Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
-                          // color: Colors.blue, 
-                          child: Wrap(
-                            spacing: 4,
-                            runSpacing: 2,
-                            children: _sortStatus.entries.where((e)=>true).map((e) =>
-                              sortButton(
-                                e.key,
-                                (){
-                                  setState(
-                                    () {
-                                      for (var k in _sortStatus.keys){
-                                        _sortStatus[k] = false;
-                                      }
-                                      _sortStatus[e.key] = true;
-                                    }
-                                  );
-                                },
-                              )
-                            ).toList(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
-      );                                
-  }
 }
 
 
