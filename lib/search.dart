@@ -139,7 +139,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                                                         ),
                                                         Container(
                                                           alignment: Alignment.centerLeft,
-                                                          padding: EdgeInsets.only(left: 5, right: 5),
+                                                          padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 10),
                                                           // color: Colors.blue, 
                                                           child: Wrap(
                                                             spacing: 4,
@@ -171,7 +171,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                                                         ),
                                                         Container(
                                                           alignment: Alignment.centerLeft,
-                                                          padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+                                                          padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 10),
                                                           // color: Colors.blue, 
                                                           child: Wrap(
                                                             spacing: 4,
@@ -288,7 +288,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                                                       children: [
                                                         Container(
                                                           alignment: Alignment.centerLeft,
-                                                          padding: EdgeInsets.only(left: 5, right: 5),
+                                                          padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
                                                           // color: Colors.blue, 
                                                           child: Wrap(
                                                             spacing: 4,

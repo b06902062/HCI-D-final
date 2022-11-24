@@ -76,7 +76,7 @@ Widget sortButton(String sortName, func) {
           padding: EdgeInsets.all(0),
           shape: StadiumBorder(),
         ),
-        onPressed: (){},
+        onPressed: func,
         child: Text(sortName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
       )
   );
