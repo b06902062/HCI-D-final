@@ -169,7 +169,7 @@ Widget infoBlock(PersonalInfo data) {
   );
 }
 
-Widget reviewSwitch(List<String>reviewInfo){
+Widget reviewSwitch(List<String> reviewInfo, func){
   return ToggleSwitch(
     minWidth: 80.0,
     minHeight: 18,
@@ -193,23 +193,150 @@ Widget reviewSwitch(List<String>reviewInfo){
     activeBgColors: [[Colors.teal],[Colors.teal]],
     onToggle: (index) {
       if(index == 0){
-        reviewInfo.sort((b, a) => a.split(',')[1].compareTo(b.split(',')[1]));
+        reviewInfo.sort((b, a) => int.parse(a.split(',')[1]).compareTo(int.parse(b.split(',')[1])));
         print(reviewInfo);
+        func();
       }
       else{
-        reviewInfo.sort((b, a) => a.split(',')[0].compareTo(b.split(',')[0]));
+        reviewInfo.sort((b, a) => int.parse(a.split(',')[0]).compareTo(int.parse(b.split(',')[0])));
         print(reviewInfo);
+        func();
       }
     },
   );
 }
 
+// Widget myReview(String data) {
+//   //TODO: create class for comment data
+//   return Container(
+//     margin: EdgeInsets.only(top: 12, left: 16, right:16),
+//     padding: EdgeInsets.all(8),
+//     decoration: BoxDecoration(
+//       borderRadius: BorderRadius.circular(4),
+//       color: Colors.blueGrey.shade50,
+//     ),
+//     child: Row(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       mainAxisSize: MainAxisSize.min,
+//       children: [
+//         // image
+//         imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
+//         SizedBox(width: 8,),
+//         Expanded(
+//           child: Column(
+//             children: [
+//               // Name, Title and Star
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   Text(data['Name'], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+//                   // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
+//                   Row(
+//                     children: [
+//                       Icon(Icons.star, color: specialTeal, size: 20),
+//                       Text(' ${data['Score']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+//                       Text('/10', style: TextStyle(fontSize: 16)),
+//                     ],
+//                   ),
+//                 ],
+//               ),
+//               SizedBox(height: 4,),
+//               // Comment
+//               Container(
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(4),
+//                     color: Colors.white,
+//                   ),
+//                   child: Container(
+//                     margin: EdgeInsets.all(6),
+//                     child: Text(data['Comment'], style: TextStyle(fontSize: 12)),
+//                   )
+//               ),
+//               SizedBox(height: 4,),
+//               //TODO: discuss about the new design
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                 children: [
+//                   // SizedBox(width: 0,),
+//                   Row(
+//                     children: [
+//                       Icon(Icons.thumb_up_alt_outlined, size: 20),
+//                       Text(' ${data['Likes']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+//                     ],
+//                   ),
+//                   Row(
+//                     children: [
+//                       Icon(Icons.thumb_down_alt_outlined, size: 20),
+//                       Text('  ${data['Likes']-100}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+//                     ],
+//                   ),
+//                   Row(
+//                     children: [
+//                       Icon(Icons.reply, size: 20),
+//                       Text(' reply', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+//                     ],
+//                   ),
+//                   // SizedBox(width: 0,),
+//                 ],
+//               ),
+//             ],
+//           ),
+//         ),
+//       ],
+//     )
+//   );
+// }
+
+class ReviewBlock extends StatefulWidget {
+  final List<String> reviews;
+  const ReviewBlock({required this.reviews});
+  @override
+  _ReviewBlock createState() => _ReviewBlock();
+}
+
+class _ReviewBlock extends State<ReviewBlock> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start, 
+      children: [
+        Column(
+          children: 
+            widget.reviews.map((review) => Column(
+              children: [Container(
+                  height: 166,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.blueGrey.shade100,
+                  ),
+                  padding: EdgeInsets.only(left: 12, right: 12),
+                  child: Text(
+                    review,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.blueGrey.shade900,
+                      fontWeight: FontWeight.bold
+                    )
+                  ),
+                ),
+                SizedBox(height: 10,)
+              ]
+            )
+          ).toList(),
+        ),
+      ]
+    );
+  }   
+}
+
 Widget blockRow(String type, String title, List<String> filePaths) {
+  ValueNotifier<bool> _notifier = ValueNotifier(false);
   if(type == "0"){
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(title,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 18,
             color: Colors.blueGrey.shade100,
             fontWeight: FontWeight.bold)),
       SizedBox(height: 8),
@@ -232,55 +359,33 @@ Widget blockRow(String type, String title, List<String> filePaths) {
   else{
     return Stack(
       children: [
-        Positioned(
-          top: 2,
-          right: 4,
-          child: reviewSwitch(filePaths),
-        ),
-        Positioned(
-          top: 30,
-          right: 4,
-          child: ElevatedButton(
-            child: Text('refresh'),
-            onPressed: (){
-              print(filePaths);
-            },
-          )
-        ),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.blueGrey.shade100,
-              fontWeight: FontWeight.bold
-            )
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.blueGrey.shade100,
+                  fontWeight: FontWeight.bold
+                )
+              ),
+              reviewSwitch(filePaths, () => _notifier.value = !_notifier.value),
+            ],
           ),
           SizedBox(height: 8),
-          Column(
-            children: 
-              filePaths.map((fp) => Column(
-                children: [Container(
-                    height: 166,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: Colors.blueGrey.shade100,
-                    ),
-                    padding: EdgeInsets.only(left: 12, right: 12),
-                    child: Text(
-                      fp,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.blueGrey.shade900,
-                        fontWeight: FontWeight.bold
-                      )
-                    ),
-                  ),
-                  SizedBox(height: 10,)
-                ]
-              )
-            ).toList(),
-          ),
+          ValueListenableBuilder<bool>(
+            builder: (BuildContext context, bool value, Widget? child) {
+              // This builder will only get called when the _counter
+              // is updated.
+              return ReviewBlock(reviews: filePaths);
+            },
+            valueListenable: _notifier,
+            // The child parameter is most helpful if the child is
+            // expensive to build and does not depend on the value from
+            // the notifier.
+          )
         ])
       ]
     );
@@ -321,8 +426,8 @@ class _ProfilePageState extends State<ProfilePage> {
       'title': "| Reviews 〉",
       'results': [
         "20221123,10",
-        "20221120,100",
         "20221119,300",
+        "20221120,100",
         "20221118,50"
       ]
     },
@@ -347,7 +452,7 @@ class _ProfilePageState extends State<ProfilePage> {
           infoBlock(_personalInfo),
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.only(left:12),
+              padding: const EdgeInsets.only(left:12, right: 12),
               children: _blocks.map(
                 (block) => blockRow(block['type'] as String, block['title'] as String,block['results'] as List<String>)
               ).toList()

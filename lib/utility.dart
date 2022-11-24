@@ -244,9 +244,9 @@ Widget otherUserComment(data) {
               SizedBox(height: 4,),
               //TODO: discuss about the new design
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(width: 0,),
+                  // SizedBox(width: 0,),
                   Row(
                     children: [
                       Icon(Icons.thumb_up_alt_outlined, size: 20),
@@ -265,6 +265,7 @@ Widget otherUserComment(data) {
                       Text(' reply', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                     ],
                   ),
+                  // SizedBox(width: 0,),
                 ],
               ),
             ],
