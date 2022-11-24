@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
           HomePage(animeList: _animeList),
           SearchWidget(animeList: _animeList),
           Container(color: Colors.blueGrey.shade900),
-          ProfilePage(),
+          ProfilePage(animeList: _animeList),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
