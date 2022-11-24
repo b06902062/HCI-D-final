@@ -1,118 +1,38 @@
 import 'package:flutter/material.dart';
 import 'utility.dart';
 
-class Social{
-  final String Media;
-  final String Url;
-
-  Social(this.Media, this.Url);
-}
-
-class PersonalInfo{
-  final String Name;
-  final String Photo;
-  final String Description;
-  final int Follower;
-  final int Following;
-  final List<Social> Media;
-
-  PersonalInfo(this.Name, this.Photo, this.Description, this.Follower, this.Following, this.Media);
-}
-
-Widget recommendationRow(String title, List<String> filePaths) {
-  return  Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(title, style: TextStyle(fontSize: 22, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
-      SizedBox(height: 8),
-      Container(
-        height: 150,  // = imageCard height
-        child: ListView(
-          clipBehavior: Clip.none,
-          scrollDirection: Axis.horizontal,
-          children: filePaths.map((fp) =>
-              Container(
-                padding: EdgeInsets.only(left: 16),
-                child: imageCard(fp),
-              )
-          ).toList(),
-        ),
-      ),
-      SizedBox(height: 12),
-    ]
-  );
-}
-
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final List<AnimeInfo> animeList;
+
+  HomePage({super.key, required this.animeList});
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
+class Recommendation {
+  final String Title;
+  final List<AnimeInfo> Results;
+
+  Recommendation(this.Title, this.Results);
+}
+
 class _HomePageState extends State<HomePage> {
-  var recommendations = [
-    {
-      'title': "| Trending Now 〉",
-      'results': [
-        "assets/images/anime1.png",
-        "assets/images/anime2.png",
-        "assets/images/anime3.png",
-        "assets/images/anime4.png",
-        "assets/images/anime5.png"
-      ]
-    },
-    {
-      'title': "| Recommended to You 〉",
-      'results': [
-        "assets/images/anime6.png",
-        "assets/images/anime7.png",
-        "assets/images/anime8.png",
-        "assets/images/anime9.png",
-        "assets/images/anime10.png"
-      ]
-    },
-    {
-      'title': "| This Season 〉",
-      'results': [
-        "assets/images/anime11.png",
-        "assets/images/anime12.png",
-        "assets/images/anime13.png",
-        "assets/images/anime14.png",
-        "assets/images/anime15.png"
-      ]
-    },
-    {
-      'title': "| Since you like Attack on Titan 〉",
-      'results': [
-        "assets/images/anime16.png",
-        "assets/images/anime17.png",
-        "assets/images/anime18.png",
-        "assets/images/anime19.png",
-        "assets/images/anime20.png"
-      ]
-    },
-    {
-      'title': "| Since you like comedy 〉",
-      'results': [
-        "assets/images/anime21.png",
-        "assets/images/anime1.png",
-        "assets/images/anime2.png",
-        "assets/images/anime3.png",
-        "assets/images/anime4.png"
-      ]
-    },
-    {
-      'title': "| Since you like school 〉",
-      'results': [
-        "assets/images/anime5.png",
-        "assets/images/anime6.png",
-        "assets/images/anime7.png",
-        "assets/images/anime8.png",
-        "assets/images/anime9.png"
-      ]
-    },
-  ];
+  List<AnimeInfo> _animeList = [];
+  List<Recommendation> _recommendations = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _animeList = widget.animeList;
+    _recommendations = [
+      new Recommendation('Trending Now', _animeList),
+      new Recommendation('Recommended to You', _animeList),
+      new Recommendation('This Season', _animeList),
+      new Recommendation('Since you like Attack on Titan', _animeList),
+      new Recommendation('Since you like comedy', _animeList),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,8 +40,8 @@ class _HomePageState extends State<HomePage> {
       color: Colors.blueGrey.shade900,
       child: ListView(
         padding: const EdgeInsets.all(12),
-        children: recommendations.map((recommendation)=>
-          recommendationRow(recommendation['title'] as String, recommendation['results'] as List<String>)
+        children: _recommendations.map((recommendation)=>
+          recommendationRow(context, recommendation.Title, recommendation.Results,)
         ).toList(),
       ),
     );

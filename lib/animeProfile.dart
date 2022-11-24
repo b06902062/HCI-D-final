@@ -12,33 +12,32 @@ class AnimeProfile extends StatefulWidget {
 }
 
 class _AnimeProfileState extends State<AnimeProfile> {
-  double _user_rating = -1;
   bool _user_favorite = false;
-  var _user_comment = '';
+  bool _user_rated = false;
+  double _user_rating = -1;
+  final TextEditingController _user_comment_controller = new TextEditingController();
+
   var _others_comments = [
     {
       'Name': 'Daan Aniki', 'Title': 'Historic Anime',
       'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 9, 'Likes': 137,
+      'Score': 4.5, 'Likes': 137,
     },{
       'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
       'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 9, 'Likes': 113,
+      'Score': 4, 'Likes': 113,
     },{
       'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
       'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 9, 'Likes': 113,
-    },{
-      'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
-      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 9, 'Likes': 113,
+      'Score': 3.5, 'Likes': 113,
     },
   ];
-  final ScrollController _controller = ScrollController();
-  GlobalKey _comment_key = GlobalKey();
 
   //reference https://stackoverflow.com/questions/43485529/programmatically-scrolling-to-the-end-of-a-listview
   //reference https://stackoverflow.com/questions/54291245/get-y-position-of-container-on-flutter
+  final ScrollController _controller = ScrollController();
+  GlobalKey _comment_key = GlobalKey();
+
   void _scrollDown() {
     RenderBox box = _comment_key.currentContext?.findRenderObject() as RenderBox;
     Offset position = box.localToGlobal(Offset.zero);
@@ -169,14 +168,14 @@ class _AnimeProfileState extends State<AnimeProfile> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
-                  child: clickableBlockWithLabel(_user_rating==-1? Icon(Icons.star_border):Icon(Icons.star, color: specialTeal,), '',
+                  child: clickableBlockWithLabel(_user_rated? Icon(Icons.star, color: specialTeal,) : Icon(Icons.star_border), '',
                       '${widget.animeInfo.Score} (2k+)', _scrollDown
                   ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
                   child: clickableBlockWithLabel(_user_favorite? Icon(Icons.favorite, color: specialIndigo,):Icon(Icons.favorite_border), '',
-                      '1285', (){
+                      '${1285+(_user_favorite? 1 : 0)}', (){
                         setState(() {
                           _user_favorite = !_user_favorite;
                         });
@@ -257,77 +256,80 @@ class _AnimeProfileState extends State<AnimeProfile> {
             // reference https://pub.dev/packages/flutter_rating_bar
             SizedBox(height: 12),
             // user comment
-            Container(
-              margin: EdgeInsets.only(left: 16, right: 16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: Colors.blueGrey.shade50,
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: 8,),
-                  Row(
-                    children: [
-                      SizedBox(width: 8,),
-                      imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
-                      // rating star
-                      // TODO: discuss thesis statement
-                      Expanded(
-                        child: Column(
-                          // alignment: Alignment.center,
-                          children: [
-                            RatingBar.builder(
-                              initialRating: 0,
-                              minRating: 0,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: specialTeal,
-                              ),
-                              onRatingUpdate: (rating) {
-                                setState(() {
-                                  _user_rating = rating;
-                                });
-                              },
-                            ),
-                            Container(
-                              color: Colors.white,
-                              margin: EdgeInsets.only(top: 8, left: 40, right: 40),
-                              child: TextField(
-                                maxLines: 1,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Thesis statement (optional)',
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.all(4),
+            _user_rated ?
+              otherUserComment({
+                'Name': 'User',
+                'Comment': _user_comment_controller.text,
+                'Score': _user_rating, 'Likes': 0,
+              })
+              :
+              Container(
+                margin: EdgeInsets.only(left: 16, right: 16),
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: Colors.blueGrey.shade50,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(width: 8,),
+                        imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
+                        // rating star
+                        // TODO: discuss thesis statement
+                        Expanded(
+                          child: Column(
+                            children: [
+                              RatingBar.builder(
+                                initialRating: 0,
+                                minRating: 0,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: specialTeal,
                                 ),
+                                onRatingUpdate: (rating) {
+                                  setState(() {
+                                    _user_rating = rating;
+                                  });
+                                },
                               ),
-                            ),
-                          ]
+                            ]
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8,),
+                    Container(
+                      width: MediaQuery.of(context).size.width-48,
+                      color: Colors.white,
+                      child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        controller: _user_comment_controller,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Leave your comment and rating',
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 8,),
-                  Container(
-                    width: MediaQuery.of(context).size.width-48,
-                    color: Colors.white,
-                    child: TextField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Leave your comment and rating',
-                      ),
                     ),
-                  ),
-                  SizedBox(height: 8,),
-                ],
+                    SizedBox(height: 4,),
+                    ElevatedButton(
+                      onPressed: _user_rating == -1 ? null : (){
+                        setState(() {
+                          _user_rated = true;
+                        });
+                      },
+                      child: Icon(Icons.send),
+                    ),
+                  ],
+                ),
               ),
-            ),
             SizedBox(height: 8),
             Container(
               margin: EdgeInsets.only(left: 16, right: 16),
