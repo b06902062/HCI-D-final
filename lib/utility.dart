@@ -11,6 +11,7 @@ import 'animeProfile.dart';
     - tagButton (String tagName, func) { return OutlineButton with text tagName and Onpressed func }
     - sortButton (String sortName, func) { return ElevatedButton with text sortName and Onpressed func }
     - clickableBlockWithLabel(Icon icon, String display, String label, func) { icon button with display(right) and label(below)}
+    - recommendationRow(BuildContext context, String title, List<AnimeInfo> animes, { size: 'big' }) { return a row of anime cover with title }
     - animeBlock(AnimeInfo data, BuildContext context) { return a anime block in search page }
 
   Tricks:
@@ -97,6 +98,44 @@ Widget clickableBlockWithLabel(Icon icon, String display, String label, func) {
         Text(label),
       ],
     ),
+  );
+}
+
+Widget recommendationRow(BuildContext context, String title, List<AnimeInfo> animes, { size: 'big' }) {
+  double _fontSize = size == 'big'? 22 : 16;
+  double _padding_between = size == 'big'? 12 : 8;
+  double _height = size == 'big'? 150 : 120;
+  double _width = size == 'big'? 110 : 88;
+  double _padding_bottom = size == 'big'? 16: 12;
+
+  return  Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('| ${title} 〉', style: TextStyle(fontSize: _fontSize, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
+        SizedBox(height: _padding_between),
+        Container(
+          height: _height,
+          child: ListView(
+            clipBehavior: Clip.none,
+            scrollDirection: Axis.horizontal,
+            children: animes.map((anime) =>
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: anime)),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 16),
+                      child: imageCard('assets/images/${anime.Cover}', height: _height, width: _width),
+                    )
+                )
+            ).toList(),
+          ),
+        ),
+        SizedBox(height: _padding_bottom,),
+      ]
   );
 }
 
@@ -213,6 +252,7 @@ Widget otherUserComment(data) {
         SizedBox(width: 8,),
         Expanded(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Name, Title and Star
               Row(
@@ -224,7 +264,7 @@ Widget otherUserComment(data) {
                     children: [
                       Icon(Icons.star, color: specialTeal, size: 20),
                       Text(' ${data['Score']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                      Text('/10', style: TextStyle(fontSize: 16)),
+                      Text('/5', style: TextStyle(fontSize: 16)),
                     ],
                   ),
                 ],
@@ -242,11 +282,9 @@ Widget otherUserComment(data) {
                   )
               ),
               SizedBox(height: 4,),
-              //TODO: discuss about the new design
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // SizedBox(width: 0,),
                   Row(
                     children: [
                       Icon(Icons.thumb_up_alt_outlined, size: 20),
@@ -256,7 +294,7 @@ Widget otherUserComment(data) {
                   Row(
                     children: [
                       Icon(Icons.thumb_down_alt_outlined, size: 20),
-                      Text('  ${data['Likes']-100}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      Text('  ${data['Likes']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                     ],
                   ),
                   Row(

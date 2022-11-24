@@ -29,31 +29,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // reference https://karthikponnam.medium.com/flutter-pageview-withbottomnavigationbar-fb4c87580f6a
-
-  int _panelIndex = 0;
-
-  List<Widget> _panelOption = <Widget>[
-    HomePage(),
-    SearchWidget(),
-    Container(color: Colors.blueGrey.shade900),
-    ProfilePage(),
+  // load data from local
+  var _animeList = [
+    AnimeInfo('SPY x FAMILY', 'Tatsuya Endo', 'Kazuhiro Furuhashi', ['action', 'comedy', 'school'], 'SPYxFamily.jpeg', 8.6,
+        'A spy on an undercover mission gets married and adopts a child as part of his cover. His wife and daughter have secrets of their own, and all three must strive to keep together.'
+    ),
+    AnimeInfo('Chainsaw Man', 'Tatsuki Fujimoto', 'Ryu Nakayama', ['adventure', 'action', 'monster'], 'ChainsawMan.jpg', 8.8,
+        'Following a betrayal, a young man left for the dead is reborn as a powerful devil-human hybrid after merging with his pet devil and is soon enlisted into an organization dedicated to hunting devils.'
+    ),
+    AnimeInfo('Attack on Titan', 'Hajime Isayama', 'Tetsurô Araki', ['monster', 'action', 'adventure'], 'AttackOnTitan.jpg', 9.0,
+      'After his hometown is destroyed and his mother is killed, young Eren Jaeger vows to cleanse the earth of the giant humanoid Titans that have brought humanity to the brink of extinction.',
+    ),
+    AnimeInfo('Demon Slayer', 'Koyoharu Gotōge', 'Sotozaki Haruo', ['action', 'monster', 'adventure'], 'DemonSlayer.jpg', 8.7,
+      'A family is attacked by demons and only two members survive - Tanjiro and his sister Nezuko, who is turning into a demon slowly. Tanjiro sets out to become a demon slayer to avenge his family and cure his sister.',
+    ),
+    AnimeInfo('My Hero Academia', 'Kôhei Horikoshi', 'Kenji Nagasaki', ['action', 'adventure', 'school'], 'MyHeroAcademia.jpg', 8.4,
+        'A superhero-loving boy without any powers is determined to enroll in a prestigious hero academy and learn what it really means to be a hero.'
+    ),
   ];
 
-  List<BottomNavigationBarItem> buildBottomNavBarItems() {
-    return [
-      BottomNavigationBarItem(icon: Icon(Icons.home,), label: 'home'),
-      BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search'),
-      BottomNavigationBarItem(icon: Icon(Icons.view_list), label: 'list'),
-      BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile'),
-    ];
-  }
-
+  // reference https://karthikponnam.medium.com/flutter-pageview-withbottomnavigationbar-fb4c87580f6a
+  int _panelIndex = 0;
   PageController pageController = PageController(
     initialPage: 0,
     keepPage: true,
   );
-
   @override
   void initState() {
     super.initState();
@@ -69,7 +69,12 @@ class _MyHomePageState extends State<MyHomePage> {
             _panelIndex = index;
           });
         },
-        children: _panelOption,
+        children: [
+          HomePage(animeList: _animeList),
+          SearchWidget(animeList: _animeList),
+          Container(color: Colors.blueGrey.shade900),
+          ProfilePage(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -85,7 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
             pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.ease);
           });
         },
-        items: buildBottomNavBarItems(),
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home,), label: 'home'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search'),
+          BottomNavigationBarItem(icon: Icon(Icons.view_list), label: 'list'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile'),
+        ],
       ),
     );
   }
