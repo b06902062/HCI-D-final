@@ -86,114 +86,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                                 builder: (BuildContext context) {
                                   return StatefulBuilder(
                                     builder: (BuildContext context, StateSetter setState) {
-                                      return Stack(
-                                      // alignment: Alignment(-1, -1),
-                                        children: [
-                                          Positioned(
-                                            left: 0,
-                                            top: 40,
-                                            child: Container(
-                                              // height: 170,
-                                              width: 360,
-                                              clipBehavior: Clip.hardEdge,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                // color: Colors.green,
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    height: 30,
-                                                    color: Color.fromARGB(255, 30, 30, 30),
-                                                    alignment: Alignment.centerLeft,
-                                                    padding:
-                                                        EdgeInsets.only(left: 10),
-                                                    child: Icon(
-                                                      Icons.sort,
-                                                      color:
-                                                          Colors.blueGrey.shade100,
-                                                      size: 28,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    // height: 140,
-                                                    color: Colors.blueGrey.shade900,
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          height: 25,
-                                                          alignment: Alignment.centerLeft,
-                                                          margin: EdgeInsets.only(left: 5),
-                                                          padding: EdgeInsets.only(left: 5),
-                                                          decoration: BoxDecoration(
-                                                            // color: Colors.red, 
-                                                            border: Border(
-                                                                left: BorderSide(
-                                                                  color: Colors.blueGrey.shade100,
-                                                                  width: 2,
-                                                                ),
-                                                            ),
-                                                          ),
-                                                          child: Text("Type 〉", style: TextStyle(fontSize: 16,color: Colors.blueGrey.shade100, fontWeight:FontWeight.bold),),
-                                                        ),
-                                                        Container(
-                                                          alignment: Alignment.centerLeft,
-                                                          padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 10),
-                                                          // color: Colors.blue, 
-                                                          child: Wrap(
-                                                            spacing: 4,
-                                                            runSpacing: 2,
-                                                            children: _typeTagStatus.entries.where((e)=>true).map((e) =>
-                                                              tagButton(
-                                                                e.key,
-                                                                (){setState(() {_typeTagStatus[e.key] = !e.value;});},
-                                                                fill: e.value,
-                                                              )
-                                                            ).toList(),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          height: 25,
-                                                          alignment: Alignment.centerLeft,
-                                                          margin: EdgeInsets.only(left: 5),
-                                                          padding: EdgeInsets.only(left: 5),
-                                                          decoration: BoxDecoration(
-                                                            // color: Colors.red, 
-                                                            border: Border(
-                                                                left: BorderSide(
-                                                                  color: Colors.blueGrey.shade100,
-                                                                  width: 2,
-                                                                ),
-                                                            ),
-                                                          ),
-                                                          child: Text("Status 〉", style: TextStyle(fontSize: 16,color: Colors.blueGrey.shade100, fontWeight:FontWeight.bold),),
-                                                        ),
-                                                        Container(
-                                                          alignment: Alignment.centerLeft,
-                                                          padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 10),
-                                                          // color: Colors.blue, 
-                                                          child: Wrap(
-                                                            spacing: 4,
-                                                            runSpacing: 2,
-                                                            children: _statusTagStatus.entries.where((e)=>true).map((e) =>
-                                                              tagButton(
-                                                                e.key,
-                                                                (){setState(() {_statusTagStatus[e.key] = !e.value;});},
-                                                                fill: e.value,
-                                                              )
-                                                            ).toList(),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      );
+                                      return filterPanel(context, setState);
                                     }
                                   );
                                 },
@@ -251,74 +144,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                                 builder: (BuildContext context) {
                                   return StatefulBuilder(
                                     builder: (BuildContext context, StateSetter setState) {
-                                      return Stack(
-                                      // alignment: Alignment(-1, -1),
-                                        children: [
-                                          Positioned(
-                                            left: 0,
-                                            top: 40,
-                                            child: Container(
-                                              // height: 170,
-                                              width: 360,
-                                              clipBehavior: Clip.hardEdge,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                // color: Colors.green,
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    height: 30,
-                                                    color: Color.fromARGB(255, 30, 30, 30),
-                                                    alignment: Alignment.centerRight,
-                                                    padding:
-                                                        EdgeInsets.only(right: 10),
-                                                    child: Icon(
-                                                      Icons.import_export,
-                                                      color:
-                                                          Colors.blueGrey.shade100,
-                                                      size: 28,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    // height: 140,
-                                                    color: Colors.blueGrey.shade900,
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          alignment: Alignment.centerLeft,
-                                                          padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
-                                                          // color: Colors.blue, 
-                                                          child: Wrap(
-                                                            spacing: 4,
-                                                            runSpacing: 2,
-                                                            children: _sortStatus.entries.where((e)=>true).map((e) =>
-                                                              sortButton(
-                                                                e.key,
-                                                                (){
-                                                                  setState(
-                                                                    () {
-                                                                      for (var k in _sortStatus.keys){
-                                                                        _sortStatus[k] = false;
-                                                                      }
-                                                                      _sortStatus[e.key] = true;
-                                                                    }
-                                                                  );
-                                                                },
-                                                              )
-                                                            ).toList(),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      );
+                                      return sorterPanel(context, setState);
                                     }
                                   );
                                 },
@@ -353,4 +179,191 @@ class _SearchWidgetState extends State<SearchWidget> {
       )
     );
   }
+
+  Widget filterPanel(BuildContext context, StateSetter setState) {
+    return 
+      Stack(
+      // alignment: Alignment(-1, -1),
+        children: [
+          Positioned(
+            left: 0,
+            top: 40,
+            child: Container(
+              // height: 170,
+              width: 360,
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.circular(10),
+                // color: Colors.green,
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: 30,
+                    color: Color.fromARGB(255, 30, 30, 30),
+                    alignment: Alignment.centerLeft,
+                    padding:
+                        EdgeInsets.only(left: 10),
+                    child: Icon(
+                      Icons.sort,
+                      color:
+                          Colors.blueGrey.shade100,
+                      size: 28,
+                    ),
+                  ),
+                  Container(
+                    // height: 140,
+                    color: Colors.blueGrey.shade900,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 25,
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(left: 5),
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                            // color: Colors.red, 
+                            border: Border(
+                                left: BorderSide(
+                                  color: Colors.blueGrey.shade100,
+                                  width: 2,
+                                ),
+                            ),
+                          ),
+                          child: Text("Type 〉", style: TextStyle(fontSize: 16,color: Colors.blueGrey.shade100, fontWeight:FontWeight.bold),),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 10),
+                          // color: Colors.blue, 
+                          child: Wrap(
+                            spacing: 4,
+                            runSpacing: 2,
+                            children: _typeTagStatus.entries.where((e)=>true).map((e) =>
+                              tagButton(
+                                e.key,
+                                (){setState(() {_typeTagStatus[e.key] = !e.value;});},
+                                fill: e.value,
+                              )
+                            ).toList(),
+                          ),
+                        ),
+                        Container(
+                          height: 25,
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(left: 5),
+                          padding: EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                            // color: Colors.red, 
+                            border: Border(
+                                left: BorderSide(
+                                  color: Colors.blueGrey.shade100,
+                                  width: 2,
+                                ),
+                            ),
+                          ),
+                          child: Text("Status 〉", style: TextStyle(fontSize: 16,color: Colors.blueGrey.shade100, fontWeight:FontWeight.bold),),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 10),
+                          // color: Colors.blue, 
+                          child: Wrap(
+                            spacing: 4,
+                            runSpacing: 2,
+                            children: _statusTagStatus.entries.where((e)=>true).map((e) =>
+                              tagButton(
+                                e.key,
+                                (){setState(() {_statusTagStatus[e.key] = !e.value;});},
+                                fill: e.value,
+                              )
+                            ).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      );
+  }
+
+  Widget sorterPanel(BuildContext context, StateSetter setState) {
+    return 
+      Stack(
+      // alignment: Alignment(-1, -1),
+        children: [
+          Positioned(
+            left: 0,
+            top: 40,
+            child: Container(
+              // height: 170,
+              width: 360,
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.circular(10),
+                // color: Colors.green,
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: 30,
+                    color: Color.fromARGB(255, 30, 30, 30),
+                    alignment: Alignment.centerRight,
+                    padding:
+                        EdgeInsets.only(right: 10),
+                    child: Icon(
+                      Icons.import_export,
+                      color:
+                          Colors.blueGrey.shade100,
+                      size: 28,
+                    ),
+                  ),
+                  Container(
+                    // height: 140,
+                    color: Colors.blueGrey.shade900,
+                    child: Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
+                          // color: Colors.blue, 
+                          child: Wrap(
+                            spacing: 4,
+                            runSpacing: 2,
+                            children: _sortStatus.entries.where((e)=>true).map((e) =>
+                              sortButton(
+                                e.key,
+                                (){
+                                  setState(
+                                    () {
+                                      for (var k in _sortStatus.keys){
+                                        _sortStatus[k] = false;
+                                      }
+                                      _sortStatus[e.key] = true;
+                                    }
+                                  );
+                                },
+                              )
+                            ).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      );                                
+  }
 }
+
+
+
