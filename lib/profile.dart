@@ -36,10 +36,10 @@ class _ProfilePageState extends State<ProfilePage> {
     _favorite.Results = _animeList;
     _history.Results = _animeList;
     _reviews = [
-      Review(SPYFAMILY , DateTime.utc(2022, 11, 23), 100, 5.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
-      Review(ChainsawMan, DateTime.utc(2022, 11, 19), 500, 3.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
-      Review(AttackonTitan, DateTime.utc(2022, 11, 21), 10, 4.5, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
-      Review(DemonSlayer, DateTime.utc(2022, 11, 22), 30, 2.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
+      Review(SPYFAMILY , DateTime.utc(2022, 11, 23), 100, 5.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.", false),
+      Review(ChainsawMan, DateTime.utc(2022, 11, 19), 500, 3.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.", false),
+      Review(AttackonTitan, DateTime.utc(2022, 11, 21), 10, 4.5, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.", false),
+      Review(DemonSlayer, DateTime.utc(2022, 11, 22), 30, 2.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.", false),
     ];
     _reviews.sort((b, a) => a.Likes.compareTo(b.Likes));
   }
@@ -48,9 +48,9 @@ class _ProfilePageState extends State<ProfilePage> {
   var _personalInfo = PersonalInfo('User', 'person.jpg',
       'I love anime.\nAttack on Titan best anime.', 5, 10, 
       [
-      Social('facebook', 'facebook.com/user'),
-      Social('instagram', '@user'),
-      Social('twitter', '@user'),
+      Social('facebook', 'facebook'),
+      Social('instagram', '@instagram'),
+      Social('twitter', '@Twitter'),
       ]
   );
 
@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          infoBlock(_personalInfo),
+          infoBlock(_personalInfo, context),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.only(left:12, right: 12),

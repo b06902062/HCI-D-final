@@ -35,6 +35,8 @@ dependencies:
   toggle_switch: ^2.0.1
   flutter_rating_bar: ^4.0.1
   intl: ^0.17.0
+  social_login_buttons: ^1.0.6+2
+  url_launcher: ^6.1.7
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -100,6 +102,13 @@ flutter:
           weight: 700
         - asset: assets/fonts/NotoSans-ExtraBold.ttf
           weight: 800
+    - family: Charm
+      fonts:
+        - asset: assets/fonts/Charm-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Charm-Bold.ttf
+          weight: 700
+          
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

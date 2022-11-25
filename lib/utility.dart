@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'animeProfile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:social_login_buttons/social_login_buttons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /*
   Class:
@@ -370,8 +373,9 @@ class Review{
   int Likes;
   double Score;
   String Comments;
+  bool Edit;
 
-  Review(this.anime, this.Time, this.Likes, this.Score, this.Comments);
+  Review(this.anime, this.Time, this.Likes, this.Score, this.Comments, this.Edit);
 }
 
 Widget follow(int follower, int following){
@@ -415,7 +419,52 @@ Widget follow(int follower, int following){
   );
 }
 
-Widget editButton(){
+class LoginPopup extends StatefulWidget{
+
+  @override
+  _LoginPopup createState() => _LoginPopup();
+}
+
+class _LoginPopup extends State<LoginPopup> {
+  final TextEditingController _user_name_controller = new TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Center(
+        child: Container(
+          height: 500,
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: Colors.blueGrey.shade900,
+          ),
+          child: Column(
+            children: [
+              Text(
+                "AniRate",
+                style: TextStyle(
+                  fontFamily: 'Charm',
+                  fontWeight: FontWeight.bold, 
+                  fontSize: 72,
+                  color: Colors.blueGrey.shade100,
+                )
+              ),
+              SocialLoginButton(
+                buttonType: SocialLoginButtonType.generalLogin,
+                onPressed: () {},
+              )
+            ],
+          )
+        )
+      ),
+    );
+  }
+}
+
+Widget editButton(BuildContext context){
   // TODO: edit personal profile
   return SizedBox(
     height: 18,
@@ -426,7 +475,17 @@ Widget editButton(){
         padding: EdgeInsets.all(0),
         shape: StadiumBorder(),
       ),
-      onPressed: (){},
+      onPressed: (){
+        showDialog(
+          context: context, 
+          barrierColor: Colors.black54,
+          barrierDismissible: true,
+          barrierLabel: 'Label',
+          builder: (BuildContext context) {
+            return LoginPopup();
+          },
+        );
+      },
       child: Text("Edit Personal Profile", style: TextStyle(fontSize: 14)),
     )
   );
@@ -435,30 +494,36 @@ Widget editButton(){
 Widget socialMedia(Social media){
   // TODO: hyperlink
   var iconMap = {"facebook": FontAwesomeIcons.facebook, "instagram": FontAwesomeIcons.instagram, "twitter": FontAwesomeIcons.twitter};
-  return Container(
-    alignment: Alignment.center,
-    child: Row(
-      children: [
-        Icon(
-          iconMap[media.Media], 
-          color: Colors.blueGrey.shade200,
-          size: 20
-        ),
-        SizedBox(width: 5),
-        Text(
-          media.Url,
-          style: TextStyle( 
-            fontSize: 14,
-            color: Colors.blueGrey.shade300,
-          )
-        ),
-        SizedBox(width: 5),
-      ],
-    ),
-  );   
+  var link = {"facebook": "https://www.facebook.com/", "instagram": "https://www.instagram.com/", "twitter": "https://twitter.com/"};
+  return InkWell(
+    onTap: () {
+      launchUrl(Uri.parse(link[media.Media]! + media.Url.split('@')[media.Url.split('@').length - 1]));
+    },
+    child: Container(
+      alignment: Alignment.center,
+      child: Row(
+        children: [
+          Icon(
+            iconMap[media.Media], 
+            color: Colors.blueGrey.shade200,
+            size: 20
+          ),
+          SizedBox(width: 5),
+          Text(
+            media.Url,
+            style: TextStyle( 
+              fontSize: 14,
+              color: Colors.blueGrey.shade300,
+            )
+          ),
+          SizedBox(width: 5),
+        ],
+      ),
+    )
+  ); 
 }
 
-Widget infoBlock(PersonalInfo data) {
+Widget infoBlock(PersonalInfo data, BuildContext context) {
   // TODO: more button
   return Container(
     color: Colors.blueGrey.shade800,
@@ -512,7 +577,7 @@ Widget infoBlock(PersonalInfo data) {
                       follow(data.Follower, data.Following),
                       SizedBox(height:10),
                       //edit button
-                      editButton(),
+                      editButton(context),
                     ],
                   ),
                 )
@@ -596,7 +661,37 @@ class _ReviewList extends State<ReviewList> {
       children: [
         Column(
           children: 
-            widget.reviews.map((review) => Column(
+            widget.reviews.map((review) => 
+            review.Edit ?
+            Column(
+              children: [
+                Container(
+                  height: 180,
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.blueGrey.shade50,
+                  ),
+                  child:Container(
+                    height: 20,
+                    width: 20,
+                    child: IconButton(
+                      onPressed: (){
+                        setState(() {
+                          review.Edit = false;
+                        });
+                      },
+                      padding: EdgeInsets.zero,
+                      iconSize: 20,
+                      icon: Icon(Icons.send, color: Colors.blueGrey),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10,)
+              ],
+            )
+            : 
+            Column(
               children: [Container(
                   // margin: EdgeInsets.only(top: 12, left: 16, right:16),
                   padding: EdgeInsets.all(8),
@@ -646,7 +741,20 @@ class _ReviewList extends State<ReviewList> {
                               children: [
                                 Text(formatter.format(review.Time), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14)),
                                 // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
-                                Icon(Icons.edit, color: Colors.blueGrey, size: 16),
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  child: IconButton(
+                                    onPressed: (){
+                                      setState(() {
+                                        review.Edit = true;
+                                      });
+                                    },
+                                    padding: EdgeInsets.zero,
+                                    iconSize: 20,
+                                    icon: Icon(Icons.edit, color: Colors.blueGrey),
+                                  ),
+                                )
                               ],
                             ),
                             SizedBox(height: 4,),
