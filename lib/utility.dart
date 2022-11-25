@@ -71,7 +71,7 @@ Widget imageCard(String imageSrc, {double height: 150, double width: 110, double
 Widget tagButton(String tagName, func, {bool fill: false}) {
   return SizedBox(
     height: 24,
-    width: tagName.length*8+9,
+    width: tagName.length*8+9,  // TODO : find better solution
     child: OutlinedButton(
       style: TextButton.styleFrom(
         primary: specialTeal,
@@ -89,7 +89,7 @@ Widget tagButton(String tagName, func, {bool fill: false}) {
 Widget sortButton(String sortName, func) {
   return SizedBox(
       height: 24,
-      width: sortName.length*9.6,
+      width: sortName.length*8+9,
       child: ElevatedButton(
         style: TextButton.styleFrom(
           primary: Colors.white,
