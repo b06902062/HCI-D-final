@@ -68,7 +68,7 @@ Widget imageCard(String imageSrc, {double height: 150, double width: 110, double
   );
 }
 
-Widget tagButton(String tagName, func) {
+Widget tagButton(String tagName, func, {bool fill: false}) {
   return SizedBox(
     height: 24,
     width: tagName.length*8+9,
@@ -78,6 +78,7 @@ Widget tagButton(String tagName, func) {
         padding: EdgeInsets.all(0),
         side: BorderSide(color: specialTeal, width: 2),
         shape: StadiumBorder(),
+        backgroundColor: fill ? Colors.blueGrey.shade100 : Color.fromARGB(0, 207, 216, 220)
       ),
       onPressed: func,
       child: Text(tagName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
@@ -95,7 +96,7 @@ Widget sortButton(String sortName, func) {
           padding: EdgeInsets.all(0),
           shape: StadiumBorder(),
         ),
-        onPressed: (){},
+        onPressed: func,
         child: Text(sortName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
       )
   );
