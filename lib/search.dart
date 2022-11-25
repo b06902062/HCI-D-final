@@ -46,6 +46,7 @@ class _SearchWidgetState extends State<SearchWidget> {
           // search bar
           Container(
             margin: EdgeInsets.only(left: 16, right: 16),
+            padding: EdgeInsets.only(left: 0, right: 16),
             height: 48,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
@@ -61,7 +62,12 @@ class _SearchWidgetState extends State<SearchWidget> {
                   },
                   icon: Icon(Icons.search, color: Colors.blueGrey.shade900)
                 ),
-                Text(searchBarText, style: TextStyle(fontSize: 16),),
+                Expanded(
+                  child: TextField(
+                    style: TextStyle(fontSize: 16),
+                    decoration: InputDecoration(hintText: searchBarText, border: InputBorder.none,),
+                  ),
+                ),
               ],
             ),
           ),
