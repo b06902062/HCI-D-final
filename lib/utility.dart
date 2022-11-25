@@ -461,6 +461,10 @@ class _LoginPopup extends State<LoginPopup> {
               SocialLoginButton(
                 buttonType: SocialLoginButtonType.generalLogin,
                 onPressed: () {},
+              ),
+              SocialLoginButton(
+                buttonType: SocialLoginButtonType.apple,
+                onPressed: () {},
               )
             ],
           )
