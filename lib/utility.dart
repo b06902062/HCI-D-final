@@ -16,6 +16,7 @@ import 'package:intl/intl.dart';
     - clickableBlockWithLabel(Icon icon, String display, String label, func) { icon button with display(right) and label(below)}
     - recommendationRow(BuildContext context, String title, List<AnimeInfo> animes, { size: 'big' }) { return a row of anime cover with title }
     - animeBlock(AnimeInfo data, BuildContext context) { return a anime block in search page }
+    - otherUserComment(data)
 
   Tricks:
     - MediaQuery.of(context).size.width - get the screen size
@@ -23,6 +24,8 @@ import 'package:intl/intl.dart';
 
 Color specialTeal = Color.fromRGBO(0, 135, 136, 1);
 Color specialIndigo = Color.fromRGBO(101, 115, 195, 1);
+
+DateFormat formatter = DateFormat('yyyy-MM-dd');
 
 // TODO: add rating/comment information
 class AnimeInfo {
@@ -35,6 +38,16 @@ class AnimeInfo {
   final String Description;
 
   AnimeInfo(this.Name, this.Author, this.Director, this.Tags, this.Cover, this.Score, this.Description);
+}
+
+class Comment{
+  String Name;
+  DateTime Time;
+  int Likes;
+  double Score;
+  String Comments;
+
+  Comment(this.Name, this.Time, this.Likes, this.Score, this.Comments);
 }
 
 Widget imageCard(String imageSrc, {double height: 150, double width: 110, double radius: 4}) {
@@ -95,10 +108,10 @@ Widget clickableBlockWithLabel(Icon icon, String display, String label, func) {
           mainAxisSize: MainAxisSize.min,
           children: [
             icon,
-            Text(display),
+            display.isEmpty? Container() : Text(display),
           ],
         ),
-        Text(label),
+        label.isEmpty? Container() : Text(label),
       ],
     ),
   );
@@ -237,8 +250,7 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
   );
 }
 
-Widget otherUserComment(data) {
-  //TODO: create class for comment data
+Widget otherUserComment(Comment comment) {
   return Container(
     margin: EdgeInsets.only(top: 12, left: 16, right:16),
     padding: EdgeInsets.all(8),
@@ -261,17 +273,18 @@ Widget otherUserComment(data) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(data['Name'], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  Text(comment.Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
                   Row(
                     children: [
                       Icon(Icons.star, color: specialTeal, size: 20),
-                      Text(' ${data['Score']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      Text(' ${(comment.Score == comment.Score.toInt() ? comment.Score.toInt() : comment.Score)}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                       Text('/5', style: TextStyle(fontSize: 16)),
                     ],
                   ),
                 ],
               ),
+              Text(formatter.format(comment.Time), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14)),
               SizedBox(height: 4,),
               // Comment
               Container(
@@ -281,7 +294,7 @@ Widget otherUserComment(data) {
                   ),
                   child: Container(
                     margin: EdgeInsets.all(6),
-                    child: Text(data['Comment'], style: TextStyle(fontSize: 12)),
+                    child: Text(comment.Comments, style: TextStyle(fontSize: 12)),
                   )
               ),
               SizedBox(height: 4,),
@@ -291,13 +304,7 @@ Widget otherUserComment(data) {
                   Row(
                     children: [
                       Icon(Icons.thumb_up_alt_outlined, size: 20),
-                      Text(' ${data['Likes']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.thumb_down_alt_outlined, size: 20),
-                      Text('  ${data['Likes']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      Text(' ${comment.Likes}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                     ],
                   ),
                   Row(
@@ -306,7 +313,6 @@ Widget otherUserComment(data) {
                       Text(' reply', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                     ],
                   ),
-                  // SizedBox(width: 0,),
                 ],
               ),
             ],

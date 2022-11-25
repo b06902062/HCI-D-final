@@ -26,11 +26,19 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _animeList = widget.animeList;
     _recommendations = [
-      new Recommendation('Trending Now', _animeList),
+      new Recommendation('Trending Now', _animeList.sublist(1)),
       new Recommendation('Recommended to You', _animeList),
       new Recommendation('This Season', _animeList),
-      new Recommendation('Since you like Attack on Titan', _animeList),
-      new Recommendation('Since you like comedy', _animeList),
+      new Recommendation(
+          'Since you like Attack on Titan',
+          _animeList.where((anime) =>
+              anime.Tags.contains('monster') && anime.Tags.contains('action') && anime.Tags.contains('adventure')
+          ).toList()
+      ),
+      new Recommendation(
+          'Since you like comedy',
+          _animeList.where((anime) => anime.Tags.contains('comedy')).toList()
+      ),
     ];
   }
 
