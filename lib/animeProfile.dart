@@ -12,33 +12,25 @@ class AnimeProfile extends StatefulWidget {
 }
 
 class _AnimeProfileState extends State<AnimeProfile> {
-  double _user_rating = -1;
   bool _user_favorite = false;
-  var _user_comment = '';
-  var _others_comments = [
-    {
-      'Name': 'Daan Aniki', 'Title': 'Historic Anime',
-      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 9, 'Likes': 137,
-    },{
-      'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
-      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 9, 'Likes': 113,
-    },{
-      'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
-      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 9, 'Likes': 113,
-    },{
-      'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
-      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 9, 'Likes': 113,
-    },
+  bool _user_rated = false;
+  double _user_rating = -1;
+  final TextEditingController _user_comment_controller = new TextEditingController();
+  // TODO: add to animeInfo
+  List<String> showingImages = ['assets/images/SPYxFamily00.jpg', 'assets/images/SPYxFamily01.jpg'];
+  int _showing_image_index = 0;
+
+  List<Comment> _others_comments = [
+    Comment('Daan Aniki', DateTime.utc(2022, 11, 23), 137, 4.5, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.'),
+    Comment('Nefu Aniki', DateTime.utc(2022, 11, 21), 79, 4, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.'),
+    Comment('Xinyi Aniki', DateTime.utc(2022, 11, 17), 35, 4.5, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.'),
   ];
-  final ScrollController _controller = ScrollController();
-  GlobalKey _comment_key = GlobalKey();
 
   //reference https://stackoverflow.com/questions/43485529/programmatically-scrolling-to-the-end-of-a-listview
   //reference https://stackoverflow.com/questions/54291245/get-y-position-of-container-on-flutter
+  final ScrollController _controller = ScrollController();
+  GlobalKey _comment_key = GlobalKey();
+
   void _scrollDown() {
     RenderBox box = _comment_key.currentContext?.findRenderObject() as RenderBox;
     Offset position = box.localToGlobal(Offset.zero);
@@ -83,16 +75,41 @@ class _AnimeProfileState extends State<AnimeProfile> {
           children: [
             // Fake Cover
             SizedBox(height: 16,),
-            Container(
-              margin: EdgeInsets.only(left: 32, right: 32),
-              height: 240,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.blueGrey,
-              ),
-              child: Center(child: Text('Cover'),),
+            Row(
+              // crossAxisAlignment: ,
+              children: [
+                SizedBox(width: 48, child: TextButton(onPressed: (){
+                  setState(() {
+                    _showing_image_index = (_showing_image_index+1)%showingImages.length;
+                  });
+                }, child: Icon(Icons.keyboard_arrow_left)),),
+                imageCard(showingImages[_showing_image_index], width: MediaQuery.of(context).size.width-96, height: MediaQuery.of(context).size.width*2/3-64),
+                SizedBox(width: 48, child: TextButton(onPressed: (){
+                  setState(() {
+                    _showing_image_index = (_showing_image_index+showingImages.length-1)%showingImages.length;
+                  });
+                }, child: Icon(Icons.keyboard_arrow_right)),)
+              ],
             ),
-            SizedBox(height: 16,),
+            SizedBox(height: 8,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: showingImages.map((fp) =>
+                Container(
+                  margin: EdgeInsets.only(left: 2, right: 2),
+                  height: 8, width: 8,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: fp == showingImages[_showing_image_index] ? Colors.blueGrey : null,
+                    border: Border.all(
+                      color: Colors.blueGrey,
+                      width: 2,
+                    ),
+                  ),
+                )
+              ).toList(),
+            ),
+            SizedBox(height: 12,),
 
             // Author, Director
             Row(
@@ -169,14 +186,14 @@ class _AnimeProfileState extends State<AnimeProfile> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
-                  child: clickableBlockWithLabel(_user_rating==-1? Icon(Icons.star_border):Icon(Icons.star, color: specialTeal,), '',
+                  child: clickableBlockWithLabel(_user_rated? Icon(Icons.star, color: specialTeal,) : Icon(Icons.star_border), '',
                       '${widget.animeInfo.Score} (2k+)', _scrollDown
                   ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
                   child: clickableBlockWithLabel(_user_favorite? Icon(Icons.favorite, color: specialIndigo,):Icon(Icons.favorite_border), '',
-                      '1285', (){
+                      '${1285+(_user_favorite? 1 : 0)}', (){
                         setState(() {
                           _user_favorite = !_user_favorite;
                         });
@@ -257,26 +274,27 @@ class _AnimeProfileState extends State<AnimeProfile> {
             // reference https://pub.dev/packages/flutter_rating_bar
             SizedBox(height: 12),
             // user comment
+            // otherUserComment(Comment('User', DateTime.now(), 0, _user_rating, _user_comment_controller.text))
             Container(
               margin: EdgeInsets.only(left: 16, right: 16),
+              padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
                 color: Colors.blueGrey.shade50,
               ),
               child: Column(
+                crossAxisAlignment: _user_rated? CrossAxisAlignment.start : CrossAxisAlignment.end,
                 children: [
-                  SizedBox(height: 8,),
                   Row(
                     children: [
                       SizedBox(width: 8,),
                       imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
                       // rating star
-                      // TODO: discuss thesis statement
                       Expanded(
                         child: Column(
-                          // alignment: Alignment.center,
                           children: [
                             RatingBar.builder(
+                              ignoreGestures: _user_rated,
                               initialRating: 0,
                               minRating: 0,
                               direction: Axis.horizontal,
@@ -293,38 +311,55 @@ class _AnimeProfileState extends State<AnimeProfile> {
                                 });
                               },
                             ),
-                            Container(
-                              color: Colors.white,
-                              margin: EdgeInsets.only(top: 8, left: 40, right: 40),
-                              child: TextField(
-                                maxLines: 1,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Thesis statement (optional)',
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.all(4),
-                                ),
-                              ),
-                            ),
                           ]
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 8,),
-                  Container(
+                  _user_rated ?
+                    _user_comment_controller.text.isEmpty?
+                      Container()
+                      : Container(
+                        margin: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Colors.white,
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.all(8),
+                          child: Text(_user_comment_controller.text, style: TextStyle(fontSize: 16)),
+                        )
+                      )
+                  : Container(
+                    margin: EdgeInsets.only(top: 8, bottom: 4),
                     width: MediaQuery.of(context).size.width-48,
                     color: Colors.white,
                     child: TextField(
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
+                      controller: _user_comment_controller,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Leave your comment and rating',
                       ),
                     ),
                   ),
-                  SizedBox(height: 8,),
+                  _user_rated ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(formatter.format(DateTime.now()), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14)),
+                      SizedBox(width: 4,),
+                      clickableBlockWithLabel(Icon(Icons.edit,), '', '', (){setState(() {_user_rated = false;});},),
+                      SizedBox(width: 4,),
+                    ],
+                  ) : ElevatedButton(
+                    onPressed: _user_rating == -1 ? null : (){
+                      setState(() {
+                        _user_rated = true;
+                      });
+                    },
+                    child: Icon(Icons.send),
+                  ),
                 ],
               ),
             ),
