@@ -201,7 +201,7 @@ Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus
           top: 40,
           child: Container(
             // height: 170,
-            width: 360,
+            width: MediaQuery.of(context).size.width,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius:
