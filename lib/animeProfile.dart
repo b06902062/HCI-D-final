@@ -16,21 +16,14 @@ class _AnimeProfileState extends State<AnimeProfile> {
   bool _user_rated = false;
   double _user_rating = -1;
   final TextEditingController _user_comment_controller = new TextEditingController();
+  // TODO: add to animeInfo
+  List<String> showingImages = ['assets/images/SPYxFamily00.jpg', 'assets/images/SPYxFamily01.jpg'];
+  int _showing_image_index = 0;
 
-  var _others_comments = [
-    {
-      'Name': 'Daan Aniki', 'Title': 'Historic Anime',
-      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 4.5, 'Likes': 137,
-    },{
-      'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
-      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 4, 'Likes': 113,
-    },{
-      'Name': 'Nefu Aniki', 'Title': 'Historic Anime',
-      'Comment': 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.',
-      'Score': 3.5, 'Likes': 113,
-    },
+  List<Comment> _others_comments = [
+    Comment('Daan Aniki', DateTime.utc(2022, 11, 23), 137, 4.5, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.'),
+    Comment('Nefu Aniki', DateTime.utc(2022, 11, 21), 79, 4, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.'),
+    Comment('Xinyi Aniki', DateTime.utc(2022, 11, 17), 35, 4.5, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.'),
   ];
 
   //reference https://stackoverflow.com/questions/43485529/programmatically-scrolling-to-the-end-of-a-listview
@@ -82,16 +75,41 @@ class _AnimeProfileState extends State<AnimeProfile> {
           children: [
             // Fake Cover
             SizedBox(height: 16,),
-            Container(
-              margin: EdgeInsets.only(left: 32, right: 32),
-              height: 240,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.blueGrey,
-              ),
-              child: Center(child: Text('Cover'),),
+            Row(
+              // crossAxisAlignment: ,
+              children: [
+                SizedBox(width: 48, child: TextButton(onPressed: (){
+                  setState(() {
+                    _showing_image_index = (_showing_image_index+1)%showingImages.length;
+                  });
+                }, child: Icon(Icons.keyboard_arrow_left)),),
+                imageCard(showingImages[_showing_image_index], width: MediaQuery.of(context).size.width-96, height: MediaQuery.of(context).size.width*2/3-64),
+                SizedBox(width: 48, child: TextButton(onPressed: (){
+                  setState(() {
+                    _showing_image_index = (_showing_image_index+showingImages.length-1)%showingImages.length;
+                  });
+                }, child: Icon(Icons.keyboard_arrow_right)),)
+              ],
             ),
-            SizedBox(height: 16,),
+            SizedBox(height: 8,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: showingImages.map((fp) =>
+                Container(
+                  margin: EdgeInsets.only(left: 2, right: 2),
+                  height: 8, width: 8,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: fp == showingImages[_showing_image_index] ? Colors.blueGrey : null,
+                    border: Border.all(
+                      color: Colors.blueGrey,
+                      width: 2,
+                    ),
+                  ),
+                )
+              ).toList(),
+            ),
+            SizedBox(height: 12,),
 
             // Author, Director
             Row(
@@ -256,80 +274,95 @@ class _AnimeProfileState extends State<AnimeProfile> {
             // reference https://pub.dev/packages/flutter_rating_bar
             SizedBox(height: 12),
             // user comment
-            _user_rated ?
-              otherUserComment({
-                'Name': 'User',
-                'Comment': _user_comment_controller.text,
-                'Score': _user_rating, 'Likes': 0,
-              })
-              :
-              Container(
-                margin: EdgeInsets.only(left: 16, right: 16),
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color: Colors.blueGrey.shade50,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(width: 8,),
-                        imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
-                        // rating star
-                        // TODO: discuss thesis statement
-                        Expanded(
-                          child: Column(
-                            children: [
-                              RatingBar.builder(
-                                initialRating: 0,
-                                minRating: 0,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: specialTeal,
-                                ),
-                                onRatingUpdate: (rating) {
-                                  setState(() {
-                                    _user_rating = rating;
-                                  });
-                                },
+            // otherUserComment(Comment('User', DateTime.now(), 0, _user_rating, _user_comment_controller.text))
+            Container(
+              margin: EdgeInsets.only(left: 16, right: 16),
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: Colors.blueGrey.shade50,
+              ),
+              child: Column(
+                crossAxisAlignment: _user_rated? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(width: 8,),
+                      imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
+                      // rating star
+                      Expanded(
+                        child: Column(
+                          children: [
+                            RatingBar.builder(
+                              ignoreGestures: _user_rated,
+                              initialRating: 0,
+                              minRating: 0,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: specialTeal,
                               ),
-                            ]
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8,),
-                    Container(
-                      width: MediaQuery.of(context).size.width-48,
-                      color: Colors.white,
-                      child: TextField(
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        controller: _user_comment_controller,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Leave your comment and rating',
+                              onRatingUpdate: (rating) {
+                                setState(() {
+                                  _user_rating = rating;
+                                });
+                              },
+                            ),
+                          ]
                         ),
                       ),
+                    ],
+                  ),
+                  _user_rated ?
+                    _user_comment_controller.text.isEmpty?
+                      Container()
+                      : Container(
+                        margin: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Colors.white,
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.all(8),
+                          child: Text(_user_comment_controller.text, style: TextStyle(fontSize: 16)),
+                        )
+                      )
+                  : Container(
+                    margin: EdgeInsets.only(top: 8, bottom: 4),
+                    width: MediaQuery.of(context).size.width-48,
+                    color: Colors.white,
+                    child: TextField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      controller: _user_comment_controller,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Leave your comment and rating',
+                      ),
                     ),
-                    SizedBox(height: 4,),
-                    ElevatedButton(
-                      onPressed: _user_rating == -1 ? null : (){
-                        setState(() {
-                          _user_rated = true;
-                        });
-                      },
-                      child: Icon(Icons.send),
-                    ),
-                  ],
-                ),
+                  ),
+                  _user_rated ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(formatter.format(DateTime.now()), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14)),
+                      SizedBox(width: 4,),
+                      clickableBlockWithLabel(Icon(Icons.edit,), '', '', (){setState(() {_user_rated = false;});},),
+                      SizedBox(width: 4,),
+                    ],
+                  ) : ElevatedButton(
+                    onPressed: _user_rating == -1 ? null : (){
+                      setState(() {
+                        _user_rated = true;
+                      });
+                    },
+                    child: Icon(Icons.send),
+                  ),
+                ],
               ),
+            ),
             SizedBox(height: 8),
             Container(
               margin: EdgeInsets.only(left: 16, right: 16),
