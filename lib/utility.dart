@@ -427,7 +427,7 @@ Widget editButton(){
         shape: StadiumBorder(),
       ),
       onPressed: (){},
-      child: Text("Edit Personal Profile", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+      child: Text("Edit Personal Profile", style: TextStyle(fontSize: 14)),
     )
   );
 }
@@ -442,13 +442,13 @@ Widget socialMedia(Social media){
         Icon(
           iconMap[media.Media], 
           color: Colors.blueGrey.shade200,
-          size: 16
+          size: 20
         ),
         SizedBox(width: 5),
         Text(
           media.Url,
           style: TextStyle( 
-            fontSize: 12,
+            fontSize: 14,
             color: Colors.blueGrey.shade300,
           )
         ),
@@ -463,7 +463,7 @@ Widget infoBlock(PersonalInfo data) {
   return Container(
     color: Colors.blueGrey.shade800,
     padding: const EdgeInsets.all(12),
-    height: 185,
+    height: 200,
     alignment: Alignment.centerLeft,
     child: Stack(
       alignment: Alignment.centerLeft,
@@ -471,8 +471,8 @@ Widget infoBlock(PersonalInfo data) {
         //more icon
         Positioned(
           top: 8,
-          right: 4,
-          child: Icon(Icons.more_vert, color: Colors.blueGrey.shade100, size: 16),
+          right: 0,
+          child: Icon(Icons.more_vert, color: Colors.blueGrey.shade100, size: 20),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -524,8 +524,8 @@ Widget infoBlock(PersonalInfo data) {
           Text(
             data.Description,
             style: TextStyle(
-              fontWeight: FontWeight.bold, 
-              fontSize: 12,
+              // fontWeight: FontWeight.bold, 
+              fontSize: 14,
               color: Colors.blueGrey.shade200,
             )
           ),
@@ -547,7 +547,7 @@ Widget infoBlock(PersonalInfo data) {
 Widget reviewSwitch(List<Review> reviews, func){
   return ToggleSwitch(
     minWidth: 80.0,
-    minHeight: 18,
+    minHeight: 24,
     initialLabelIndex: 0,
     cornerRadius: 20.0,
     activeFgColor: Colors.blueGrey.shade100,
@@ -587,6 +587,7 @@ class ReviewList extends StatefulWidget {
 }
 
 class _ReviewList extends State<ReviewList> {
+  // TODO: edit button
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   @override
   Widget build(BuildContext context) {
@@ -608,7 +609,17 @@ class _ReviewList extends State<ReviewList> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // image
-                      imageCard('assets/images/${review.anime.Cover}', height: 120, width: 88),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: review.anime)),
+                            );
+                          },
+                          child: Container(
+                            child: imageCard('assets/images/${review.anime.Cover}', height: 120, width: 88),
+                          )
+                      ),
                       SizedBox(width: 8,),
                       Expanded(
                         child: Column(
@@ -630,7 +641,14 @@ class _ReviewList extends State<ReviewList> {
                               ],
                             ),
                             //Date
-                            Text(formatter.format(review.Time), style: TextStyle(color: Colors.blueGrey.shade400, fontSize: 12)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(formatter.format(review.Time), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14)),
+                                // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
+                                Icon(Icons.edit, color: Colors.blueGrey, size: 16),
+                              ],
+                            ),
                             SizedBox(height: 4,),
                             // Comment
                             Container(
@@ -649,8 +667,8 @@ class _ReviewList extends State<ReviewList> {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.thumb_up_alt_outlined, size: 20),
-                                    Text(review.Likes.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                    Icon(Icons.thumb_up_alt_outlined, color: Colors.blueGrey, size: 16),
+                                    Text(" " + review.Likes.toString(), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 16)),
                                   ],
                                 )
                                 // SizedBox(width: 0,),
@@ -683,14 +701,14 @@ Widget reviewRow(List<Review> reviews, { size: 'big' }) {
   return Stack(
     children: [
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text('| Review 〉', style: TextStyle(fontSize: _fontSize, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text('| Review 〉', style: TextStyle(fontSize: _fontSize, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
             reviewSwitch(reviews, () => _notifier.value = !_notifier.value),
           ],
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 10),
         ValueListenableBuilder<bool>(
           builder: (BuildContext context, bool value, Widget? child) {
             // This builder will only get called when the _counter

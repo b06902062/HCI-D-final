@@ -37,9 +37,9 @@ class _ProfilePageState extends State<ProfilePage> {
     _history.Results = _animeList;
     _reviews = [
       Review(SPYFAMILY , DateTime.utc(2022, 11, 23), 100, 5.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
-      Review(ChainsawMan, DateTime.utc(2022, 11, 19), 500, 3.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
-      Review(AttackonTitan, DateTime.utc(2022, 11, 21), 10, 4.5, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
-      Review(DemonSlayer, DateTime.utc(2022, 11, 22), 30, 2.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
+      Review(ChainsawMan, DateTime.utc(2022, 11, 19), 500, 3.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
+      Review(AttackonTitan, DateTime.utc(2022, 11, 21), 10, 4.5, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
+      Review(DemonSlayer, DateTime.utc(2022, 11, 22), 30, 2.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
     ];
     _reviews.sort((b, a) => a.Likes.compareTo(b.Likes));
   }
@@ -67,9 +67,9 @@ class _ProfilePageState extends State<ProfilePage> {
             child: ListView(
               padding: const EdgeInsets.only(left:12, right: 12),
               children:  [
-                recommendationRow(context, _favorite.Title, _favorite.Results, size: "small"),
-                recommendationRow(context, _history.Title, _history.Results, size: "small"),
-                reviewRow(_reviews, size: "small"),
+                recommendationRow(context, _favorite.Title, _favorite.Results),
+                recommendationRow(context, _history.Title, _history.Results),
+                reviewRow(_reviews),
               ]
             )
           ),
