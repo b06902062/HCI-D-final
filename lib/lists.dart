@@ -62,7 +62,7 @@ class _ListPageState extends State<ListPage> {
                   });},
                 ),
               )
-                  : bracketTitle(userlist.Title, 22),
+                  : bracketTitle('${userlist.Title} (${userlist.Results.length})', 22),
               Spacer(),
               Text(formatter.format(DateTime.now()), style: TextStyle(color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold, fontSize: 14)),
               SizedBox(width: 4,),
