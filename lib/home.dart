@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
       child: ListView(
         padding: const EdgeInsets.all(12),
         children: _recommendations.map((recommendation)=>
-          recommendationRow(context, recommendation.Title, recommendation.Results,)
+          recommendationRow(context, bracketTitle(recommendation.Title, 22), recommendation.Results,)
         ).toList(),
       ),
     );

@@ -75,8 +75,8 @@ class _OtherUserProfile extends State<OtherUserProfile> {
                       padding: const EdgeInsets.only(left:12, right: 12),
                       child: Column(
                         children: [
-                          recommendationRow(context, _favorite.Title, _favorite.Results),
-                          recommendationRow(context, _history.Title, _history.Results),
+                          recommendationRow(context, bracketTitle(_favorite.Title, 22), _favorite.Results),
+                          recommendationRow(context, bracketTitle(_history.Title, 22), _history.Results),
                           reviewRow(_reviews, false),
                         ],
                       ),

@@ -2,6 +2,7 @@ import 'package:AniRate/database.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'search.dart';
+import 'lists.dart';
 import 'profile.dart';
 import 'utility.dart';
 import 'database.dart';
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           HomePage(animeList: _animeList),
           SearchWidget(animeList: _animeList),
-          Container(color: Colors.blueGrey.shade900),
+          ListPage(animeList: _animeList),
           ProfilePage(animeList: _animeList),
         ],
       ),

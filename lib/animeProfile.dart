@@ -73,7 +73,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
         body: ListView(
           controller: _controller,
           children: [
-            // Fake Cover
+            // Cover
             SizedBox(height: 16,),
             Row(
               // crossAxisAlignment: ,
@@ -274,7 +274,6 @@ class _AnimeProfileState extends State<AnimeProfile> {
             // reference https://pub.dev/packages/flutter_rating_bar
             SizedBox(height: 12),
             // user comment
-            // otherUserComment(Comment('User', DateTime.now(), 0, _user_rating, _user_comment_controller.text))
             Container(
               margin: EdgeInsets.only(left: 16, right: 16),
               padding: EdgeInsets.all(8),
@@ -320,6 +319,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                     _user_comment_controller.text.isEmpty?
                       Container()
                       : Container(
+                        width: double.infinity,
                         margin: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
