@@ -292,14 +292,15 @@ Widget otherUserComment(Comment comment) {
               SizedBox(height: 4,),
               // Comment
               Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    color: Colors.white,
-                  ),
-                  child: Container(
-                    margin: EdgeInsets.all(6),
-                    child: Text(comment.Comments, style: TextStyle(fontSize: 12)),
-                  )
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: Colors.white,
+                ),
+                child: Container(
+                  margin: EdgeInsets.all(6),
+                  child: Text(comment.Comments, style: TextStyle(fontSize: 12)),
+                )
               ),
               SizedBox(height: 4,),
               Row(

@@ -21,7 +21,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
   int _showing_image_index = 0;
 
   List<Comment> _others_comments = [
-    Comment('Daan Aniki', DateTime.utc(2022, 11, 23), 137, 4.5, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.'),
+    Comment('Daan Aniki', DateTime.utc(2022, 11, 23), 137, 4.5, 'Incredible'),
     Comment('Nefu Aniki', DateTime.utc(2022, 11, 21), 79, 4, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.'),
     Comment('Xinyi Aniki', DateTime.utc(2022, 11, 17), 35, 4.5, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.'),
   ];
@@ -274,7 +274,6 @@ class _AnimeProfileState extends State<AnimeProfile> {
             // reference https://pub.dev/packages/flutter_rating_bar
             SizedBox(height: 12),
             // user comment
-            // otherUserComment(Comment('User', DateTime.now(), 0, _user_rating, _user_comment_controller.text))
             Container(
               margin: EdgeInsets.only(left: 16, right: 16),
               padding: EdgeInsets.all(8),
@@ -320,6 +319,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                     _user_comment_controller.text.isEmpty?
                       Container()
                       : Container(
+                        width: double.infinity,
                         margin: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
