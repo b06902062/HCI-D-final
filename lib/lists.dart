@@ -29,7 +29,7 @@ class _ListPageState extends State<ListPage> {
     super.initState();
     _animeList = widget.animeList;
     _user_lists = [
-      new UserList('My favorite', _animeList.where((anime) => true).toList()),
+      new UserList('My favorite', _animeList.where((anime) => anime.Score>4.3).toList()),
       new UserList('Relax', _animeList.where((anime) => anime.Tags.contains('comedy')).toList()),
       new UserList('Satisfying', _animeList.where((anime) => anime.Tags.contains('action')).toList()),
     ];

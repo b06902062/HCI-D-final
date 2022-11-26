@@ -15,51 +15,51 @@ class animedatabase {
         {
           'name': 'Hayami, Saori',
           'role': 'Forger, Yor',
-          'img': 'SPYxFamilyC1.jpg'
+          'img': 'SPYxFamilyC2.jpg'
         },
         {
           'name': 'Eguchi, Takuya',
           'role': 'Forger, Loid',
-          'img': 'SPYxFamilyC1.jpg'
+          'img': 'SPYxFamilyC3.jpg'
         },
         {
           'name': 'Fujiwara, Natsumi',
           'role': 'Desmond, Damian',
-          'img': 'SPYxFamilyC1.jpg'
+          'img': 'SPYxFamilyC4.jpg'
         },
         {
           'name': 'Ono, Kensho',
           'role': 'Briar, Yuri',
-          'img': 'SPYxFamilyC1.jpg'
+          'img': 'SPYxFamilyC5.jpg'
         },
         {
           'name': 'Yamaji, Kazuhiro',
           'role': '	Henderson, Henry',
-          'img': 'SPYxFamilyC1.jpg'
+          'img': 'SPYxFamilyC6.jpg'
         },
         {
           'name': 'Yoshino, Hiroyuki',
           'role': 'Franklin, Franky',
-          'img': 'SPYxFamilyC1.jpg'
+          'img': 'SPYxFamilyC7.jpg'
         },
         {
           'name': 'Katou, Emiri',
           'role': 'Blackbell, Becky',
-          'img': 'SPYxFamilyC1.jpg'
+          'img': 'SPYxFamilyC8.jpg'
         },
         {
           'name': 'Kaida, Yuuko',
           'role': '	Sherwood, Sylvia',
-          'img': 'SPYxFamilyC1.jpg'
+          'img': 'SPYxFamilyC9.jpg'
         },
       ],
       ['action', 'comedy', 'school'],
-      'SPYxFamily.jpg',
+      'SPYxFamily.jpeg',
       ['SPYxFamily00.jpg', 'SPYxFamily01.jpg'],
-      8.6,
+      4.3,
       'A spy on an undercover mission gets married and adopts a child as part of his cover. His wife and daughter have secrets of their own, and all three must strive to keep together.',
       [2022, 4, 9],
-      1114563,
+      111,
     ),
     AnimeInfo(
       'Chainsaw Man',
@@ -99,10 +99,10 @@ class animedatabase {
         'ChainsawMan00.jpg',
         'ChainsawMan01.jpg',
       ],
-      8.8,
+      4.4,
       'Following a betrayal, a young man left for the dead is reborn as a powerful devil-human hybrid after merging with his pet devil and is soon enlisted into an organization dedicated to hunting devils.',
       [2022, 10, 12],
-      846215,
+      84,
     ),
     AnimeInfo(
       'Attack on Titan',
@@ -132,11 +132,11 @@ class animedatabase {
       ],
       ['monster', 'action', 'adventure'],
       'AttackOnTitan.jpg',
-      ['AttackOnTitan00.jpg', 'AttackOnTitan01.jpg'],
-      9.0,
+      ['AttackOnTitan00.jpg', 'AttackOnTitan01.jpg', 'AttackOnTitan02.jpg'],
+      4.5,
       'After his hometown is destroyed and his mother is killed, young Eren Jaeger vows to cleanse the earth of the giant humanoid Titans that have brought humanity to the brink of extinction.',
       [2013, 4, 7],
-      3573323,
+      357,
     ),
     AnimeInfo(
       'Demon Slayer',
@@ -162,10 +162,10 @@ class animedatabase {
       ['action', 'monster', 'adventure'],
       'DemonSlayer.jpg',
       ['DemonSlayer00.jpg', 'DemonSlayer01.jpg', 'DemonSlayer02.jpg'],
-      8.7,
+      4.4,
       'A family is attacked by demons and only two members survive - Tanjiro and his sister Nezuko, who is turning into a demon slowly. Tanjiro sets out to become a demon slayer to avenge his family and cure his sister.',
       [2019, 4, 6],
-      2609570,
+      260,
     ),
     AnimeInfo(
       'My Hero Academia',
@@ -190,11 +190,11 @@ class animedatabase {
       ],
       ['action', 'adventure', 'school'],
       'MyHeroAcademia.jpg',
-      ['MyHeroAcademia00.jpg', 'MyHeroAcademia01.jpg'],
-      8.4,
+      ['MyHeroAcademia00.jpeg', 'MyHeroAcademia01.jpg'],
+      4.2,
       'A superhero-loving boy without any powers is determined to enroll in a prestigious hero academy and learn what it really means to be a hero.',
       [2016, 4, 3],
-      2748462,
+      274,
     ),
     // 5
     AnimeInfo(
@@ -217,13 +217,13 @@ class animedatabase {
       ['action', 'comedy', 'supernatural'],
       'MobPsycho100.jpg',
       ['MobPsycho00.jpg', 'MobPsycho01.jpg'],
-      8.7,
+      4.4,
       'After foiling a world-threatening plot, Shigeo "Mob" Kageyama returns to tackle the more exhausting aspects of his mundane life—starting with filling out his school\'s nerve-racking career form.',
       [2022, 10, 6],
-      389461,
+      38,
     ),
     AnimeInfo(
-      'Bleach- Sennen Kessen-hen',
+      'Bleach-Sennen Kessen-hen',
       'Kubo, Tite',
       'Taguchi, Tomohisa',
       [
@@ -245,11 +245,11 @@ class animedatabase {
       ],
       ['action', 'adventure', 'fantasy'],
       'Bleach-SennenKessen-hen.jpg',
-      ['Bleach-SennenKessen-hen00.jpg', 'Bleach-SennenKessen-hen01.jpg'],
-      9.1,
+      ['Bleach-SennenKessen-hen00.jpg', 'Bleach-SennenKessen-hen01.jpg', 'Bleach-SennenKessen-hen02.jpg'],
+      4.6,
       'Substitute Soul Reaper Ichigo Kurosaki spends his days fighting against Hollows, dangerous evil spirits that threaten Karakura Town.',
       [2022, 10, 11],
-      295846,
+      29,
     ),
     AnimeInfo(
       'Jujutsu Kaisen',
@@ -275,10 +275,10 @@ class animedatabase {
       ['action', 'fantasy'],
       'JujutsuKaisen.jpg',
       ['JujutsuKaisen00.jpg', 'JujutsuKaisen01.jpg'],
-      8.7,
+      4.4,
       'Idly indulging in baseless paranormal activities with the Occult Club, high schooler Yuuji Itadori spends his days at either the clubroom or the hospital, where he visits his bedridden grandfather.',
       [2020, 10, 3],
-      2047050,
+      204,
     ),
     AnimeInfo(
       'Naruto',
@@ -288,26 +288,26 @@ class animedatabase {
         {
           'name': 'Takeuchi, Junko',
           'role': 'Uzumaki, Naruto',
-          'img': 'NarutoC1'
+          'img': 'NarutoC1.jpg'
         },
         {
           'name': 'Inoue, Kazuhiko',
           'role': 'Hatake, Kakashi',
-          'img': 'NarutoC2'
+          'img': 'NarutoC2.jpg'
         },
         {
           'name': 'Sugiyama, Noriaki',
           'role': 'Uchiha, Sasuke',
-          'img': 'NarutoC3'
+          'img': 'NarutoC3.jpg'
         },
       ],
       ['action', 'adventure', 'fantasy'],
       'Naruto.jpg',
-      ['Naruto00', 'Naruto01'],
-      8.0,
+      ['Naruto00.jpg', 'Naruto01.jpg', 'Naruto02.jpg'],
+      4.0,
       'Moments prior to Naruto Uzumaki\'s birth, a huge demon known as the Kyuubi, the Nine-Tailed Fox, attacked Konohagakure, the Hidden Leaf Village, and wreaked havoc.',
       [2002, 10, 3],
-      2594995,
+      259,
     ),
     AnimeInfo(
       'One Piece',
@@ -328,11 +328,11 @@ class animedatabase {
       ],
       ['action', 'adventure', 'fantasy'],
       'OnePiece.jpg',
-      ['OnePiece00.jpg', 'OnePiece01.jpg'],
-      8.7,
+      ['OnePiece00.jpg', 'OnePiece01.jpg', 'OnePiece02.jpg'],
+      4.4,
       'Gol D. Roger was known as the "Pirate King," the strongest and most infamous being to have sailed the Grand Line.',
       [1999, 10, 20],
-      2012681,
+      201,
     ),
     //10
     AnimeInfo(
@@ -364,10 +364,10 @@ class animedatabase {
       ['action', 'adventure', 'fantasy'],
       'HunterxHunter.jpg',
       ['HunterxHunter00.jpg', 'HunterxHunter01.jpg'],
-      9.4,
+      4.7,
       'Hunters devote themselves to accomplishing hazardous tasks, all from traversing the world\'s uncharted territories to locating rare items and monsters.',
       [2011, 10, 2],
-      2510252,
+      251,
     ),
     AnimeInfo(
       'Fullmetal Alchemist',
@@ -393,10 +393,10 @@ class animedatabase {
       ['action', 'adventure', 'fantasy', 'drama'],
       'FullmetalAlchemist.jpg',
       ['FullmetalAlchemist00.jpg', 'FullmetalAlchemist01.jpg'],
-      9.1,
+      4.6,
       'After a horrific alchemy experiment goes wrong in the Elric household, brothers Edward and Alphonse are left in a catastrophic new reality.',
       [2009, 4, 5],
-      3027709,
+      302,
     ),
     AnimeInfo(
       'D.Gray-man',
@@ -422,11 +422,11 @@ class animedatabase {
       ],
       ['action', 'adventure', 'comedy'],
       'DGray-man.jpg',
-      ['DGray-man00.jpg', 'DGray-man01.jpg'],
-      8.0,
+      ['DGray-man00.jpg'],
+      4.0,
       'Losing a loved one is so painful that one may sometimes wish to be able to resurrect them—a weakness that the enigmatic Millennium Earl exploits.',
       [2006, 10, 3],
-      656393,
+      65,
     ),
   ];
   static List<AnimeInfo> customList = [];

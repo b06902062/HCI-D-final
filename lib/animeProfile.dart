@@ -17,7 +17,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
   double _user_rating = -1;
   final TextEditingController _user_comment_controller = new TextEditingController();
   // TODO: add to animeInfo
-  List<String> showingImages = ['assets/images/SPYxFamily00.jpg', 'assets/images/SPYxFamily01.jpg'];
+  // List<String> showingImages = ['assets/images/SPYxFamily00.jpg', 'assets/images/SPYxFamily01.jpg'];
   int _showing_image_index = 0;
 
   List<Comment> _others_comments = [
@@ -80,13 +80,17 @@ class _AnimeProfileState extends State<AnimeProfile> {
               children: [
                 SizedBox(width: 48, child: TextButton(onPressed: (){
                   setState(() {
-                    _showing_image_index = (_showing_image_index+1)%showingImages.length;
+                    _showing_image_index = (_showing_image_index+widget.animeInfo.LandScapes.length-1)%widget.animeInfo.LandScapes.length;
                   });
                 }, child: Icon(Icons.keyboard_arrow_left)),),
-                imageCard(showingImages[_showing_image_index], width: MediaQuery.of(context).size.width-96, height: MediaQuery.of(context).size.width*2/3-64),
+                imageCard(
+                  'assets/images/${widget.animeInfo.LandScapes[_showing_image_index]}',
+                  width: MediaQuery.of(context).size.width-96,
+                  height: MediaQuery.of(context).size.width*2/3-64
+                ),
                 SizedBox(width: 48, child: TextButton(onPressed: (){
                   setState(() {
-                    _showing_image_index = (_showing_image_index+showingImages.length-1)%showingImages.length;
+                    _showing_image_index = (_showing_image_index+1)%widget.animeInfo.LandScapes.length;
                   });
                 }, child: Icon(Icons.keyboard_arrow_right)),)
               ],
@@ -94,13 +98,13 @@ class _AnimeProfileState extends State<AnimeProfile> {
             SizedBox(height: 8,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: showingImages.map((fp) =>
+              children: widget.animeInfo.LandScapes.map((fp) =>
                 Container(
                   margin: EdgeInsets.only(left: 2, right: 2),
                   height: 8, width: 8,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    color: fp == showingImages[_showing_image_index] ? Colors.blueGrey : null,
+                    color: fp == widget.animeInfo.LandScapes[_showing_image_index] ? Colors.blueGrey : null,
                     border: Border.all(
                       color: Colors.blueGrey,
                       width: 2,
@@ -193,7 +197,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
                   child: clickableBlockWithLabel(_user_favorite? Icon(Icons.favorite, color: specialIndigo,):Icon(Icons.favorite_border), '',
-                      '${1285+(_user_favorite? 1 : 0)}', (){
+                      '${widget.animeInfo.Favorites+(_user_favorite? 1 : 0)}', (){
                         setState(() {
                           _user_favorite = !_user_favorite;
                         });
@@ -239,21 +243,21 @@ class _AnimeProfileState extends State<AnimeProfile> {
               child: ListView(
                 clipBehavior: Clip.none,
                 scrollDirection: Axis.horizontal,
-                children: ['dfjkaljf jdfisljs', 'erwefiajf', 'jijsdifjsl', 'dsjifjal', 'dsfishjh'].map((name) =>
+                children: widget.animeInfo.CastingInfos.map((mapping) =>
                     Container(
                       padding: EdgeInsets.only(left: 12),
                       child: Column(
                         children: [
-                          imageCard('assets/images/person.jpg', height: 108, width: 108, radius: 59),
+                          imageCard('assets/images/${mapping['img']}', height: 108, width: 108, radius: 59, fit: false),
                           Text.rich(
                               TextSpan(
-                                text: name,
+                                text: mapping['name'],
                                 style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
                               )
                           ),
                           Text.rich(
                               TextSpan(
-                                text: 'as ${name}',
+                                text: mapping['role'],
                                 style: TextStyle(fontWeight: FontWeight.w300),
                               )
                           )

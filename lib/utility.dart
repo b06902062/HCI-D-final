@@ -32,31 +32,32 @@ class AnimeInfo {
   final String Name;
   final String Author;
   final String Director;
-  final List<Map<String, String>> CastingInfo;
+  final List<Map<String, String>> CastingInfos;
   // key string：name role img
   // Format： img = Cover +C1, C2, ...
   final List<String> Tags;
   //action, adventure, comedy, monster, school, family. fantasy, drama, supernatural
   final String Cover;
-  final List<String> LandScape;
+  final List<String> LandScapes;
   // Format：LandScape = Cover +00, 01, ...
   final double Score;
   final String Description;
   final List<int> YMD;
-  final int Popularity;
+  final int Favorites;
 
   AnimeInfo(
-      this.Name,
-      this.Author,
-      this.Director,
-      this.CastingInfo,
-      this.Tags,
-      this.Cover,
-      this.LandScape,
-      this.Score,
-      this.Description,
-      this.YMD,
-      this.Popularity);
+    this.Name,
+    this.Author,
+    this.Director,
+    this.CastingInfos,
+    this.Tags,
+    this.Cover,
+    this.LandScapes,
+    this.Score,
+    this.Description,
+    this.YMD,
+    this.Favorites
+  );
 }
 
 class Comment {
@@ -72,7 +73,7 @@ class Comment {
 }
 
 Widget imageCard(String imageSrc,
-    {double height: 150, double width: 110, double radius: 4}) {
+    {double height: 150, double width: 110, double radius: 4, bool fit: true}) {
   return Container(
     height: height,
     width: width,
@@ -82,7 +83,7 @@ Widget imageCard(String imageSrc,
     ),
     child: Image.asset(
       imageSrc,
-      fit: BoxFit.fill,
+      fit: fit? BoxFit.fill : BoxFit.cover,
     ),
   );
 }
