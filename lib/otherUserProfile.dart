@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'utility.dart';
 import 'profileUtility.dart';
 
-class ProfilePage extends StatefulWidget {
+class OtherUserProfile extends StatefulWidget {
   final List<AnimeInfo> animeList;
+  final PersonalInfo userInfo;
 
-  const ProfilePage({super.key, required this.animeList});
+  OtherUserProfile({super.key,  required this.animeList, required this.userInfo});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _OtherUserProfile createState() => _OtherUserProfile();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _OtherUserProfile extends State<OtherUserProfile> {
+
+  //reference https://stackoverflow.com/questions/43485529/programmatically-scrolling-to-the-end-of-a-listview
+  //reference https://stackoverflow.com/questions/54291245/get-y-position-of-container-on-flutter
+  GlobalKey _comment_key = GlobalKey();
   List<AnimeInfo> _animeList = [];
   FavoriteAndHistory _favorite = FavoriteAndHistory("Favorite Anime", []);
   FavoriteAndHistory _history = FavoriteAndHistory("Search History", []);
@@ -46,33 +52,41 @@ class _ProfilePageState extends State<ProfilePage> {
     _reviews.sort((b, a) => a.Likes.compareTo(b.Likes));
   }
 
-
-  var _personalInfo = PersonalInfo('User', 'person.jpg',
-      'I love anime.\nAttack on Titan best anime.', 5, 10, 
-      'facebook','','@Twitter',
-  );
-
   @override
   Widget build(BuildContext context) {
     ValueNotifier<bool> _notifier = ValueNotifier(false);
-    return Container(
-      color: Colors.blueGrey.shade900,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          infoBlockListener(_personalInfo, context, true),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.only(left:12, right: 12),
-              children:  [
-                recommendationRow(context, _favorite.Title, _favorite.Results),
-                recommendationRow(context, _history.Title, _history.Results),
-                reviewRow(_reviews, true),
-              ]
-            )
-          ),
-        ]
-      )
+    return Scaffold(
+        backgroundColor: Colors.blueGrey.shade100,
+        appBar: AppBar(
+          backgroundColor: Colors.blueGrey.shade900,
+          centerTitle: true,
+          title: Text('${widget.userInfo.Name}'),
+        ),
+        body: Container(
+          color: Colors.blueGrey.shade900,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: ListView(
+                  children:  [
+                    infoBlockListener(widget.userInfo, context, false),
+                    Container(
+                      padding: const EdgeInsets.only(left:12, right: 12),
+                      child: Column(
+                        children: [
+                          recommendationRow(context, _favorite.Title, _favorite.Results),
+                          recommendationRow(context, _history.Title, _history.Results),
+                          reviewRow(_reviews, false),
+                        ],
+                      ),
+                    )
+                  ]
+                )
+              ),
+            ]
+          )
+        )
     );
   }
 }
