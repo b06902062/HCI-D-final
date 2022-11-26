@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     _animeList = widget.animeList;
     _favorite.Results = _animeList;
-    _favorite.Title = _favorite.Title + " (${_favorite.Results.length})";
+    _favorite.Title = "${_favorite.Title} (${_favorite.Results.length})";
     _history.Results = _animeList;
     _reviews = [
       Review(SPYFAMILY , DateTime.utc(2022, 11, 23), 100, 5.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.", false, new TextEditingController()),

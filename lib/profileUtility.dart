@@ -178,10 +178,10 @@ class EditPopup extends StatefulWidget{
 class _EditPopup extends State<EditPopup> {
   EditPopupController _user_name_controller = EditPopupController("User Name", new TextEditingController(), "user");
   EditPopupController _user_photo_controller = EditPopupController("User Photo", new TextEditingController(), "person.png");
-  EditPopupController _user_description_controller = EditPopupController("Description", new TextEditingController(), "description(2 lines max)");
-  EditPopupController _user_facebook_controller = EditPopupController("Facebook", new TextEditingController(), "facebook");
-  EditPopupController _user_instagram_controller = EditPopupController("Instagram", new TextEditingController(), "@instagram");
-  EditPopupController _user_twitter_controller = EditPopupController("Twitter", new TextEditingController(), "@twitter");
+  EditPopupController _user_description_controller = EditPopupController("Description", new TextEditingController(), "description(max length: 90))");
+  EditPopupController _user_facebook_controller = EditPopupController("Facebook Username", new TextEditingController(), "facebook");
+  EditPopupController _user_instagram_controller = EditPopupController("Instagram Username", new TextEditingController(), "@instagram");
+  EditPopupController _user_twitter_controller = EditPopupController("Twitter Username", new TextEditingController(), "@twitter");
   List<EditPopupController> _controllers = [];
 
   @override void initState() {
@@ -209,9 +209,11 @@ class _EditPopup extends State<EditPopup> {
             width: MediaQuery.of(context).size.width,
             child: TextField(
               style: TextStyle(color: Colors.blueGrey.shade100),
-              keyboardType: TextInputType.multiline,
+              // keyboardType: TextInputType.multiline,
               maxLines: controller.type == "Description"? null:1,
+              maxLength: controller.type == "Description"? 90:null,
               controller: controller.controller,
+              textInputAction: TextInputAction.done,
               decoration: InputDecoration(
                 labelText: controller.type,
                 labelStyle: TextStyle(color: Colors.blueGrey.shade400),
@@ -312,7 +314,7 @@ Widget socialMedia(String media){
   Container():
   InkWell(
     onTap: () {
-      launchUrl(Uri.parse(link[_media]! + _url.split('@')[_url.split('@').length - 1]));
+      launchUrl(Uri.parse("${link[_media]!}${_url.split('@')[_url.split('@').length - 1]}"));
     },
     child: Container(
       alignment: Alignment.center,
@@ -355,7 +357,7 @@ Widget infoBlockListener(PersonalInfo data, BuildContext context, bool isUser){
 
 Widget infoBlock(PersonalInfo data, BuildContext context, ValueNotifier<bool> _notifier, bool isUser) {
   List<String> medias = [];
-  medias.addAll(["facebook,"+ data.Facebook, "instagram," + data.Instagram, "twitter," + data.Twitter]);
+  medias.addAll(["facebook,${data.Facebook}", "instagram,${data.Instagram}" , "twitter,${data.Twitter}"]);
 
   // TODO: more button
   return Container(
@@ -555,6 +557,7 @@ class _ReviewList extends State<ReviewList> {
                         child: TextField(
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
+                          textInputAction: TextInputAction.done,
                           controller: review.EditController,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
@@ -683,7 +686,7 @@ class _ReviewList extends State<ReviewList> {
                                 Row(
                                   children: [
                                     Icon(Icons.thumb_up_alt_outlined, color: Colors.blueGrey, size: 16),
-                                    Text(" " + review.Likes.toString(), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 16)),
+                                    Text(" ${review.Likes}", style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 16)),
                                   ]
                                 ),
                                 //Date & edit button
