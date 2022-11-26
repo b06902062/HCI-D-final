@@ -73,7 +73,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
         body: ListView(
           controller: _controller,
           children: [
-            // Fake Cover
+            // Cover
             SizedBox(height: 16,),
             Row(
               // crossAxisAlignment: ,

@@ -17,7 +17,8 @@ import 'package:url_launcher/url_launcher.dart';
     - tagButton (String tagName, func) { return OutlineButton with text tagName and Onpressed func }
     - sortButton (String sortName, func) { return ElevatedButton with text sortName and Onpressed func }
     - clickableBlockWithLabel(Icon icon, String display, String label, func) { icon button with display(right) and label(below)}
-    - recommendationRow(BuildContext context, String title, List<AnimeInfo> animes, { size: 'big' }) { return a row of anime cover with title }
+    - bracketTitle(String title, double fontSize) { return a title like '|title>'}
+    - recommendationRow(BuildContext context, Widge title, List<AnimeInfo> animes, { size: 'big' }) { return a row of anime cover with title }
     - animeBlock(AnimeInfo data, BuildContext context) { return a anime block in search page }
     - otherUserComment(data)
 
@@ -121,8 +122,11 @@ Widget clickableBlockWithLabel(Icon icon, String display, String label, func) {
   );
 }
 
-Widget recommendationRow(BuildContext context, String title, List<AnimeInfo> animes, { size: 'big' }) {
-  double _fontSize = size == 'big'? 22 : 16;
+Widget bracketTitle(String title, double fontSize){
+  return Text('| ${title} 〉', style: TextStyle(fontSize: fontSize, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold));
+}
+
+Widget recommendationRow(BuildContext context, Widget Title, List<AnimeInfo> animes, { size: 'big' }) {
   double _padding_between = size == 'big'? 12 : 8;
   double _height = size == 'big'? 150 : 120;
   double _width = size == 'big'? 110 : 88;
@@ -131,7 +135,7 @@ Widget recommendationRow(BuildContext context, String title, List<AnimeInfo> ani
   return  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('| ${title} 〉', style: TextStyle(fontSize: _fontSize, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
+        Title,
         SizedBox(height: _padding_between),
         Container(
           height: _height,
@@ -282,7 +286,7 @@ Widget otherUserComment(Comment comment) {
                   Row(
                     children: [
                       Icon(Icons.star, color: specialTeal, size: 20),
-                      Text(' ${(comment.Score == comment.Score.toInt() ? comment.Score.toInt() : comment.Score)}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      Text(' ${comment.Score}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                       Text('/5', style: TextStyle(fontSize: 16)),
                     ],
                   ),
