@@ -32,15 +32,34 @@ class AnimeInfo {
   final String Name;
   final String Author;
   final String Director;
+  final List<Map<String, String>> CastingInfo;
+  // key string：name role img
+  // Format： img = Cover +C1, C2, ...
   final List<String> Tags;
+  //action, adventure, comedy, monster, school, family. fantasy, drama, supernatural
   final String Cover;
+  final List<String> LandScape;
+  // Format：LandScape = Cover +00, 01, ...
   final double Score;
   final String Description;
+  final List<int> YMD;
+  final int Popularity;
 
-  AnimeInfo(this.Name, this.Author, this.Director, this.Tags, this.Cover, this.Score, this.Description);
+  AnimeInfo(
+      this.Name,
+      this.Author,
+      this.Director,
+      this.CastingInfo,
+      this.Tags,
+      this.Cover,
+      this.LandScape,
+      this.Score,
+      this.Description,
+      this.YMD,
+      this.Popularity);
 }
 
-class Comment{
+class Comment {
   String Name;
   DateTime Time;
   int Likes;
@@ -48,10 +67,12 @@ class Comment{
   String Comments;
   bool Liked;
 
-  Comment(this.Name, this.Time, this.Likes, this.Score, this.Comments, this.Liked);
+  Comment(
+      this.Name, this.Time, this.Likes, this.Score, this.Comments, this.Liked);
 }
 
-Widget imageCard(String imageSrc, {double height: 150, double width: 110, double radius: 4}) {
+Widget imageCard(String imageSrc,
+    {double height: 150, double width: 110, double radius: 4}) {
   return Container(
     height: height,
     width: width,
@@ -69,17 +90,19 @@ Widget imageCard(String imageSrc, {double height: 150, double width: 110, double
 Widget tagButton(String tagName, func, {bool fill: false}) {
   return SizedBox(
     height: 24,
-    width: tagName.length*8+9,  // TODO : find better solution
+    width: tagName.length * 8 + 9, // TODO : find better solution
     child: OutlinedButton(
       style: TextButton.styleFrom(
-        primary: specialTeal,
-        padding: EdgeInsets.all(0),
-        side: BorderSide(color: specialTeal, width: 2),
-        shape: StadiumBorder(),
-        backgroundColor: fill ? Colors.blueGrey.shade100 : Color.fromARGB(0, 207, 216, 220)
-      ),
+          primary: specialTeal,
+          padding: EdgeInsets.all(0),
+          side: BorderSide(color: specialTeal, width: 2),
+          shape: StadiumBorder(),
+          backgroundColor: fill
+              ? Colors.blueGrey.shade100
+              : Color.fromARGB(0, 207, 216, 220)),
       onPressed: func,
-      child: Text(tagName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+      child: Text(tagName,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
     ),
   );
 }
@@ -87,7 +110,7 @@ Widget tagButton(String tagName, func, {bool fill: false}) {
 Widget sortButton(String sortName, func) {
   return SizedBox(
       height: 24,
-      width: sortName.length*8+9,
+      width: sortName.length * 8 + 9,
       child: ElevatedButton(
         style: TextButton.styleFrom(
           primary: Colors.white,
@@ -95,13 +118,13 @@ Widget sortButton(String sortName, func) {
           shape: StadiumBorder(),
         ),
         onPressed: func,
-        child: Text(sortName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-      )
-  );
+        child: Text(sortName,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+      ));
 }
 
 Widget clickableBlockWithLabel(Icon icon, String display, String label, func) {
-  return  GestureDetector(
+  return GestureDetector(
     onTap: func,
     child: Column(
       mainAxisSize: MainAxisSize.min,
@@ -110,62 +133,70 @@ Widget clickableBlockWithLabel(Icon icon, String display, String label, func) {
           mainAxisSize: MainAxisSize.min,
           children: [
             icon,
-            display.isEmpty? Container() : Text(display),
+            display.isEmpty ? Container() : Text(display),
           ],
         ),
-        label.isEmpty? Container() : Text(label),
+        label.isEmpty ? Container() : Text(label),
       ],
     ),
   );
 }
 
-Widget bracketTitle(String title, double fontSize){
-  return Text('| ${title} 〉', style: TextStyle(fontSize: fontSize, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold));
+Widget bracketTitle(String title, double fontSize) {
+  return Text('| ${title} 〉',
+      style: TextStyle(
+          fontSize: fontSize,
+          color: Colors.blueGrey.shade100,
+          fontWeight: FontWeight.bold));
 }
 
-Widget recommendationRow(BuildContext context, Widget Title, List<AnimeInfo> animes, { size: 'big' }) {
-  double _padding_between = size == 'big'? 12 : 8;
-  double _height = size == 'big'? 150 : 120;
-  double _width = size == 'big'? 110 : 88;
-  double _padding_bottom = size == 'big'? 16: 12;
+Widget recommendationRow(
+    BuildContext context, Widget Title, List<AnimeInfo> animes,
+    {size: 'big'}) {
+  double _padding_between = size == 'big' ? 12 : 8;
+  double _height = size == 'big' ? 150 : 120;
+  double _width = size == 'big' ? 110 : 88;
+  double _padding_bottom = size == 'big' ? 16 : 12;
 
-  return  Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Title,
-        SizedBox(height: _padding_between),
-        Container(
-          height: _height,
-          child: ListView(
-            clipBehavior: Clip.none,
-            scrollDirection: Axis.horizontal,
-            children: animes.map((anime) =>
-                GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: anime)),
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(left: 16),
-                      child: imageCard('assets/images/${anime.Cover}', height: _height, width: _width),
-                    )
-                )
-            ).toList(),
-          ),
-        ),
-        SizedBox(height: _padding_bottom,),
-      ]
-  );
+  return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    Title,
+    SizedBox(height: _padding_between),
+    Container(
+      height: _height,
+      child: ListView(
+        clipBehavior: Clip.none,
+        scrollDirection: Axis.horizontal,
+        children: animes
+            .map((anime) => GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            new AnimeProfile(animeInfo: anime)),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.only(left: 16),
+                  child: imageCard('assets/images/${anime.Cover}',
+                      height: _height, width: _width),
+                )))
+            .toList(),
+      ),
+    ),
+    SizedBox(
+      height: _padding_bottom,
+    ),
+  ]);
 }
 
 Widget animeBlock(AnimeInfo data, BuildContext context) {
-  return  GestureDetector(
+  return GestureDetector(
     onTap: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: data)),
+        MaterialPageRoute(
+            builder: (context) => new AnimeProfile(animeInfo: data)),
       );
     },
     child: Container(
@@ -187,13 +218,11 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
             child: DecoratedBox(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4),
-                    color: Colors.blueGrey.shade50
-                ),
+                    color: Colors.blueGrey.shade50),
                 child: Container(
                   margin: EdgeInsets.all(6),
                   child: Text(data.Description, style: TextStyle(fontSize: 12)),
-                )
-            ),
+                )),
           ),
           // information
           Positioned(
@@ -203,14 +232,20 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(data.Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text(data.Name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16)),
                     // SizedBox(height: 4),
                     Text.rich(
                       TextSpan(
                         text: 'Author: ',
                         style: TextStyle(fontSize: 12),
                         children: <TextSpan>[
-                          TextSpan(text: data.Author, style: TextStyle(decoration: TextDecoration.underline, fontSize: 12)),
+                          TextSpan(
+                              text: data.Author,
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 12)),
                         ],
                       ),
                     ),
@@ -219,20 +254,22 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
                         text: 'Director: ',
                         style: TextStyle(fontSize: 12),
                         children: <TextSpan>[
-                          TextSpan(text: data.Director, style: TextStyle(decoration: TextDecoration.underline, fontSize: 12)),
+                          TextSpan(
+                              text: data.Director,
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 12)),
                         ],
                       ),
                     ),
                     SizedBox(height: 4),
                     Wrap(
                       spacing: 8,
-                      children: (data.Tags as List).map((name) =>
-                          tagButton(name, (){})
-                      ).toList(),
+                      children: (data.Tags as List)
+                          .map((name) => tagButton(name, () {}))
+                          .toList(),
                     ),
-                  ]
-              )
-          ),
+                  ])),
           //Image
           Positioned(
             left: 8,
@@ -245,7 +282,9 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
             child: Row(
               children: [
                 Icon(Icons.star, color: specialTeal, size: 20),
-                Text(' ${data.Score}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(' ${data.Score}',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               ],
             ),
           ),
@@ -260,7 +299,7 @@ Widget otherUserComment(Comment comment) {
   return ValueListenableBuilder<bool>(
     builder: (BuildContext context, bool value, Widget? child) {
       return Container(
-          margin: EdgeInsets.only(top: 12, left: 16, right:16),
+          margin: EdgeInsets.only(top: 12, left: 16, right: 16),
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
@@ -271,8 +310,11 @@ Widget otherUserComment(Comment comment) {
             mainAxisSize: MainAxisSize.min,
             children: [
               // image
-              imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
-              SizedBox(width: 8,),
+              imageCard('assets/images/person.jpg',
+                  height: 72, width: 72, radius: 36),
+              SizedBox(
+                width: 8,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,19 +323,30 @@ Widget otherUserComment(Comment comment) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(comment.Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                        Text(comment.Name,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16)),
                         // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
                         Row(
                           children: [
                             Icon(Icons.star, color: specialTeal, size: 20),
-                            Text(' ${(comment.Score == comment.Score.toInt() ? comment.Score.toInt() : comment.Score)}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                            Text(
+                                ' ${(comment.Score == comment.Score.toInt() ? comment.Score.toInt() : comment.Score)}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16)),
                             Text('/5', style: TextStyle(fontSize: 16)),
                           ],
                         ),
                       ],
                     ),
-                    Text(formatter.format(comment.Time), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14)),
-                    SizedBox(height: 4,),
+                    Text(formatter.format(comment.Time),
+                        style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14)),
+                    SizedBox(
+                      height: 4,
+                    ),
                     // Comment
                     Container(
                         decoration: BoxDecoration(
@@ -302,29 +355,42 @@ Widget otherUserComment(Comment comment) {
                         ),
                         child: Container(
                           margin: EdgeInsets.all(6),
-                          child: Text(comment.Comments, style: TextStyle(fontSize: 12)),
-                        )
+                          child: Text(comment.Comments,
+                              style: TextStyle(fontSize: 12)),
+                        )),
+                    SizedBox(
+                      height: 4,
                     ),
-                    SizedBox(height: 4,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Row(
                           children: [
-                            clickableBlockWithLabel(comment.Liked? Icon(Icons.thumb_up, color: specialIndigo, size: 20):Icon(Icons.thumb_up_alt_outlined, size: 20), '','',
-                                    (){
-                                  comment.Liked = !comment.Liked;
-                                  comment.Likes = comment.Liked ? comment.Likes + 1: comment.Likes - 1;
-                                  notifier.value = !notifier.value;
-                                }
-                            ),
-                            Text(' ${comment.Likes}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                            clickableBlockWithLabel(
+                                comment.Liked
+                                    ? Icon(Icons.thumb_up,
+                                        color: specialIndigo, size: 20)
+                                    : Icon(Icons.thumb_up_alt_outlined,
+                                        size: 20),
+                                '',
+                                '', () {
+                              comment.Liked = !comment.Liked;
+                              comment.Likes = comment.Liked
+                                  ? comment.Likes + 1
+                                  : comment.Likes - 1;
+                              notifier.value = !notifier.value;
+                            }),
+                            Text(' ${comment.Likes}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16)),
                           ],
                         ),
                         Row(
                           children: [
                             Icon(Icons.reply, size: 20),
-                            Text(' reply', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                            Text(' reply',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16)),
                           ],
                         ),
                       ],
@@ -333,8 +399,7 @@ Widget otherUserComment(Comment comment) {
                 ),
               ),
             ],
-          )
-      );
+          ));
     },
     valueListenable: notifier,
   );
