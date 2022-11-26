@@ -282,7 +282,7 @@ Widget otherUserComment(Comment comment) {
                       Row(
                         children: [
                           Icon(Icons.star, color: specialTeal, size: 20),
-                          Text(' ${(comment.Score == comment.Score.toInt() ? comment.Score.toInt() : comment.Score)}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text(' ${comment.Score}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                           Text('/5', style: TextStyle(fontSize: 16)),
                         ],
                       ),

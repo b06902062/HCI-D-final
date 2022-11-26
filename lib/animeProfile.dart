@@ -22,7 +22,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
 
   List<Comment> _others_comments = [
     Comment('Daan Aniki', DateTime.utc(2022, 11, 23), 137, 4.5, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.', false),
-    Comment('Nefu Aniki', DateTime.utc(2022, 11, 21), 79, 4, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.', false),
+    Comment('Nefu Aniki', DateTime.utc(2022, 11, 21), 79, 4.0, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.', false),
     Comment('Xinyi Aniki', DateTime.utc(2022, 11, 17), 35, 4.5, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.', false),
   ];
 
