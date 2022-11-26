@@ -12,19 +12,24 @@ import 'otherUserProfile.dart';
 
 /*
   Class:
-    - Social(2 variables)
-    - PersonalInfo(6 variables)
+    - PersonalInfo(8 variables)
     - FavoriteAndHistory(2 variables)
-    - Review(5 variables)
+    - Review(7 variables)
+    - EditPopupController(3 variables)
 
   Widgets:
     - follow(int follower, int following) { return number of the follower and followings }
-    - editButton() { return a button used to edit personal profile }
-    - socialMedia(Social media) { return the social medias in personal information }
-    - infoBlock(PersonalInfo data) { return the top personal information }
+    - LoginPopup() {return an unused login popup}
+    - EditPopup({required this.personalInfo, required this.notifier}) { return an edit popup to edit user profile }
+    - editButton(BuildContext context, PersonalInfo data, ValueNotifier<bool> _notifier) { return a button used to edit personal profile }
+    - followButton(BuildContext context, PersonalInfo data, ValueNotifier<bool> _notifier) { return follow button for other users }
+    - socialMedia(String media) { return the social medias in personal information }
+    - infoBlockListener(PersonalInfo data, BuildContext context, bool isUser) { return infoblock(used to refresh infoblock) }
+    - infoBlock(PersonalInfo data, BuildContext context, ValueNotifier<bool> _notifier, bool isUser) { return the top personal information }
     - reviewSwitch(List<Review> reviews, func) { return a toggleswitch that sorts the reviews by Popularity/Time }
-    - ReviewList({required this.reviews}) { return columns of reviews }
-    - reviewRow(List<Review> reviews, { size: 'big' }) { return columns of reviews with title and switch }
+    - ReviewList({required this.reviews, required this.isUser}) { return columns of reviews }
+    - reviewRow(List<Review> reviews, bool isUser, { size: 'big' }) { return columns of reviews with title and switch }
+
 
   Tricks:
     - ValueListenableBuilder: update a widget only instead of the whole page
@@ -245,7 +250,6 @@ class _EditPopup extends State<EditPopup> {
 }
 
 Widget editButton(BuildContext context, PersonalInfo data, ValueNotifier<bool> _notifier){
-  // TODO: edit personal profile
   return SizedBox(
     height: 18,
     width: 168,
@@ -276,7 +280,7 @@ Widget editButton(BuildContext context, PersonalInfo data, ValueNotifier<bool> _
 }
 
 Widget followButton(BuildContext context, PersonalInfo data, ValueNotifier<bool> _notifier){
-  // TODO: edit personal profile
+  //follow
   return SizedBox(
     height: 18,
     width: 50,
@@ -300,7 +304,6 @@ Widget followButton(BuildContext context, PersonalInfo data, ValueNotifier<bool>
 }
 
 Widget socialMedia(String media){
-  // TODO: hyperlink
   String _media = media.split(',')[0];
   String _url = media.split(',')[1];
   var iconMap = {"facebook": FontAwesomeIcons.facebook, "instagram": FontAwesomeIcons.instagram, "twitter": FontAwesomeIcons.twitter};
@@ -485,7 +488,6 @@ class ReviewList extends StatefulWidget {
 }
 
 class _ReviewList extends State<ReviewList> {
-  // TODO: edit button
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   
 

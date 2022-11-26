@@ -54,7 +54,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    ValueNotifier<bool> _notifier = ValueNotifier(false);
     return Container(
       color: Colors.blueGrey.shade900,
       child: Column(

@@ -45,8 +45,9 @@ class Comment{
   int Likes;
   double Score;
   String Comments;
+  bool Liked;
 
-  Comment(this.Name, this.Time, this.Likes, this.Score, this.Comments);
+  Comment(this.Name, this.Time, this.Likes, this.Score, this.Comments, this.Liked);
 }
 
 Widget imageCard(String imageSrc, {double height: 150, double width: 110, double radius: 4}) {
@@ -251,74 +252,86 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
 }
 
 Widget otherUserComment(Comment comment) {
-  return Container(
-    margin: EdgeInsets.only(top: 12, left: 16, right:16),
-    padding: EdgeInsets.all(8),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(4),
-      color: Colors.blueGrey.shade50,
-    ),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // image
-        imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
-        SizedBox(width: 8,),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Name, Title and Star
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(comment.Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
-                  Row(
-                    children: [
-                      Icon(Icons.star, color: specialTeal, size: 20),
-                      Text(' ${(comment.Score == comment.Score.toInt() ? comment.Score.toInt() : comment.Score)}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                      Text('/5', style: TextStyle(fontSize: 16)),
-                    ],
-                  ),
-                ],
-              ),
-              Text(formatter.format(comment.Time), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14)),
-              SizedBox(height: 4,),
-              // Comment
-              Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    color: Colors.white,
-                  ),
-                  child: Container(
-                    margin: EdgeInsets.all(6),
-                    child: Text(comment.Comments, style: TextStyle(fontSize: 12)),
-                  )
-              ),
-              SizedBox(height: 4,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.thumb_up_alt_outlined, size: 20),
-                      Text(' ${comment.Likes}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.reply, size: 20),
-                      Text(' reply', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
+  ValueNotifier<bool> notifier = ValueNotifier(comment.Liked);
+  return ValueListenableBuilder<bool>(
+    builder: (BuildContext context, bool value, Widget? child) {
+      return Container(
+        margin: EdgeInsets.only(top: 12, left: 16, right:16),
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: Colors.blueGrey.shade50,
         ),
-      ],
-    )
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // image
+            imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
+            SizedBox(width: 8,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Name, Title and Star
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(comment.Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
+                      Row(
+                        children: [
+                          Icon(Icons.star, color: specialTeal, size: 20),
+                          Text(' ${(comment.Score == comment.Score.toInt() ? comment.Score.toInt() : comment.Score)}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text('/5', style: TextStyle(fontSize: 16)),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Text(formatter.format(comment.Time), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14)),
+                  SizedBox(height: 4,),
+                  // Comment
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Colors.white,
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.all(6),
+                        child: Text(comment.Comments, style: TextStyle(fontSize: 12)),
+                      )
+                  ),
+                  SizedBox(height: 4,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        children: [
+                          clickableBlockWithLabel(comment.Liked? Icon(Icons.thumb_up, color: specialIndigo, size: 20):Icon(Icons.thumb_up_alt_outlined, size: 20), '','', 
+                            (){
+                              comment.Liked = !comment.Liked;
+                              comment.Likes = comment.Liked ? comment.Likes + 1: comment.Likes - 1;
+                              notifier.value = !notifier.value;
+                            }
+                          ),
+                          Text(' ${comment.Likes}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.reply, size: 20),
+                          Text(' reply', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        )
+      );
+    },
+    valueListenable: notifier,
   );
 }
