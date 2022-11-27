@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'utility.dart';
+import 'profileUtility.dart';
 
 class SearchWidget extends StatefulWidget {
   final List<AnimeInfo> animeList;
+  final PersonalInfo userData;
+  final List<PersonalInfo> userList;
 
-  SearchWidget({super.key, required this.animeList});
+  SearchWidget({super.key, required this.animeList, required this.userData, required this.userList});
 
   @override
   _SearchWidgetState createState() => _SearchWidgetState();
@@ -17,10 +20,15 @@ class _SearchWidgetState extends State<SearchWidget> {
   int _sortStatusIndex = 0;
   var searchBarText = 'type here to search';
   List<AnimeInfo> _animeList = [];
+  PersonalInfo _userData = PersonalInfo(-1, "", "", -1, -1, "", "", "", "", [], [], [], []);
+  List<PersonalInfo> _userList = [];
+
   @override
   void initState() {
     super.initState();
     _animeList = widget.animeList;
+    _userData = widget.userData;
+    _userList = widget.userList;
   }
 
   void refresh() {
@@ -156,7 +164,7 @@ class _SearchWidgetState extends State<SearchWidget> {
               padding: const EdgeInsets.all(0),
               itemCount: _animeList.length,
               itemBuilder: (BuildContext context, int index) {
-                return animeBlock(_animeList[index], context);
+                return animeBlock(_animeList[index], _animeList, _userData, _userList, context,);
               },
               separatorBuilder: (BuildContext context, int index) => const Divider(),
             ),

@@ -1,3 +1,4 @@
+import 'package:AniRate/otherUserProfile.dart';
 import 'package:flutter/material.dart';
 import 'animeProfile.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +30,7 @@ DateFormat formatter = DateFormat('yyyy-MM-dd');
 
 // TODO: add rating/comment information
 class AnimeInfo {
+  final int AnimeId;
   final String Name;
   final String Author;
   final String Director;
@@ -44,8 +46,11 @@ class AnimeInfo {
   final String Description;
   final List<int> YMD;
   final int Favorites;
+  final List<Comment> Comments;
+  
 
   AnimeInfo(
+    this.AnimeId,
     this.Name,
     this.Author,
     this.Director,
@@ -56,12 +61,13 @@ class AnimeInfo {
     this.Score,
     this.Description,
     this.YMD,
-    this.Favorites
+    this.Favorites,
+    this.Comments,
   );
 }
 
 class Comment {
-  String Name;
+  int UserId;
   DateTime Time;
   int Likes;
   double Score;
@@ -69,7 +75,7 @@ class Comment {
   bool Liked;
 
   Comment(
-      this.Name, this.Time, this.Likes, this.Score, this.Comments, this.Liked);
+      this.UserId, this.Time, this.Likes, this.Score, this.Comments, [this.Liked = false]);
 }
 
 Widget imageCard(String imageSrc,
@@ -152,7 +158,7 @@ Widget bracketTitle(String title, double fontSize) {
 }
 
 Widget recommendationRow(
-    BuildContext context, Widget Title, List<AnimeInfo> animes,
+    BuildContext context, Widget Title, List<AnimeInfo> animes, List<AnimeInfo> animeList, final PersonalInfo userData, final List<PersonalInfo> userList,
     {size: 'big'}) {
   double _padding_between = size == 'big' ? 12 : 8;
   double _height = size == 'big' ? 150 : 120;
@@ -170,11 +176,14 @@ Widget recommendationRow(
         children: animes
             .map((anime) => GestureDetector(
                 onTap: () {
+                  userData.SearchHistory.removeLast();
+                  userData.SearchHistory.insert(0, anime.AnimeId);
+                  // print(widget.userData.SearchHistory);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            new AnimeProfile(animeInfo: anime)),
+                            new AnimeProfile(animeInfo: anime, animeList: animeList, userData: userData, userList: userList,)),
                   );
                 },
                 child: Container(
@@ -191,13 +200,13 @@ Widget recommendationRow(
   ]);
 }
 
-Widget animeBlock(AnimeInfo data, BuildContext context) {
+Widget animeBlock(AnimeInfo data, List<AnimeInfo> animeList, final PersonalInfo userData, final List<PersonalInfo> userList, BuildContext context) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => new AnimeProfile(animeInfo: data)),
+            builder: (context) => new AnimeProfile(animeInfo: data, animeList: animeList, userData: userData, userList: userList,)),
       );
     },
     child: Container(
@@ -295,7 +304,7 @@ Widget animeBlock(AnimeInfo data, BuildContext context) {
   );
 }
 
-Widget otherUserComment(Comment comment) {
+Widget otherUserComment(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, Comment comment) {
   ValueNotifier<bool> notifier = ValueNotifier(comment.Liked);
   return ValueListenableBuilder<bool>(
     builder: (BuildContext context, bool value, Widget? child) {
@@ -311,8 +320,17 @@ Widget otherUserComment(Comment comment) {
             mainAxisSize: MainAxisSize.min,
             children: [
               // image
-              imageCard('assets/images/person.jpg',
-                  height: 72, width: 72, radius: 36),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OtherUserProfile(animeList: animeList, userData: userData, userList: userList, id: comment.UserId)),
+                    );
+                  },
+                  child: Container(
+                    child: imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
+                  )
+              ),
               SizedBox(
                 width: 8,
               ),
@@ -324,7 +342,7 @@ Widget otherUserComment(Comment comment) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(comment.Name,
+                        Text(userList[comment.UserId].Name,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16)),
                         // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),

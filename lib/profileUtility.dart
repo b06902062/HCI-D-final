@@ -1,4 +1,3 @@
-import 'package:AniRate/otherUserProfile.dart';
 import 'package:flutter/material.dart';
 import 'animeProfile.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +7,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'utility.dart';
-import 'otherUserProfile.dart';
+import 'lists.dart';
+import 'database.dart';
 
 /*
   Class:
@@ -37,16 +37,21 @@ import 'otherUserProfile.dart';
  */
 
 class PersonalInfo{
+  int UserId;
   String Name;
   String Photo;
-  String Description;
   int Follower;
   int Following;
+  String Description;
   String Facebook;
   String Instagram;
   String Twitter;
+  List<int> Favorite;
+  List<UserList> Lists;
+  List<int> SearchHistory;
+  List<Review> Reviews; 
 
-  PersonalInfo(this.Name, this.Photo, this.Description, this.Follower, this.Following, this.Facebook, this.Instagram, this.Twitter);
+  PersonalInfo(this.UserId, this.Name, this.Photo, this.Follower, this.Following, this.Description, this.Facebook, this.Instagram, this.Twitter, this.Favorite, this.Lists, this.SearchHistory, this.Reviews);
 }
 
 class FavoriteAndHistory {
@@ -57,15 +62,16 @@ class FavoriteAndHistory {
 }
 
 class Review{
-  AnimeInfo anime;
+  int AnimeId;
   DateTime Time;
   int Likes;
   double Score;
   String Comments;
-  bool Edit;
-  TextEditingController EditController;
+  bool Liked = false;
+  bool Edit = false;
+  TextEditingController EditController = TextEditingController();
 
-  Review(this.anime, this.Time, this.Likes, this.Score, this.Comments, this.Edit, this.EditController);
+  Review(this.AnimeId, this.Time, this.Likes, this.Score, this.Comments, [this.Liked = false, this.Edit = false]);
 }
 
 class EditPopupController{
@@ -482,9 +488,12 @@ Widget reviewSwitch(List<Review> reviews, func){
 }
 
 class ReviewList extends StatefulWidget {
-  final List<Review> reviews;
+  final List<AnimeInfo> animeList;
+  final PersonalInfo userData;
+  final List<PersonalInfo> userList;
   final bool isUser;
-  const ReviewList({required this.reviews, required this.isUser});
+  final int id;
+  const ReviewList({required this.animeList, required this.userData, required this.userList, required this.isUser, required this.id});
   @override
   _ReviewList createState() => _ReviewList();
 }
@@ -495,8 +504,11 @@ class _ReviewList extends State<ReviewList> {
 
   @override void initState() {
     super.initState();
-    for(int i = 0; i < widget.reviews.length; i++){
-      widget.reviews[i].EditController.text = widget.reviews[i].Comments;
+    for(int i = 0; i < widget.userData.Reviews.length; i++){
+      widget.userData.Reviews[i].EditController.text = widget.userData.Reviews[i].Comments;
+    }
+    for(int i = 0; i < widget.userList[widget.id].Reviews.length; i++){
+      widget.userList[widget.id].Reviews[i].EditController.text = widget.userList[widget.id].Reviews[i].Comments;
     }
   }
 
@@ -507,7 +519,7 @@ class _ReviewList extends State<ReviewList> {
       children: [
         Column(
           children: 
-            widget.reviews.map((review) => 
+            (widget.isUser?widget.userData:widget.userList[widget.id]).Reviews.map((review) => 
             review.Edit ?
             Column(
               children:[
@@ -523,7 +535,7 @@ class _ReviewList extends State<ReviewList> {
                       Row(
                         children: [
                           SizedBox(width: 8,),
-                          imageCard('assets/images/${review.anime.Cover}', height: 120, width: 88),
+                          imageCard('assets/images/${widget.animeList[review.AnimeId].Cover}', height: 120, width: 88),
                           // rating star
                           Expanded(
                             child: Column(
@@ -608,13 +620,16 @@ class _ReviewList extends State<ReviewList> {
                       // image
                       GestureDetector(
                           onTap: () {
+                            widget.userData.SearchHistory.removeLast();
+                            widget.userData.SearchHistory.insert(0, review.AnimeId);
+                            // print(widget.userData.SearchHistory);
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: review.anime)),
+                              MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: widget.animeList[review.AnimeId],  animeList: widget.animeList, userData: widget.userData, userList: widget.userList)),
                             );
                           },
                           child: Container(
-                            child: imageCard('assets/images/${review.anime.Cover}', height: 120, width: 88),
+                            child: imageCard('assets/images/${widget.animeList[review.AnimeId].Cover}', height: 120, width: 88),
                           )
                       ),
                       SizedBox(width: 8,),
@@ -625,8 +640,12 @@ class _ReviewList extends State<ReviewList> {
                             // Name, Title and Star
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(review.anime.Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                Container(
+                                  width: 190,
+                                  child: Text(widget.animeList[review.AnimeId].Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                ),
                                 // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
                                 review.Comments.isEmpty?
                                 Container():
@@ -730,7 +749,7 @@ class _ReviewList extends State<ReviewList> {
   }   
 }
 
-Widget reviewRow(List<Review> reviews, bool isUser, { size: 'big' }) {
+Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, bool isUser, { size: 'big' , int id: 0}) {
   double _fontSize = size == 'big'? 22 : 16;
   double _padding_between = size == 'big'? 12 : 8;
   double _height = size == 'big'? 150 : 120;
@@ -745,7 +764,7 @@ Widget reviewRow(List<Review> reviews, bool isUser, { size: 'big' }) {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            reviewSwitch(reviews, () => _notifier.value = !_notifier.value),
+            reviewSwitch(isUser? userData.Reviews: userList[id].Reviews, () => _notifier.value = !_notifier.value),
           ],
         ),
         SizedBox(height: 10),
@@ -753,7 +772,7 @@ Widget reviewRow(List<Review> reviews, bool isUser, { size: 'big' }) {
           builder: (BuildContext context, bool value, Widget? child) {
             // This builder will only get called when the _counter
             // is updated.
-            return ReviewList(reviews: reviews, isUser: isUser);
+            return ReviewList(animeList: animeList, userData: userData, userList: userList, isUser: isUser, id: id);
           },
           valueListenable: _notifier,
           // The child parameter is most helpful if the child is

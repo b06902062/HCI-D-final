@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'utility.dart';
+import 'profileUtility.dart';
 
 class HomePage extends StatefulWidget {
   final List<AnimeInfo> animeList;
+  final PersonalInfo userData;
+  final List<PersonalInfo> userList;
 
-  HomePage({super.key, required this.animeList});
+  HomePage({super.key, required this.animeList, required this.userData, required this.userList});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,11 +23,16 @@ class Recommendation {
 class _HomePageState extends State<HomePage> {
   List<AnimeInfo> _animeList = [];
   List<Recommendation> _recommendations = [];
+  PersonalInfo _userData = PersonalInfo(-1, "", "", -1, -1, "", "", "", "", [], [], [], []);
+  List<PersonalInfo> _userList = [];
 
   @override
   void initState() {
     super.initState();
     _animeList = widget.animeList;
+    _userData = widget.userData;
+    _userList = widget.userList;
+
     _recommendations = [
       new Recommendation('Trending Now', _animeList.sublist(1)),
       new Recommendation('Recommended to You', _animeList),
@@ -49,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       child: ListView(
         padding: const EdgeInsets.all(12),
         children: _recommendations.map((recommendation)=>
-          recommendationRow(context, bracketTitle(recommendation.Title, 22), recommendation.Results,)
+          recommendationRow(context, bracketTitle(recommendation.Title, 22), recommendation.Results, _animeList, _userData, _userList,)
         ).toList(),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:AniRate/database.dart';
+import 'package:AniRate/otherUserProfile.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'search.dart';
@@ -6,6 +7,7 @@ import 'lists.dart';
 import 'profile.dart';
 import 'utility.dart';
 import 'database.dart';
+import 'profileUtility.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,6 +36,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // load data from local
   var _animeList;
+  var _userData;
+  var _userList;
 
   // reference https://karthikponnam.medium.com/flutter-pageview-withbottomnavigationbar-fb4c87580f6a
   int _panelIndex = 0;
@@ -45,6 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _animeList = animedatabase.animeList;
+    _userData = userdata.userData;
+    _userList = userdatabase.userList;
   }
   
   @override
@@ -58,10 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
         children: [
-          HomePage(animeList: _animeList),
-          SearchWidget(animeList: _animeList),
-          ListPage(animeList: _animeList),
-          ProfilePage(animeList: _animeList),
+          HomePage(animeList: _animeList, userData: _userData, userList: _userList, ),
+          SearchWidget(animeList: _animeList, userData: _userData, userList: _userList,),
+          ListPage(animeList: _animeList, userData: _userData, userList: _userList,),
+          ProfilePage(animeList: _animeList, userData: _userData, userList: _userList,),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
