@@ -14,7 +14,8 @@ class SearchWidget extends StatefulWidget {
 }
 
 class _SearchWidgetState extends State<SearchWidget> {
-  var _typeTagStatus = {'comedy': false, 'adventure': false, 'action': false, 'school': false, 'monster': false, 'family': false, 'fantasy': false, 'drama': false, 'supernatural': false};
+  // action, adventure, comedy, monster, school, family, supernatural, sports, fantasy
+  var _typeTagStatus = {'comedy': false, 'adventure': false, 'action': false, 'school': false, 'monster': false, 'family': false, 'fantasy': false, 'sports': false, 'supernatural': false};
   var _statusTagStatus = {'in progress': true, 'ended': true, 'new season': true};
   var _sortStatus = ['score', 'time'];
   int _sortStatusIndex = 0;

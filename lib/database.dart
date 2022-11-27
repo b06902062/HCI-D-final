@@ -12,48 +12,48 @@ class animedatabase {
       'Kazuhiro Furuhashi',
       [
         {
-          'name': 'Tanezaki, Atsumi',
-          'role': 'Forger, Anya',
+          'name': 'Atsumi Tanezaki',
+          'role': 'Anya Forger',
           'img': 'SPYxFamilyC1.jpg'
         },
         {
-          'name': 'Hayami, Saori',
-          'role': 'Forger, Yor',
+          'name': 'Saori Hayami',
+          'role': 'Yor Forger',
           'img': 'SPYxFamilyC2.jpg'
         },
         {
-          'name': 'Eguchi, Takuya',
-          'role': 'Forger, Loid',
+          'name': 'Takuya Eguchi',
+          'role': 'Loid Forger',
           'img': 'SPYxFamilyC3.jpg'
         },
         {
-          'name': 'Fujiwara, Natsumi',
-          'role': 'Desmond, Damian',
+          'name': 'Natsumi Fujiwara',
+          'role': 'Damian Desmond',
           'img': 'SPYxFamilyC4.jpg'
         },
         {
-          'name': 'Ono, Kensho',
-          'role': 'Briar, Yuri',
+          'name': 'Kensho Ono',
+          'role': 'Yuri Briar',
           'img': 'SPYxFamilyC5.jpg'
         },
         {
-          'name': 'Yamaji, Kazuhiro',
-          'role': '	Henderson, Henry',
+          'name': 'Kazuhiro Yamaji',
+          'role': 'Henry Henderson',
           'img': 'SPYxFamilyC6.jpg'
         },
         {
-          'name': 'Yoshino, Hiroyuki',
-          'role': 'Franklin, Franky',
+          'name': 'Hiroyuki Yoshino',
+          'role': 'Franky Franklin',
           'img': 'SPYxFamilyC7.jpg'
         },
         {
-          'name': 'Katou, Emiri',
-          'role': 'Blackbell, Becky',
+          'name': 'Emiri Katou',
+          'role': 'Becky Blackbell',
           'img': 'SPYxFamilyC8.jpg'
         },
         {
-          'name': 'Kaida, Yuuko',
-          'role': '	Sherwood, Sylvia',
+          'name': 'Yuuko Kaida',
+          'role': 'Sylvia	Sherwood',
           'img': 'SPYxFamilyC9.jpg'
         },
       ],
@@ -81,28 +81,32 @@ class animedatabase {
       'Ryu Nakayama',
       [
         {
-          'name': 'Kusunoki, Tomori',
+          'name': 'Tomori Kusunoki',
           'role': 'Makima',
           'img': 'ChainsawManC1.jpg'
         },
-        {'name': 'Fairouz, Ai', 'role': 'Power', 'img': 'ChainsawManC2.jpg'},
         {
-          'name': 'Toya, Kikunosuke',
+          'name': 'Ai Fairouz',
+          'role': 'Power',
+          'img': 'ChainsawManC2.jpg'
+        },
+        {
+          'name': 'Kikunosuke Toya',
           'role': 'Denji',
           'img': 'ChainsawManC3.jpg'
         },
         {
-          'name': 'Sakata, Shougo',
-          'role': 'Hayakawa, Aki',
+          'name': 'Shougo Sakata',
+          'role': 'Aki Hayakawa',
           'img': 'ChainsawManC4.jpg'
         },
         {
-          'name': 'Takahashi, Karin',
-          'role': 'Higashiyama, Kobeni',
+          'name': 'Karin Takahashi',
+          'role': 'Kobeni Higashiyama',
           'img': 'ChainsawManC5.jpg'
         },
         {
-          'name': 'Izawa, Shiori',
+          'name': 'Shiori Izawa',
           'role': 'Pochita',
           'img': 'ChainsawManC6.jpg'
         },
@@ -134,22 +138,22 @@ class animedatabase {
       'Tetsurô Araki',
       [
         {
-          'name': 'Kaji, Yuuki',
-          'role': 'Yeager, Eren',
+          'name': 'Yuuki Kaji',
+          'role': 'Eren Yeager',
           'img': 'AttackOnTitanC1.jpg'
         },
         {
-          'name': 'Ishikawa, Yui',
-          'role': 'Ackerman, Mikasa',
+          'name': 'Yui Ishikawa',
+          'role': 'Mikasa Ackerman',
           'img': 'AttackOnTitanC2.jpg'
         },
         {
-          'name': 'Inoue, Marina',
-          'role': 'Arlert, Armin',
+          'name': 'Marina Inoue',
+          'role': 'Armin Arlert',
           'img': 'AttackOnTitanC3.jpg'
         },
         {
-          'name': 'Kamiya, Hiroshi',
+          'name': 'Hiroshi Kamiya',
           'role': 'Levi',
           'img': 'AttackOnTitanC4.jpg'
         },
@@ -178,18 +182,18 @@ class animedatabase {
       'Sotozaki Haruo',
       [
         {
-          'name': 'Hanae, Natsuki',
-          'role': 'Kamado, Tanjirou',
+          'name': 'Natsuki Hanae',
+          'role': 'Tanjirou Kamado',
           'img': 'DemonSlayerC1.jpg'
         },
         {
-          'name': 'Shimono, Hiro',
-          'role': 'Agatsuma, Zenitsu',
+          'name': 'Hiro Shimono',
+          'role': 'Zenitsu Agatsuma',
           'img': 'DemonSlayerC2.jpg'
         },
         {
-          'name': 'Kitou, Akari',
-          'role': 'Kamado, Nezuko',
+          'name': 'Akari Kitou',
+          'role': 'Nezuko Kamado',
           'img': 'DemonSlayerC3.jpg'
         },
       ],
@@ -217,17 +221,17 @@ class animedatabase {
       'Kenji Nagasaki',
       [
         {
-          'name': 'Yamashita, Daiki',
-          'role': 'Midoriya, Izuku',
+          'name': 'Daiki Yamashita',
+          'role': 'Izuku Midoriya',
           'img': 'MyHeroAcademiaC1.jpg'
         },
         {
-          'name': 'Okamoto, Nobuhiko',
-          'role': 'Bakugou, Katsuki',
+          'name': 'Nobuhiko Okamoto',
+          'role': 'Katsuki Bakugou',
           'img': 'MyHeroAcademiaC2.jpg'
         },
         {
-          'name': 'Miyake, Kenta',
+          'name': 'Kenta Miyake',
           'role': 'All Might',
           'img': 'MyHeroAcademiaC3.jpg'
         },
@@ -253,20 +257,24 @@ class animedatabase {
     AnimeInfo(
       5,
       "Mob Psycho 100",
-      'Tachikawa, Yuzuru',
-      'Hasui, Takahiro',
+      'Yuzuru Tachikawa',
+      'Takahiro Hasui',
       [
         {
-          'name': 'Sakurai, Takahiro',
-          'role': 'Reigen, Arataka',
+          'name': 'Takahiro Sakurai',
+          'role': 'Arataka Reigen',
           'img': 'MobPsychoC1.jpg'
         },
         {
-          'name': 'Itou, Setsuo',
-          'role': 'Kageyama, Shigeo',
+          'name': 'Setsuo Itou',
+          'role': 'Shigeo Kageyama',
           'img': 'MobPsychoC2.jpg'
         },
-        {'name': 'Ootsuka, Akio', 'role': 'Ekubo', 'img': 'MobPsychoC3.jpg'},
+        {
+          'name': 'Akio Ootsuka',
+          'role': 'Ekubo',
+          'img': 'MobPsychoC3.jpg'
+        },
       ],
       ['action', 'comedy', 'supernatural'],
       'MobPsycho100.jpg',
@@ -288,22 +296,22 @@ class animedatabase {
     AnimeInfo(
       6,
       'Bleach-Sennen Kessen-hen',
-      'Kubo, Tite',
-      'Taguchi, Tomohisa',
+      'Tite Kubo',
+      'Tomohisa Taguchi',
       [
         {
-          'name': 'Morita, Masakazu',
-          'role': 'Kurosaki, Ichigo',
+          'name': 'Masakazu Morita',
+          'role': 'Ichigo Kurosaki',
           'img': 'Bleach-SennenKessen-henC1.jpg'
         },
         {
-          'name': 'Orikasa, Fumiko',
-          'role': 'Kuchiki, Rukia',
+          'name': 'Fumiko Orikasa',
+          'role': 'Rukia Kuchiki',
           'img': 'Bleach-SennenKessen-henC2.jpg'
         },
         {
-          'name': 'Itou, Kentarou',
-          'role': 'Abarai, Renji',
+          'name': 'Kentarou Itou',
+          'role': 'RenjiAbarai',
           'img': 'Bleach-SennenKessen-henC3.jpg'
         },
       ],
@@ -331,26 +339,26 @@ class animedatabase {
     AnimeInfo(
       7,
       'Jujutsu Kaisen',
-      'Akutami, Gege',
-      'Park, Seong-Hu',
+      'Gege Akutami',
+      'Seong-Hu Park',
       [
         {
-          'name': 'Nakamura, Yuuichi',
-          'role': 'Gojou, Satoru',
+          'name': 'Yuuichi Nakamura',
+          'role': 'Satoru Gojou',
           'img': 'JujutsuKaisenC1.jpg'
         },
         {
-          'name': 'Enoki, Junya',
-          'role': 'Itadori, Yuuji',
+          'name': 'Junya Enoki',
+          'role': 'Yuuji Itadori',
           'img': 'JujutsuKaisenC2.jpg'
         },
         {
-          'name': 'Uchida, Yuuma',
-          'role': 'Fushiguro, Megumi',
+          'name': 'Yuuma Uchida',
+          'role': 'Megumi Fushiguro',
           'img': 'JujutsuKaisenC3.jpg'
         },
       ],
-      ['action', 'fantasy'],
+      ['action', 'fantasy', 'school'],
       'JujutsuKaisen.jpg',
       ['JujutsuKaisen00.jpg', 'JujutsuKaisen01.jpg'],
       4.4,
@@ -370,22 +378,22 @@ class animedatabase {
     AnimeInfo(
       8,
       'Naruto',
-      'Kishimoto, Masashi',
-      'Date, Hayato',
+      'Masashi Kishimoto',
+      'Hayato Date',
       [
         {
-          'name': 'Takeuchi, Junko',
-          'role': 'Uzumaki, Naruto',
+          'name': 'Junko Takeuchi',
+          'role': 'Naruto Uzumaki',
           'img': 'NarutoC1.jpg'
         },
         {
-          'name': 'Inoue, Kazuhiko',
-          'role': 'Hatake, Kakashi',
+          'name': 'Kazuhiko Inoue',
+          'role': 'Kakashi Hatake',
           'img': 'NarutoC2.jpg'
         },
         {
-          'name': 'Sugiyama, Noriaki',
-          'role': 'Uchiha, Sasuke',
+          'name': 'Noriaki Sugiyama',
+          'role': 'Sasuke Uchiha',
           'img': 'NarutoC3.jpg'
         },
       ],
@@ -409,20 +417,24 @@ class animedatabase {
     AnimeInfo(
       9,
       'One Piece',
-      'Oda, Eiichiro',
-      'Ishitani, Megumi',
+      'Eiichiro Oda',
+      'Megumi Ishitani',
       [
         {
-          'name': 'Tanaka, Mayumi',
+          'name': 'Mayumi Tanaka',
           'role': 'Monkey D., Luffy',
           'img': 'OnePieceC1.jpg'
         },
         {
-          'name': 'Nakai, Kazuya',
+          'name': 'Kazuya Nakai',
           'role': 'Roronoa, Zoro',
           'img': 'OnePieceC2.jpg'
         },
-        {'name': 'Hirata, Hiroaki', 'role': 'Sanji', 'img': 'OnePieceC3.jpg'},
+        {
+          'name': 'Hiroaki Hirata',
+          'role': 'Sanji',
+          'img': 'OnePieceC3.jpg'
+        },
       ],
       ['action', 'adventure', 'fantasy'],
       'OnePiece.jpg',
@@ -445,27 +457,27 @@ class animedatabase {
     AnimeInfo(
       10,
       'Hunter x Hunter',
-      'Togashi, Yoshihiro',
-      'Koujina, Hiroshi',
+      'Yoshihiro Togashi',
+      'Hiroshi Koujina',
       [
         {
-          'name': 'Ise, Mariya',
-          'role': 'Zoldyck, Killua',
+          'name': 'Mariya Ise',
+          'role': 'Killua Zoldyck',
           'img': 'HunterxHunterC1.jpg'
         },
         {
-          'name': 'Sawashiro, Miyuki',
+          'name': 'Miyuki Sawashiro',
           'role': 'Kurapika',
           'img': 'HunterxHunterC2.jpg'
         },
         {
-          'name': 'Han, Megumi',
-          'role': 'Freecss, Gon',
+          'name': 'Megumi Han',
+          'role': 'Gon Freecss',
           'img': 'HunterxHunterC3.jpg'
         },
         {
-          'name': 'Fujiwara, Keiji',
-          'role': 'Paladiknight, Leorio',
+          'name': 'Keiji Fujiwara',
+          'role': 'Leorio Paladiknight',
           'img': 'HunterxHunterC4.jpg'
         },
       ],
@@ -489,26 +501,26 @@ class animedatabase {
     AnimeInfo(
       11,
       'Fullmetal Alchemist',
-      'Arakawa, Hiromu',
-      'Irie, Yasuhiro',
+      'Hiromu Arakawa',
+      'Yasuhiro Irie',
       [
         {
-          'name': 'Park, Romi',
-          'role': 'Elric, Edward',
+          'name': 'Romi Park',
+          'role': 'Edward Elric',
           'img': 'FullmetalAlchemistC1.jpg'
         },
         {
-          'name': 'Kugimiya, Rie',
-          'role': 'Elric, Alphonse',
+          'name': 'Rie Kugimiya',
+          'role': 'Alphonse Elric',
           'img': 'FullmetalAlchemistC2.jpg'
         },
         {
-          'name': 'Ookawa, Tooru',
-          'role': 'Mustang, Roy',
+          'name': 'Tooru Ookawa',
+          'role': 'Roy Mustang',
           'img': 'FullmetalAlchemistC3.jpg'
         },
       ],
-      ['action', 'adventure', 'fantasy', 'drama'],
+      ['action', 'adventure', 'fantasy'],
       'FullmetalAlchemist.jpg',
       ['FullmetalAlchemist00.jpg', 'FullmetalAlchemist01.jpg'],
       4.6,
@@ -528,23 +540,26 @@ class animedatabase {
     AnimeInfo(
       12,
       'D.Gray-man',
-      'Hoshino, Katsura',
-      'Sabat, Christopher',
+      'Katsura Hoshino',
+      'Christopher Sabat',
       [
         {
-          'name': 'Kobayashi, Sanae',
-          'role': 'Walker, Allen',
+          'name': 'Sanae Kobayashi',
+          'role': 'Allen Walker',
           'img': 'DGray-manC1.jpg'
         },
-        {'name': 'Suzumura, Kenichi', 'role': 'Lavi', 'img': 'DGray-manC2.jpg'},
         {
-          'name': 'Sakurai, Takahiro',
-          'role': 'Kanda, Yuu',
+          'name': 'Kenichi Suzumura',
+          'role': 'Lavi',
+          'img': 'DGray-manC2.jpg'},
+        {
+          'name': 'Takahiro Sakurai',
+          'role': 'Yuu Kanda',
           'img': 'DGray-manC3.jpg'
         },
         {
-          'name': 'Itou, Shizuka',
-          'role': 'Lee, Lenalee',
+          'name': 'Shizuka Itou',
+          'role': 'Lenalee Lee',
           'img': 'DGray-manC4.jpg'
         },
       ],
@@ -568,30 +583,30 @@ class animedatabase {
     AnimeInfo(
       13,
       'Busou Renkin',
-      'Watsuki, Nobuhiro',
-      'Kato, Takao',
+      'Nobuhiro Watsuki',
+      'Takao Kato',
       [
         {
-          'name': 'Yuzuki, Ryouka',
-          'role': 'Tsumura, Tokiko',
+          'name': 'Ryouka Yuzuki',
+          'role': 'Tokiko Tsumura',
           'img': 'BusouRenkinC1.jpg'
         },
         {
-          'name': 'Fukuyama, Jun',
-          'role': 'Muto, Kazuki',
+          'name': 'Jun Fukuyama',
+          'role': 'Kazuki Muto',
           'img': 'BusouRenkinC2.jpg'
         },
         {
-          'name': 'Madono, Mitsuaki',
-          'role': 'Chouno, Koushaku',
+          'name': 'Mitsuaki Madono',
+          'role': 'Koushaku Chouno',
           'img': 'BusouRenkinC3.jpg'
         },
       ],
-      ['action', 'fantasy', 'comedy', 'supernatural'],
+      ['action', 'comedy', 'supernatural'],
       'BusouRenkin.jpg',
-      ['BusouRenkin00.jpg', 'BusouRenkin01.jpg'],
+      ['BusouRenkin00.jpg'],
       4.5,
-      '',
+      'A high-schooler saves a strange girl from a monster, but gets killed. The girl revives him with a magic medallion that also creates a weapon for its owner to fight these monsters. They team up to stop the monsters and their master.',
       DateTime.utc(2006, 10, 5),
       ['ended'],
       65,
@@ -607,22 +622,22 @@ class animedatabase {
     AnimeInfo(
       14,
       'Blue Lock',
-      'Kaneshiro, Muneyuki (Story), Nomura, Yuusuke (Art)',
-      'Watanabe, Tetsuaki',
+      'Muneyuki Kaneshiro (Story), Yuusuke Nomura (Art)',
+      'Tetsuaki Watanabe',
       [
         {
-          'name': 'Kaito, Tasuku',
-          'role': 'Bachira, Meguru',
+          'name': 'Tasuku Kaito',
+          'role': 'Meguru Bachira',
           'img': 'BlueLockC1.jpg'
         },
         {
-          'name': 'Ura, Kazuki',
-          'role': 'Isagi, Yoichi',
+          'name': 'Kazuki Ura',
+          'role': 'Yoichi Isagi',
           'img': 'BlueLockC2.jpg'
         },
         {
-          'name': 'Saitou, Souma',
-          'role': 'Chigiri, Hyouma',
+          'name': 'Souma Saitou',
+          'role': 'Hyouma Chigiri',
           'img': 'BlueLockC3.jpg'
         },
       ],
@@ -632,7 +647,7 @@ class animedatabase {
       'BlueLock.jpg',
       ['BlueLock00.jpg', 'BlueLock01.jpg'],
       3.4,
-      '',
+      'Japan keeps losing the World Cup, over and over. After Isagi Yoichi, a forward for a high school team, gets eliminated in the last game in the qualifier for nationals, gets invited to a program called "Blue Lock" Their coach will be Ego Jinpachi, who intends to "destroy Japanese loser football" by introducing a radical new training regimen: isolate 300 young forwards in a prison-like institution called "Blue Lock" and put them through rigorous training aimed at creating "the world\'s greatest egotist striker."',
       DateTime.utc(2022, 10, 9),
       ['new season', 'in progress'],
       80,
@@ -648,30 +663,30 @@ class animedatabase {
     AnimeInfo(
       15,
       'Grand Blue',
-      'Inoue, Kenji (Story), Yoshioka, Kimitake (Art)',
-      'Takamatsu, Shinji',
+      'Kenji Inoue (Story), Kimitake Yoshioka (Art)',
+      'Shinji Takamatsu',
       [
         {
-          'name': 'Anzai, Chika',
-          'role': 'Kotegawa, Chisa',
+          'name': 'Chika Anzai',
+          'role': 'Chisa Kotegawa',
           'img': 'GrandBlueC1.jpg'
         },
         {
-          'name': 'Uchida, Yuuma',
-          'role': '	Kitahara, Iori',
+          'name': 'Yuuma Uchida',
+          'role': '	Iori Kitahara',
           'img': 'GrandBlueC2.jpg'
         },
         {
-          'name': 'Kimura, Ryouhei',
-          'role': 'Imamura, Kouhei',
+          'name': 'Ryouhei Kimura',
+          'role': 'Kouhei Imamura',
           'img': 'GrandBlueC3.jpg'
         },
       ],
-      ['comedy'],
+      ['comedy', 'sports'],
       'GrandBlue.jpg',
       ['GrandBlue00.jpg', 'GrandBlue01.jpg'],
       4.2,
-      '',
+      'A college student spends his year at the seaside town of Izu, having fun on the beach with his school friends.',
       DateTime.utc(2018, 7, 14),
       ['in progress'],
       72,
@@ -687,26 +702,30 @@ class animedatabase {
     AnimeInfo(
       16,
       'Gintama',
-      'Sorachi, Hideaki',
-      'Takamatsu, Shinji',
+      'Hideaki Sorachi',
+      'Shinji Takamatsu',
       [
         {
-          'name': 'Sugita, Tomokazu',
-          'role': 'Sakata, Gintoki',
+          'name': 'Tomokazu Sugita',
+          'role': 'Gintoki Sakata',
           'img': 'GintamaC1.jpg'
         },
-        {'name': 'Kugimiya, Rie', 'role': 'Kagura', 'img': 'GintamaC2.jpg'},
         {
-          'name': 'Sakaguchi, Daisuke',
-          'role': 'Shimura, Shinpachi',
+          'name': 'Rie Kugimiya',
+          'role': 'Kagura',
+          'img': 'GintamaC2.jpg'
+        },
+        {
+          'name': 'Daisuke Sakaguchi',
+          'role': 'Shinpachi Shimura',
           'img': 'GintamaC3.jpg'
         },
       ],
-      ['action', 'fantasy', 'sci-fi'],
+      ['action', 'comedy', 'fantasy'],
       'Gintama.jpg',
-      ['Gintama00.jpg', 'Gintama01.jpg'],
+      ['Gintama00.jpg', 'Gintama01.jpg', 'Gintama02.jpg'],
       4.6,
-      '',
+      'In an era where aliens have invaded and taken over feudal Tokyo, an unemployed samurai finds work however he can.',
       DateTime.utc(2006, 4, 6),
       ['ended'],
       80,
@@ -722,25 +741,26 @@ class animedatabase {
     AnimeInfo(
       17,
       'One Punch Man',
-      'Murata, Yusuke (Art), ONE (Story)',
-      'Natsume, Shingo',
+      'Yusuke Murata (Art), ONE (Story)',
+      'Shingo Natsume',
       [
         {
-          'name': 'Furukawa, Makoto',
+          'name': 'Makoto Furukawa',
           'role': 'Saitama',
           'img': 'OnePunchManC1.jpg'
         },
         {
-          'name': 'Ishikawa, Kaito',
+          'name': 'Kaito Ishikawa',
           'role': 'Genos',
           'img': 'OnePunchManC2.jpg'
         },
-        {'name': 'Yuuki, Aoi', 'role': 'Tatsumaki', 'img': 'OnePunchManC3.jpg'},
+        {
+          'name': 'Aoi Yuuki',
+          'role': 'Tatsumaki',
+          'img': 'OnePunchManC3.jpg'
+        },
       ],
-      [
-        'action',
-        'comedy',
-      ],
+      [ 'action', 'comedy', 'supernatural'],
       'OnePunchMan.jpg',
       ['OnePunchMan00.jpg', 'OnePunchMan01.jpg'],
       4.3,
@@ -760,26 +780,26 @@ class animedatabase {
     AnimeInfo(
       18,
       'Sakamoto desu ga?',
-      'Sano, Nami',
-      'Takamatsu, Shinji',
+      'Nami Sano',
+      'Shinji Takamatsu',
       [
         {
-          'name': 'Midorikawa, Hikaru',
+          'name': 'Hikaru Midorikawa',
           'role': 'Sakamoto',
           'img': 'SakamotodesugaC1.jpg'
         },
         {
-          'name': 'Yusa, Kouji',
+          'name': 'Kouji Yusa',
           'role': '8823-senpai',
           'img': 'SakamotodesugaC2.jpg'
         },
         {
-          'name': 'Ishida, Akira',
-          'role': 'Kubota, Yoshinobu',
+          'name': 'Akira Ishida',
+          'role': 'Yoshinobu Kubota',
           'img': 'SakamotodesugaC3.jpg'
         },
       ],
-      ['gag humor', 'school'],
+      ['comedy', 'school'],
       'Sakamotodesuga.jpg',
       ['Sakamotodesuga00.jpg', 'Sakamotodesuga01.jpg'],
       3.8,
@@ -799,26 +819,26 @@ class animedatabase {
     AnimeInfo(
       19,
       'Nichijou',
-      'Arawi, Keiichi',
-      'Ishihara, Tatsuya',
+      'Keiichi Arawi',
+      'Tatsuya Ishihara',
       [
         {
-          'name': 'Honda, Mariko',
-          'role': 'Aioi, Yuuko',
+          'name': 'Mariko Honda',
+          'role': 'Yuuko Aioi',
           'img': 'NichijouC1.jpg'
         },
         {
-          'name': 'Shiraishi, Minoru',
+          'name': 'Minoru Shiraishi',
           'role': 'Sakamoto',
           'img': 'NichijouC2.jpg'
         },
         {
-          'name': 'Konno, Hiromi',
-          'role': 'Shinonome, Hakase',
+          'name': 'Hiromi Konno',
+          'role': 'Hakase Shinonome',
           'img': 'NichijouC3.jpg'
         },
       ],
-      ['action', 'fantasy', 'comedy', 'supernatural'],
+      ['action', 'comedy', 'supernatural'],
       'Nichijou.jpg',
       ['Nichijou00.jpg', 'Nichijou01.jpg'],
       4.7,

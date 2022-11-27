@@ -33,10 +33,12 @@ class _HomePageState extends State<HomePage> {
     _userData = widget.userData;
     _userList = widget.userList;
 
-    _recommendations = [
-      new Recommendation('Trending Now', _animeList.sublist(1)),
-      new Recommendation('Recommended to You', _animeList),
-      new Recommendation('This Season', _animeList),
+    _animeList.sort((b, a) =>a.Time.compareTo(b.Time));
+    _recommendations.add(new Recommendation('Trending Now', _animeList.sublist(0, 5)));
+    _animeList.sort((b, a) =>a.Score.compareTo(b.Score));
+    _recommendations.add(new Recommendation('Recommended to You', _animeList.sublist(0, 5)));
+    _recommendations += [
+      new Recommendation('This Season', _animeList.where((anime) => anime.Status.contains('new season')).toList()),
       new Recommendation(
           'Since you like Attack on Titan',
           _animeList.where((anime) =>

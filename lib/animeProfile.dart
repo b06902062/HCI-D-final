@@ -213,7 +213,8 @@ class _AnimeProfileState extends State<AnimeProfile> {
                 imageCard(
                   'assets/images/${widget.animeInfo.LandScapes[_showing_image_index]}',
                   width: MediaQuery.of(context).size.width-96,
-                  height: MediaQuery.of(context).size.width*2/3-64
+                  height: MediaQuery.of(context).size.width*2/3-64,
+                  fit: false
                 ),
                 SizedBox(width: 48, child: TextButton(onPressed: (){
                   setState(() {
@@ -243,10 +244,10 @@ class _AnimeProfileState extends State<AnimeProfile> {
             SizedBox(height: 12,),
 
             // Author, Director
-            Row(
+            Wrap(
               children: [
-                SizedBox(width: 12,),
-                SizedBox(
+                Container(
+                  margin: EdgeInsets.only(left: 12, bottom: 12),
                   child: Text.rich(
                     TextSpan(
                       text: 'Author: ',
@@ -257,9 +258,8 @@ class _AnimeProfileState extends State<AnimeProfile> {
                     ),
                   ),
                 ),
-                SizedBox(width: 16,),
-                SizedBox(
-                  // width: MediaQuery.of(context).size.width/2-16,
+                Container(
+                  margin: EdgeInsets.only(left: 12, bottom: 12),
                   child: Text.rich(
                     TextSpan(
                       text: 'Director: ',
@@ -272,7 +272,6 @@ class _AnimeProfileState extends State<AnimeProfile> {
                 ),
               ],
             ),
-            SizedBox(height: 12),
 
             // Tags
             Row(

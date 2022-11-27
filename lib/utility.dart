@@ -38,7 +38,7 @@ class AnimeInfo {
   // key string：name role img
   // Format： img = Cover +C1, C2, ...
   final List<String> Tags;
-  //action, adventure, comedy, monster, school, family. fantasy, drama, supernatural, gag humor, sci-fi, sports,
+  //action, adventure, comedy, monster, school, family, supernatural, sports, fantasy
   final String Cover;
   final List<String> LandScapes;
   // Format：LandScape = Cover +00, 01, ...
