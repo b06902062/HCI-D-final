@@ -534,7 +534,7 @@ class _ReviewList extends State<ReviewList> {
                       Row(
                         children: [
                           SizedBox(width: 8,),
-                          imageCard('assets/images/${widget.animeList[review.AnimeId].Cover}', height: 120, width: 88),
+                          imageCard('assets/images/${widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Cover}', height: 120, width: 88),
                           // rating star
                           Expanded(
                             child: Column(
@@ -629,11 +629,11 @@ class _ReviewList extends State<ReviewList> {
                             }
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: widget.animeList[review.AnimeId],  animeList: widget.animeList, userData: widget.userData, userList: widget.userList)),
+                              MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)],  animeList: widget.animeList, userData: widget.userData, userList: widget.userList)),
                             );
                           },
                           child: Container(
-                            child: imageCard('assets/images/${widget.animeList[review.AnimeId].Cover}', height: 120, width: 88),
+                            child: imageCard('assets/images/${widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Cover}', height: 120, width: 88),
                           )
                       ),
                       SizedBox(width: 8,),
@@ -648,7 +648,7 @@ class _ReviewList extends State<ReviewList> {
                               children: [
                                 Container(
                                   width: MediaQuery.of(context).size.width - 200,
-                                  child: Text(widget.animeList[review.AnimeId].Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis,),
+                                  child: Text(widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis,),
                                 ),
                                 // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
                                 review.Comments.isEmpty?

@@ -34,8 +34,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    _favorite.Title = "Favorite Anime (${_favorite.Results.length})";
     _favorite.Results = _userData.Favorite.map((index) => animedatabase.animeList.where((anime) => anime.AnimeId == index).toList()[0]).toList();
+    _favorite.Title = "Favorite Anime (${_favorite.Results.length})";
     _history.Results = _userData.SearchHistory.map((index) => animedatabase.animeList.where((anime) => anime.AnimeId == index).toList()[0]).toList();
 
     return Container(
