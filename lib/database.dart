@@ -62,7 +62,8 @@ class animedatabase {
       ['SPYxFamily00.jpg', 'SPYxFamily01.jpg'],
       4.3,
       'A spy on an undercover mission gets married and adopts a child as part of his cover. His wife and daughter have secrets of their own, and all three must strive to keep together.',
-      [2022, 4, 9],
+      DateTime.utc(2022, 4, 9),
+      ['new season', 'in progress'],
       111,
       [
         Comment(
@@ -129,7 +130,8 @@ class animedatabase {
       ],
       4.4,
       'Following a betrayal, a young man left for the dead is reborn as a powerful devil-human hybrid after merging with his pet devil and is soon enlisted into an organization dedicated to hunting devils.',
-      [2022, 10, 12],
+      DateTime.utc(2022, 10, 12),
+      ['new season', 'in progress'],
       84,
       [
         Comment(
@@ -187,7 +189,8 @@ class animedatabase {
       ['AttackOnTitan00.jpg', 'AttackOnTitan01.jpg', 'AttackOnTitan02.jpg'],
       4.5,
       'After his hometown is destroyed and his mother is killed, young Eren Jaeger vows to cleanse the earth of the giant humanoid Titans that have brought humanity to the brink of extinction.',
-      [2013, 4, 7],
+      DateTime.utc(2013, 4, 7),
+      ['ended'],
       357,
       [
         Comment(
@@ -240,7 +243,8 @@ class animedatabase {
       ['DemonSlayer00.jpg', 'DemonSlayer01.jpg', 'DemonSlayer02.jpg'],
       4.4,
       'A family is attacked by demons and only two members survive - Tanjiro and his sister Nezuko, who is turning into a demon slowly. Tanjiro sets out to become a demon slayer to avenge his family and cure his sister.',
-      [2019, 4, 6],
+      DateTime.utc(2019, 4, 6),
+      ['in progress'],
       260,
       [
         Comment(
@@ -293,7 +297,8 @@ class animedatabase {
       ['MyHeroAcademia00.jpeg', 'MyHeroAcademia01.jpg'],
       4.2,
       'A superhero-loving boy without any powers is determined to enroll in a prestigious hero academy and learn what it really means to be a hero.',
-      [2016, 4, 3],
+      DateTime.utc(2016, 4, 3),
+      ['in progress'],
       274,
       [
         Comment(
@@ -343,7 +348,8 @@ class animedatabase {
       ['MobPsycho00.jpg', 'MobPsycho01.jpg'],
       4.4,
       'After foiling a world-threatening plot, Shigeo "Mob" Kageyama returns to tackle the more exhausting aspects of his mundane life—starting with filling out his school\'s nerve-racking career form.',
-      [2022, 10, 6],
+      DateTime.utc(2022, 10, 6),
+      ['new season', 'in progress'],
       38,
       [
         Comment(
@@ -396,7 +402,8 @@ class animedatabase {
       ['Bleach-SennenKessen-hen00.jpg', 'Bleach-SennenKessen-hen01.jpg', 'Bleach-SennenKessen-hen02.jpg'],
       4.6,
       'Substitute Soul Reaper Ichigo Kurosaki spends his days fighting against Hollows, dangerous evil spirits that threaten Karakura Town.',
-      [2022, 10, 11],
+      DateTime.utc(2022, 10, 11),
+      ['new season', 'in progress'],
       29,
       [
         Comment(
@@ -449,7 +456,8 @@ class animedatabase {
       ['JujutsuKaisen00.jpg', 'JujutsuKaisen01.jpg'],
       4.4,
       'Idly indulging in baseless paranormal activities with the Occult Club, high schooler Yuuji Itadori spends his days at either the clubroom or the hospital, where he visits his bedridden grandfather.',
-      [2020, 10, 3],
+      DateTime.utc(2020, 10, 3),
+      ['in progress'],
       204,
       [
         Comment(
@@ -502,7 +510,8 @@ class animedatabase {
       ['Naruto00.jpg', 'Naruto01.jpg', 'Naruto02.jpg'],
       4.0,
       'Moments prior to Naruto Uzumaki\'s birth, a huge demon known as the Kyuubi, the Nine-Tailed Fox, attacked Konohagakure, the Hidden Leaf Village, and wreaked havoc.',
-      [2002, 10, 3],
+      DateTime.utc(2002, 10, 3),
+      ['ended'],
       259,
       [
         Comment(
@@ -551,7 +560,8 @@ class animedatabase {
       ['OnePiece00.jpg', 'OnePiece01.jpg', 'OnePiece02.jpg'],
       4.4,
       'Gol D. Roger was known as the "Pirate King," the strongest and most infamous being to have sailed the Grand Line.',
-      [1999, 10, 20],
+      DateTime.utc(1999, 10, 20),
+      ['in progress'],
       201,
       [
         Comment(
@@ -610,7 +620,8 @@ class animedatabase {
       ['HunterxHunter00.jpg', 'HunterxHunter01.jpg'],
       4.7,
       'Hunters devote themselves to accomplishing hazardous tasks, all from traversing the world\'s uncharted territories to locating rare items and monsters.',
-      [2011, 10, 2],
+      DateTime.utc(2011, 10, 2),
+      ['in progress'],
       251,
       [
         Comment(
@@ -663,7 +674,8 @@ class animedatabase {
       ['FullmetalAlchemist00.jpg', 'FullmetalAlchemist01.jpg'],
       4.6,
       'After a horrific alchemy experiment goes wrong in the Elric household, brothers Edward and Alphonse are left in a catastrophic new reality.',
-      [2009, 4, 5],
+      DateTime.utc(2009, 4, 5),
+      ['ended'],
       302,
       [
         Comment(
@@ -717,7 +729,8 @@ class animedatabase {
       ['DGray-man00.jpg'],
       4.0,
       'Losing a loved one is so painful that one may sometimes wish to be able to resurrect them—a weakness that the enigmatic Millennium Earl exploits.',
-      [2006, 10, 3],
+      DateTime.utc(2006, 10, 3),
+      ['ended'],
       65,
       [
         Comment(

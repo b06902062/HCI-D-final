@@ -38,16 +38,16 @@ class AnimeInfo {
   // key string：name role img
   // Format： img = Cover +C1, C2, ...
   final List<String> Tags;
-  //action, adventure, comedy, monster, school, family. fantasy, drama, supernatural
+  //action, adventure, comedy, monster, school, family, fantasy, drama, supernatural
   final String Cover;
   final List<String> LandScapes;
   // Format：LandScape = Cover +00, 01, ...
   final double Score;
   final String Description;
-  final List<int> YMD;
+  final DateTime Time;
+  final List<String> Status;
   final int Favorites;
   final List<Comment> Comments;
-  
 
   AnimeInfo(
     this.AnimeId,
@@ -60,7 +60,8 @@ class AnimeInfo {
     this.LandScapes,
     this.Score,
     this.Description,
-    this.YMD,
+    this.Time,
+    this.Status,
     this.Favorites,
     this.Comments,
   );
