@@ -148,7 +148,22 @@ class _SearchWidgetState extends State<SearchWidget> {
                       });
                     },
                     iconSize: 28,
-                    icon: Icon(Icons.import_export, color: Colors.blueGrey.shade100,)
+                    icon: ShaderMask(
+                        shaderCallback: (Rect bounds) {
+                          Color leftColor = _sortReverseOrder ? Colors.blueGrey.shade100 : specialTeal;
+                          Color rightColor = !_sortReverseOrder ? Colors.blueGrey.shade100 : specialTeal;
+                          
+                          return LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            stops: [0.0, 0.5, 0.5, 1.0],
+                            colors: <Color>[leftColor, leftColor, rightColor, rightColor],
+                          ).createShader(bounds);
+                        },
+                       
+                        child: Icon(Icons.import_export, color: Colors.blueGrey.shade100,)
+                    )
+                    
                 ),
                 
               ]
