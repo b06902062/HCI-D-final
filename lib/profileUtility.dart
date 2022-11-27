@@ -390,7 +390,6 @@ Widget infoBlock(PersonalInfo data, BuildContext context, ValueNotifier<bool> _n
                   color: Colors.blueGrey.shade100,
                 )
               ),
-              // Icon(Icons.more_vert, color: Colors.blueGrey.shade100, size: 20),
             ],
           )
           : Container() 
@@ -493,7 +492,8 @@ class ReviewList extends StatefulWidget {
   final List<PersonalInfo> userList;
   final bool isUser;
   final int id;
-  const ReviewList({required this.animeList, required this.userData, required this.userList, required this.isUser, required this.id});
+  final Function()? func;
+  const ReviewList({required this.animeList, required this.userData, required this.userList, required this.isUser, required this.id, this.func});
   @override
   _ReviewList createState() => _ReviewList();
 }
@@ -504,6 +504,13 @@ class _ReviewList extends State<ReviewList> {
 
   @override void initState() {
     super.initState();
+    // if(widget.func == null){
+    //   print("Null");
+    // }
+    // else{
+    //   print("pass!");
+    //   print(widget.func.toString());
+    // }
     for(int i = 0; i < widget.userData.Reviews.length; i++){
       widget.userData.Reviews[i].EditController.text = widget.userData.Reviews[i].Comments;
     }
@@ -631,7 +638,7 @@ class _ReviewList extends State<ReviewList> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: widget.animeList[review.AnimeId],  animeList: widget.animeList, userData: widget.userData, userList: widget.userList)),
-                            );
+                            ).then((_){widget.func;});
                           },
                           child: Container(
                             child: imageCard('assets/images/${widget.animeList[review.AnimeId].Cover}', height: 120, width: 88),
@@ -754,7 +761,34 @@ class _ReviewList extends State<ReviewList> {
   }   
 }
 
-Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, bool isUser, { size: 'big' , int id: 0}) {
+
+
+// class ReviewRow extends StatefulWidget {
+//   final List<AnimeInfo> animeList;
+//   final PersonalInfo userData;
+//   final List<PersonalInfo> userList;
+//   final bool isUser;
+//   final int id;
+//   final String size;
+//   final Function(bool)? notifier;
+//   const ReviewRow({required this.animeList, required this.userData, required this.userList, required this.isUser, this.size = "big", this.id = 0, this.notifier});
+//   @override
+//   _ReviewRow createState() => _ReviewRow();
+// }
+
+// class _ReviewRow extends State<ReviewRow> {
+
+//   @override void initState() {
+//     super.initState();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+    
+//   }
+// }
+
+Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, bool isUser, { size: 'big' , int id: 0, Function()? notifier: null}) {
   double _fontSize = size == 'big'? 22 : 16;
   double _padding_between = size == 'big'? 12 : 8;
   double _height = size == 'big'? 150 : 120;
@@ -777,7 +811,7 @@ Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<Personal
           builder: (BuildContext context, bool value, Widget? child) {
             // This builder will only get called when the _counter
             // is updated.
-            return ReviewList(animeList: animeList, userData: userData, userList: userList, isUser: isUser, id: id);
+            return ReviewList(animeList: animeList, userData: userData, userList: userList, isUser: isUser, id: id, func: notifier);
           },
           valueListenable: _notifier,
           // The child parameter is most helpful if the child is

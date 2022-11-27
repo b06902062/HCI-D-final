@@ -14,6 +14,7 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
+
 class _ProfilePageState extends State<ProfilePage> {
   List<AnimeInfo> _animeList = [];
   FavoriteAndHistory _favorite = FavoriteAndHistory("Favorite Anime", []);
@@ -29,6 +30,11 @@ class _ProfilePageState extends State<ProfilePage> {
     _userData = widget.userData;
     _userList = widget.userList;
     _userData.Reviews.sort((b, a) => a.Likes.compareTo(b.Likes));
+  }
+
+  refresh() {
+    // print("refresh");
+    setState(() {    });
   }
 
   @override
@@ -49,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 recommendationRow(context, bracketTitle(_favorite.Title, 22), _favorite.Results, _animeList, _userData, _userList),
                 recommendationRow(context, bracketTitle(_history.Title, 22), _history.Results, _animeList, _userData, _userList),
-                reviewRow(_animeList, _userData, _userList, true),
+                reviewRow(_animeList, _userData, _userList, true, notifier: refresh),
               ]
             )
           ),
