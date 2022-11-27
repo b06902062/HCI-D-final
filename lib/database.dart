@@ -622,7 +622,7 @@ class animedatabase {
     AnimeInfo(
       14,
       'Blue Lock',
-      'Muneyuki Kaneshiro (Story), Yuusuke Nomura (Art)',
+      'Muneyuki Kaneshiro(Story), Yuusuke Nomura(Art)',
       'Tetsuaki Watanabe',
       [
         {
@@ -663,7 +663,7 @@ class animedatabase {
     AnimeInfo(
       15,
       'Grand Blue',
-      'Kenji Inoue (Story), Kimitake Yoshioka (Art)',
+      'Kenji Inoue(Story), Kimitake Yoshioka(Art)',
       'Shinji Takamatsu',
       [
         {
@@ -741,7 +741,7 @@ class animedatabase {
     AnimeInfo(
       17,
       'One Punch Man',
-      'Yusuke Murata (Art), ONE (Story)',
+      'Yusuke Murata(Art), ONE(Story)',
       'Shingo Natsume',
       [
         {

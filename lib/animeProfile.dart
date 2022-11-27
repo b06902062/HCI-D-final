@@ -305,7 +305,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
             Wrap(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 12, bottom: 12),
+                  margin: EdgeInsets.only(left: 12, bottom: 12, right: 4),
                   child: Text.rich(
                     TextSpan(
                       text: 'Author: ',
