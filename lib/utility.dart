@@ -182,6 +182,7 @@ Widget recommendationRow(
         children: animes
             .map((anime) => GestureDetector(
                 onTap: () {
+                  print(anime.AnimeId);
                   if(userData.SearchHistory.contains(anime.AnimeId)){
                     userData.SearchHistory.remove(anime.AnimeId);
                     userData.SearchHistory.insert(0, anime.AnimeId);
