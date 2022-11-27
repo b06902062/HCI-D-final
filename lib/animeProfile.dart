@@ -186,6 +186,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
     _user_comment_controller.text = _user_rated ? widget.userData.Reviews[_user_review_index].Comments : '';
     _user_rating = _user_rated ? widget.userData.Reviews[_user_review_index].Score : -1;
     _user_review_time = _user_rated ? widget.userData.Reviews[_user_review_index].Time : _user_review_time;
+    _user_favorite = widget.userData.Favorite.contains(widget.animeInfo.AnimeId);
   }
 
   @override
@@ -327,6 +328,14 @@ class _AnimeProfileState extends State<AnimeProfile> {
                       '${widget.animeInfo.Favorites+(_user_favorite? 1 : 0)}', (){
                         setState(() {
                           _user_favorite = !_user_favorite;
+                          if(_user_favorite){
+                            widget.userData.Favorite.add(widget.animeInfo.AnimeId);
+                            widget.userData.Lists.singleWhere((list) => list.Title == "My favorite").Results.add(widget.animeInfo);
+                          }
+                          else{
+                            widget.userData.Favorite.remove(widget.animeInfo.AnimeId);
+                            widget.userData.Lists.singleWhere((list) => list.Title == "My favorite").Results.remove(widget.animeInfo);
+                          }
                         });
                       }
                   ),

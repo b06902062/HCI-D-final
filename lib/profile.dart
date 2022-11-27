@@ -28,14 +28,15 @@ class _ProfilePageState extends State<ProfilePage> {
     _animeList = widget.animeList;
     _userData = widget.userData;
     _userList = widget.userList;
-    _favorite.Results = _userData.Favorite.map((index) => animedatabase.animeList[index]).toList();
-    _favorite.Title = "${_favorite.Title} (${_favorite.Results.length})";
-    _history.Results = _userData.SearchHistory.map((index) => animedatabase.animeList[index]).toList();
     _userData.Reviews.sort((b, a) => a.Likes.compareTo(b.Likes));
   }
 
   @override
   Widget build(BuildContext context) {
+    _favorite.Title = "Favorite Anime (${_favorite.Results.length})";
+    _favorite.Results = _userData.Favorite.map((index) => animedatabase.animeList[index]).toList();
+    _history.Results = _userData.SearchHistory.map((index) => animedatabase.animeList[index]).toList();
+
     return Container(
       color: Colors.blueGrey.shade900,
       child: Column(

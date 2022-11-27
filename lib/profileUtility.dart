@@ -620,9 +620,14 @@ class _ReviewList extends State<ReviewList> {
                       // image
                       GestureDetector(
                           onTap: () {
-                            widget.userData.SearchHistory.removeLast();
-                            widget.userData.SearchHistory.insert(0, review.AnimeId);
-                            // print(widget.userData.SearchHistory);
+                            if(widget.userData.SearchHistory.contains(review.AnimeId)){
+                              widget.userData.SearchHistory.remove(review.AnimeId);
+                              widget.userData.SearchHistory.insert(0, review.AnimeId);
+                            }
+                            else{
+                              widget.userData.SearchHistory.removeLast();
+                              widget.userData.SearchHistory.insert(0, review.AnimeId);
+                            }
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: widget.animeList[review.AnimeId],  animeList: widget.animeList, userData: widget.userData, userList: widget.userList)),

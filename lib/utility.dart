@@ -176,9 +176,14 @@ Widget recommendationRow(
         children: animes
             .map((anime) => GestureDetector(
                 onTap: () {
-                  userData.SearchHistory.removeLast();
-                  userData.SearchHistory.insert(0, anime.AnimeId);
-                  // print(widget.userData.SearchHistory);
+                  if(userData.SearchHistory.contains(anime.AnimeId)){
+                    userData.SearchHistory.remove(anime.AnimeId);
+                    userData.SearchHistory.insert(0, anime.AnimeId);
+                  }
+                  else{
+                    userData.SearchHistory.removeLast();
+                    userData.SearchHistory.insert(0, anime.AnimeId);
+                  }
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -203,6 +208,14 @@ Widget recommendationRow(
 Widget animeBlock(AnimeInfo data, List<AnimeInfo> animeList, final PersonalInfo userData, final List<PersonalInfo> userList, BuildContext context) {
   return GestureDetector(
     onTap: () {
+      if(userData.SearchHistory.contains(data.AnimeId)){
+        userData.SearchHistory.remove(data.AnimeId);
+        userData.SearchHistory.insert(0, data.AnimeId);
+      }
+      else{
+        userData.SearchHistory.removeLast();
+        userData.SearchHistory.insert(0, data.AnimeId);
+      }
       Navigator.push(
         context,
         MaterialPageRoute(
