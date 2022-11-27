@@ -14,9 +14,9 @@ class SearchWidget extends StatefulWidget {
 }
 
 class _SearchWidgetState extends State<SearchWidget> {
-  var _typeTagStatus = {'comedy': false, 'adventure': false, 'action': true, 'school': false, 'monster': false, 'monster1': true, 'monster2': true, 'monster3': true};
-  var _statusTagStatus = {'in progress': false, 'ended': false, 'new season': true};
-  var _sortStatus = ['score', 'time', 'popularity'];
+  var _typeTagStatus = {'comedy': false, 'adventure': false, 'action': false, 'school': false, 'monster': false, 'family': false, 'fantasy': false, 'drama': false, 'supernatural': false};
+  var _statusTagStatus = {'in progress': true, 'ended': true, 'new season': true};
+  var _sortStatus = ['score', 'time'];
   int _sortStatusIndex = 0;
   var searchBarText = 'type here to search';
   List<AnimeInfo> _animeList = [];
@@ -86,7 +86,6 @@ class _SearchWidgetState extends State<SearchWidget> {
                     onPressed: (){
                       setState(
                         () {
-                          //TODO: show filter
                           showDialog(
                             context: context,
                             barrierColor: Colors.black54,
@@ -118,13 +117,13 @@ class _SearchWidgetState extends State<SearchWidget> {
                           e.key,
                           (){setState(() {_typeTagStatus[e.key] = !e.value;});},
                         )
-                      ).toList() + 
-                      _statusTagStatus.entries.where((e)=>e.value).map((e) =>
-                        tagButton(
-                          e.key,
-                          (){setState(() {_statusTagStatus[e.key] = !e.value;});},
-                        )
                       ).toList(),
+                      // +_statusTagStatus.entries.where((e)=>e.value).map((e) =>
+                      //   tagButton(
+                      //     e.key,
+                      //     (){setState(() {_statusTagStatus[e.key] = !e.value;});},
+                      //   )
+                      // ).toList(),
                     ),
                   ),
                 ),
@@ -157,9 +156,23 @@ class _SearchWidgetState extends State<SearchWidget> {
           Expanded(
             child: ListView.separated(
               padding: const EdgeInsets.all(0),
-              itemCount: _animeList.length,
+              itemCount: _animeList.where(
+                (anime) =>
+                  _typeTagStatus.keys.where((e)=>_typeTagStatus[e] as bool).every((tag) => anime.Tags.contains(tag))
+                  && anime.Status.any((status)=>
+                    _statusTagStatus.keys.where((e)=>_statusTagStatus[e] as bool).contains(status)
+                  )
+              ).length,
+
               itemBuilder: (BuildContext context, int index) {
-                return animeBlock(_animeList[index], _animeList, _userData, _userList, context,);
+                List<String> tags = _typeTagStatus.keys.where((e)=>_typeTagStatus[e] as bool).toList();
+                List<String> statuses = _statusTagStatus.keys.where((e)=>_statusTagStatus[e] as bool).toList();
+                List<AnimeInfo> filtered = _animeList.where((anime) =>
+                  tags.every((tag) => anime.Tags.contains(tag))
+                  && anime.Status.any((status)=>statuses.contains(status))
+                ).toList();
+                filtered.sort((b, a) => _sortStatusIndex == 0? a.Score.compareTo(b.Score) : a.Time.compareTo(b.Time));
+                return animeBlock(filtered[index], _animeList, _userData, _userList, context,);
               },
               separatorBuilder: (BuildContext context, int index) => const Divider(),
             ),

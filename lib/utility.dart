@@ -38,16 +38,16 @@ class AnimeInfo {
   // key string：name role img
   // Format： img = Cover +C1, C2, ...
   final List<String> Tags;
-  //action, adventure, comedy, monster, school, family. fantasy, drama, supernatural
+  //action, adventure, comedy, monster, school, family. fantasy, drama, supernatural, gag humor, sci-fi, sports,
   final String Cover;
   final List<String> LandScapes;
   // Format：LandScape = Cover +00, 01, ...
   final double Score;
   final String Description;
-  final List<int> YMD;
+  final DateTime Time;
+  final List<String> Status;
   final int Favorites;
   final List<Comment> Comments;
-  
 
   AnimeInfo(
     this.AnimeId,
@@ -60,7 +60,8 @@ class AnimeInfo {
     this.LandScapes,
     this.Score,
     this.Description,
-    this.YMD,
+    this.Time,
+    this.Status,
     this.Favorites,
     this.Comments,
   );
@@ -74,8 +75,8 @@ class Comment {
   String Comments;
   bool Liked;
 
-  Comment(
-      this.UserId, this.Time, this.Likes, this.Score, this.Comments, [this.Liked = false]);
+  Comment(this.UserId, this.Time, this.Likes, this.Score, this.Comments,
+      [this.Liked = false]);
 }
 
 Widget imageCard(String imageSrc,
@@ -89,7 +90,7 @@ Widget imageCard(String imageSrc,
     ),
     child: Image.asset(
       imageSrc,
-      fit: fit? BoxFit.fill : BoxFit.cover,
+      fit: fit ? BoxFit.fill : BoxFit.cover,
     ),
   );
 }
@@ -158,7 +159,12 @@ Widget bracketTitle(String title, double fontSize) {
 }
 
 Widget recommendationRow(
-    BuildContext context, Widget Title, List<AnimeInfo> animes, List<AnimeInfo> animeList, final PersonalInfo userData, final List<PersonalInfo> userList,
+    BuildContext context,
+    Widget Title,
+    List<AnimeInfo> animes,
+    List<AnimeInfo> animeList,
+    final PersonalInfo userData,
+    final List<PersonalInfo> userList,
     {size: 'big'}) {
   double _padding_between = size == 'big' ? 12 : 8;
   double _height = size == 'big' ? 150 : 120;
@@ -187,8 +193,12 @@ Widget recommendationRow(
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            new AnimeProfile(animeInfo: anime, animeList: animeList, userData: userData, userList: userList,)),
+                        builder: (context) => new AnimeProfile(
+                              animeInfo: anime,
+                              animeList: animeList,
+                              userData: userData,
+                              userList: userList,
+                            )),
                   );
                 },
                 child: Container(
@@ -205,7 +215,12 @@ Widget recommendationRow(
   ]);
 }
 
-Widget animeBlock(AnimeInfo data, List<AnimeInfo> animeList, final PersonalInfo userData, final List<PersonalInfo> userList, BuildContext context) {
+Widget animeBlock(
+    AnimeInfo data,
+    List<AnimeInfo> animeList,
+    final PersonalInfo userData,
+    final List<PersonalInfo> userList,
+    BuildContext context) {
   return GestureDetector(
     onTap: () {
       if(userData.SearchHistory.contains(data.AnimeId)){
@@ -219,7 +234,12 @@ Widget animeBlock(AnimeInfo data, List<AnimeInfo> animeList, final PersonalInfo 
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => new AnimeProfile(animeInfo: data, animeList: animeList, userData: userData, userList: userList,)),
+            builder: (context) => new AnimeProfile(
+                  animeInfo: data,
+                  animeList: animeList,
+                  userData: userData,
+                  userList: userList,
+                )),
       );
     },
     child: Container(
@@ -317,7 +337,8 @@ Widget animeBlock(AnimeInfo data, List<AnimeInfo> animeList, final PersonalInfo 
   );
 }
 
-Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, Comment comment) {
+Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
+    PersonalInfo userData, List<PersonalInfo> userList, Comment comment) {
   ValueNotifier<bool> notifier = ValueNotifier(comment.Liked);
   return ValueListenableBuilder<bool>(
     builder: (BuildContext context, bool value, Widget? child) {
@@ -337,13 +358,18 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList, Personal
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => OtherUserProfile(animeList: animeList, userData: userData, userList: userList, id: comment.UserId)),
+                      MaterialPageRoute(
+                          builder: (context) => OtherUserProfile(
+                              animeList: animeList,
+                              userData: userData,
+                              userList: userList,
+                              id: comment.UserId)),
                     );
                   },
                   child: Container(
-                    child: imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
-                  )
-              ),
+                    child: imageCard('assets/images/person.jpg',
+                        height: 72, width: 72, radius: 36),
+                  )),
               SizedBox(
                 width: 8,
               ),
@@ -362,7 +388,9 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList, Personal
                         Row(
                           children: [
                             Icon(Icons.star, color: specialTeal, size: 20),
-                            Text(' ${comment.Score}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                            Text(' ${comment.Score}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16)),
                             Text('/5', style: TextStyle(fontSize: 16)),
                           ],
                         ),
@@ -407,10 +435,22 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList, Personal
                               comment.Likes = comment.Liked
                                   ? comment.Likes + 1
                                   : comment.Likes - 1;
-                              var userReviewindex = userList[comment.UserId].Reviews.indexWhere((review) => review.AnimeId == animeInfo.AnimeId);
-                              userList[comment.UserId].Reviews[userReviewindex].Likes = comment.Liked
-                                  ? userList[comment.UserId].Reviews[userReviewindex].Likes + 1
-                                  : userList[comment.UserId].Reviews[userReviewindex].Likes - 1;
+                              var userReviewindex = userList[comment.UserId]
+                                  .Reviews
+                                  .indexWhere((review) =>
+                                      review.AnimeId == animeInfo.AnimeId);
+                              userList[comment.UserId]
+                                      .Reviews[userReviewindex]
+                                      .Likes =
+                                  comment.Liked
+                                      ? userList[comment.UserId]
+                                              .Reviews[userReviewindex]
+                                              .Likes +
+                                          1
+                                      : userList[comment.UserId]
+                                              .Reviews[userReviewindex]
+                                              .Likes -
+                                          1;
                               notifier.value = !notifier.value;
                             }),
                             Text(' ${comment.Likes}',
