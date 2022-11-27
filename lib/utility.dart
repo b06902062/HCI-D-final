@@ -264,7 +264,7 @@ Widget animeBlock(
                     color: Colors.blueGrey.shade50),
                 child: Container(
                   margin: EdgeInsets.all(6),
-                  child: Text(data.Description, style: TextStyle(fontSize: 12)),
+                  child: Text(data.Description, style: TextStyle(fontSize: 12),),
                 )),
           ),
           // information
@@ -276,34 +276,43 @@ Widget animeBlock(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width - 210,
+                      width: MediaQuery.of(context).size.width - 220,
                       child: Text(data.Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis,),
                     ),
                     // SizedBox(height: 4),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Author: ',
-                        style: TextStyle(fontSize: 12),
-                        children: <TextSpan>[
+                    Container(
+                      width: MediaQuery.of(context).size.width - 167,
+                      child:
+                        Text.rich(
                           TextSpan(
-                              text: data.Author,
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 12)),
-                        ],
-                      ),
+                            text: 'Author: ',
+                            style: TextStyle(fontSize: 12),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: data.Author,
+                                  style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      fontSize: 12)),
+                            ],
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                     ),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Director: ',
-                        style: TextStyle(fontSize: 12),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: data.Director,
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 12)),
-                        ],
+                    Container(
+                      width: MediaQuery.of(context).size.width - 167,
+                      child:
+                      Text.rich(
+                        TextSpan(
+                          text: 'Director: ',
+                          style: TextStyle(fontSize: 12),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: data.Director,
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 12)),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(height: 4),
