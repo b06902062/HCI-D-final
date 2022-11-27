@@ -1,13 +1,15 @@
+import 'package:AniRate/database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'utility.dart';
 import 'profileUtility.dart';
 
 class OtherUserProfile extends StatefulWidget {
-  final List<AnimeInfo> animeList;
-  final PersonalInfo userInfo;
+   final List<AnimeInfo> animeList;
+  final PersonalInfo userData;
+  final List<PersonalInfo> userList;
+  final int id;
 
-  OtherUserProfile({super.key,  required this.animeList, required this.userInfo});
+  OtherUserProfile({super.key, required this.animeList, required this.userData, required this.userList, required this.id});
 
   @override
   _OtherUserProfile createState() => _OtherUserProfile();
@@ -17,26 +19,25 @@ class _OtherUserProfile extends State<OtherUserProfile> {
 
   //reference https://stackoverflow.com/questions/43485529/programmatically-scrolling-to-the-end-of-a-listview
   //reference https://stackoverflow.com/questions/54291245/get-y-position-of-container-on-flutter
-  GlobalKey _comment_key = GlobalKey();
   List<AnimeInfo> _animeList = [];
   FavoriteAndHistory _favorite = FavoriteAndHistory("Favorite Anime", []);
   FavoriteAndHistory _history = FavoriteAndHistory("Search History", []);
   List<Review> _reviews = [];
+  PersonalInfo _userData = PersonalInfo(-1, "", "", -1, -1, "", "", "", "", [], [], [], []);
+  List<PersonalInfo> _userList = [];
+  int _id = -1;
 
   @override
   void initState() {
     super.initState();
     _animeList = widget.animeList;
-    _favorite.Results = _animeList;
-    _favorite.Title = _favorite.Title + " (${_favorite.Results.length})";
-    _history.Results = _animeList;
-    _reviews = [
-      Review(_animeList[0], DateTime.utc(2022, 11, 23), 100, 5.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.", false, new TextEditingController()),
-      Review(_animeList[1], DateTime.utc(2022, 11, 19), 500, 3.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.", false, new TextEditingController()),
-      Review(_animeList[2], DateTime.utc(2022, 11, 21), 10, 4.5, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.", false, new TextEditingController()),
-      Review(_animeList[3], DateTime.utc(2022, 11, 22), 30, 2.0, "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.", false, new TextEditingController()),
-    ];
-    _reviews.sort((b, a) => a.Likes.compareTo(b.Likes));
+    _userData = widget.userData;
+    _userList = widget.userList;
+    _id = widget.id;
+    _favorite.Results = _userList[_id].Favorite.map((index) => animedatabase.animeList[index]).toList();
+    _favorite.Title = "${_favorite.Title} (${_favorite.Results.length})";
+    _history.Results = _userList[_id].SearchHistory.map((index) => animedatabase.animeList[index]).toList();
+    _userList[_id].Reviews.sort((b, a) => a.Likes.compareTo(b.Likes));
   }
 
   @override
@@ -47,7 +48,7 @@ class _OtherUserProfile extends State<OtherUserProfile> {
         appBar: AppBar(
           backgroundColor: Colors.blueGrey.shade900,
           centerTitle: true,
-          title: Text('${widget.userInfo.Name}'),
+          title: Text('${_userList[_id].Name}'),
         ),
         body: Container(
           color: Colors.blueGrey.shade900,
@@ -57,14 +58,14 @@ class _OtherUserProfile extends State<OtherUserProfile> {
               Expanded(
                 child: ListView(
                   children:  [
-                    infoBlockListener(widget.userInfo, context, false),
+                    infoBlockListener(_userList[_id], context, false),
                     Container(
                       padding: const EdgeInsets.only(left:12, right: 12),
                       child: Column(
                         children: [
-                          recommendationRow(context, bracketTitle(_favorite.Title, 22), _favorite.Results),
-                          recommendationRow(context, bracketTitle(_history.Title, 22), _history.Results),
-                          reviewRow(_reviews, false),
+                          recommendationRow(context, bracketTitle(_favorite.Title, 22), _favorite.Results, _animeList, _userData, _userList,),
+                          recommendationRow(context, bracketTitle(_history.Title, 22), _history.Results, _animeList, _userData, _userList,),
+                          reviewRow(_animeList, _userData, _userList, false, id: _id),
                         ],
                       ),
                     )

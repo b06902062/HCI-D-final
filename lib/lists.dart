@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'utility.dart';
 import 'animeProfile.dart';
+import 'profileUtility.dart';
 
 class ListPage extends StatefulWidget {
   final List<AnimeInfo> animeList;
+  final PersonalInfo userData;
+  final List<PersonalInfo> userList;
 
-  ListPage({super.key, required this.animeList});
+  ListPage({super.key, required this.animeList, required this.userData, required this.userList});
 
   @override
   _ListPageState createState() => _ListPageState();
@@ -22,17 +25,17 @@ class UserList {
 
 class _ListPageState extends State<ListPage> {
   List<AnimeInfo> _animeList = [];
+  PersonalInfo _userData = PersonalInfo(-1, "", "", -1, -1, "", "", "", "", [], [], [], []);
+  List<PersonalInfo> _userList = [];
   List<UserList> _user_lists = [];
 
   @override
   void initState() {
     super.initState();
     _animeList = widget.animeList;
-    _user_lists = [
-      new UserList('My favorite', _animeList.where((anime) => anime.Score>4.3).toList()),
-      new UserList('Relax', _animeList.where((anime) => anime.Tags.contains('comedy')).toList()),
-      new UserList('Satisfying', _animeList.where((anime) => anime.Tags.contains('action')).toList()),
-    ];
+    _userData = widget.userData;
+    _userList = widget.userList;
+    _user_lists = _userData.Lists;
   }
 
   Widget listRow(UserList userlist){
@@ -120,7 +123,7 @@ class _ListPageState extends State<ListPage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: anime)),
+                          MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: anime, animeList: _animeList, userData: _userData, userList: _userList,)),
                         );
                       },
                       child: Container(

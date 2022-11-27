@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'utility.dart';
+import 'profileUtility.dart';
 
 class AnimeProfile extends StatefulWidget {
   final AnimeInfo animeInfo;
+  final List<AnimeInfo> animeList;
+  final PersonalInfo userData;
+  final List<PersonalInfo> userList;
 
-  AnimeProfile({super.key, required this.animeInfo});
+  AnimeProfile({super.key, required this.animeInfo, required this.animeList, required this.userData, required this.userList});
 
   @override
   _AnimeProfileState createState() => _AnimeProfileState();
@@ -19,12 +23,6 @@ class _AnimeProfileState extends State<AnimeProfile> {
   // TODO: add to animeInfo
   // List<String> showingImages = ['assets/images/SPYxFamily00.jpg', 'assets/images/SPYxFamily01.jpg'];
   int _showing_image_index = 0;
-
-  List<Comment> _others_comments = [
-    Comment('Daan Aniki', DateTime.utc(2022, 11, 23), 137, 4.5, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.', false),
-    Comment('Nefu Aniki', DateTime.utc(2022, 11, 21), 79, 4.0, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot. Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.', false),
-    Comment('Xinyi Aniki', DateTime.utc(2022, 11, 17), 35, 4.5, 'Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.', false),
-  ];
 
   //reference https://stackoverflow.com/questions/43485529/programmatically-scrolling-to-the-end-of-a-listview
   //reference https://stackoverflow.com/questions/54291245/get-y-position-of-container-on-flutter
@@ -379,7 +377,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
               child: Text('2k+ comments', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
             ),
             Column(
-              children: _others_comments.map((comment) => otherUserComment(comment)).toList(),
+              children: widget.animeInfo.Comments.map((comment) => otherUserComment(widget.animeList, widget.userData, widget.userList, comment)).toList(),
             ),
             SizedBox(height: 8),
           ],
