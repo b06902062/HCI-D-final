@@ -23,6 +23,30 @@ class UserList {
   UserList(this.Title, this.Results): _user_comment_controller = new TextEditingController(text: Title);
 }
 
+Widget _checkPopup(BuildContext context, List<UserList> _user_lists, UserList list){
+  return AlertDialog(
+    backgroundColor: Colors.blueGrey.shade900,
+    content: Row(children: [Text("Are you sure to delete ", style: TextStyle(color: Colors.blueGrey.shade100,)), Text("${list.Title}", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red,)), Text("?", style: TextStyle(color: Colors.blueGrey.shade100,))]),
+    actions: [
+      TextButton.icon(
+        onPressed: (){
+          Navigator.pop(context);
+        }, 
+        icon: Icon(Icons.close, color: Colors.red), 
+        label: Text("CANCEL", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade100,))
+      ),
+      TextButton.icon(
+        onPressed:  (){
+            _user_lists.remove(list);
+            Navigator.pop(context);
+        },
+        icon: Icon(Icons.check, color: Colors.green), 
+        label: Text("OK", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade100,))
+      ),
+    ],
+  );
+}
+
 class _ListPageState extends State<ListPage> {
   List<AnimeInfo> _animeList = [];
   PersonalInfo _userData = PersonalInfo(-1, "", "", -1, -1, "", "", "", "", [], [], [], []);
@@ -44,7 +68,7 @@ class _ListPageState extends State<ListPage> {
         children: [
           Row(
             children: [
-              userlist.isEditing?
+              (userlist.isEditing && userlist.Title != "My favorite") ?
               Container(
                 height: 32,
                 width: MediaQuery.of(context).size.width - 160,
@@ -67,7 +91,16 @@ class _ListPageState extends State<ListPage> {
               )
                   : bracketTitle('${userlist.Title} (${userlist.Results.length})', 22),
               Spacer(),
-              Text(formatter.format(DateTime.now()), style: TextStyle(color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold, fontSize: 14)),
+              (userlist.isEditing && userlist.Title != "My favorite") ?
+              clickableBlockWithLabel(Icon(Icons.delete, color: Colors.blueGrey.shade100,), '', '', (){
+                showDialog(
+                  context: context, 
+                  builder: (BuildContext context) {
+                    return _checkPopup(context, _user_lists, userlist);
+                  }).then((_){setState(() {});});
+                }
+              )
+              : Text(formatter.format(DateTime.now()), style: TextStyle(color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold, fontSize: 14)),
               SizedBox(width: 4,),
               clickableBlockWithLabel(Icon(Icons.edit, color: Colors.blueGrey.shade100,), '', '', (){setState(() {
                 if(userlist.isEditing){
@@ -96,10 +129,11 @@ class _ListPageState extends State<ListPage> {
                         width: 110,
                         child: ElevatedButton(
                           onPressed: (){setState(() {
-                            if(userlist.Results.length == 1){
+                            if(userlist.Results.length == 1 && userlist.Title != "My favorite"){
                               _user_lists.remove(userlist);
                             }
                             else{
+                              (userlist.Title == "My favorite") ? widget.userData.Favorite.remove(anime.AnimeId): null;
                               userlist.Results.remove(anime);
                             }
                           });},
@@ -124,7 +158,7 @@ class _ListPageState extends State<ListPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: anime, animeList: _animeList, userData: _userData, userList: _userList,)),
-                        );
+                        ).then((_){setState(() {});});
                       },
                       child: Container(
                         padding: EdgeInsets.only(left: 16),
