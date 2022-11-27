@@ -203,11 +203,11 @@ Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus
     // alignment: Alignment(-1, -1),
       children: [
         Positioned(
-          left: 0,
-          top: 40,
+          left: 6,
+          top: 67,
           child: Container(
             // height: 170,
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width - 12,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius:
