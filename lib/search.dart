@@ -71,93 +71,88 @@ class _SearchWidgetState extends State<SearchWidget> {
               ],
             ),
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 4),
+
           // filter, sorter
           Container(
+            // color: Colors.orange,
             margin: EdgeInsets.only(left: 8, right: 8),
-            height: 36,
-            child: Stack(
-              alignment: Alignment.center,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // filter
-                Positioned(
-                  left: 0,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: (){
-                          setState(
-                            () {
-                              //TODO: show filter
-                              showDialog(
-                                context: context,
-                                barrierColor: Colors.black54,
-                                barrierDismissible: true,
-                                barrierLabel: 'Label',
-                                builder: (BuildContext context) {
-                                  return FilterPanel(typeTagStatus: _typeTagStatus, statusTagStatus: _statusTagStatus, notifyParent: refresh);
-                                },
-                              );
-                              
-                            }
+                Container(
+                  // color: Colors.green,
+                  child: IconButton(
+                    onPressed: (){
+                      setState(
+                        () {
+                          //TODO: show filter
+                          showDialog(
+                            context: context,
+                            barrierColor: Colors.black54,
+                            barrierDismissible: true,
+                            barrierLabel: 'Label',
+                            builder: (BuildContext dialogContext) {
+                              return FilterPanel(typeTagStatus: _typeTagStatus, statusTagStatus: _statusTagStatus, notifyParent: refresh, parentContext: context);
+                            },
                           );
-                        },
-                        iconSize: 28,
-                        icon: Icon(Icons.sort, color: Colors.blueGrey.shade100),
-                      ),
-                      // tags button
-                      Wrap(
-                        spacing: 4,
-                        children: _typeTagStatus.entries.where((e)=>e.value).map((e) =>
-                          tagButton(
-                            e.key,
-                            (){setState(() {_typeTagStatus[e.key] = !e.value;});},
-                          )
-                        ).toList() + 
-                        _statusTagStatus.entries.where((e)=>e.value).map((e) =>
-                          tagButton(
-                            e.key,
-                            (){setState(() {_statusTagStatus[e.key] = !e.value;});},
-                          )
-                        ).toList(),
-                      ),
-                    ],
+                          
+                        }
+                      );
+                    },
+                    iconSize: 28,
+                    icon: Icon(Icons.sort, color: Colors.blueGrey.shade100,),
                   ),
                 ),
-                // sorter
-                Positioned(
-                  right: 0,
-                  child: Row(
-                    children: [
-                      // sorts button
-                      Wrap(
-                        spacing: 4,
-                        children: [
-                          sortButton(_sortStatus[_sortStatusIndex], (){
-                            setState(() {
-                              _sortStatusIndex += 1; 
-                              _sortStatusIndex %= _sortStatus.length;
-                            });
-                          })
-                        ]
-                      ),
-                      IconButton(
-                          onPressed: (){
-                            setState(() {
-                              // TODO: reverse sorter
-                              
-                            });
-                          },
-                          iconSize: 28,
-                          icon: Icon(Icons.import_export, color: Colors.blueGrey.shade100,)
-                      ),
-                    ]
+                Expanded(
+                  // width: 200,
+                  // color: Colors.blue,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10),
+                    // color: Colors.blue,
+                    child: Wrap(
+                      spacing: 4,
+                      runSpacing: 2,
+                      children: _typeTagStatus.entries.where((e)=>e.value).map((e) =>
+                        tagButton(
+                          e.key,
+                          (){setState(() {_typeTagStatus[e.key] = !e.value;});},
+                        )
+                      ).toList() + 
+                      _statusTagStatus.entries.where((e)=>e.value).map((e) =>
+                        tagButton(
+                          e.key,
+                          (){setState(() {_statusTagStatus[e.key] = !e.value;});},
+                        )
+                      ).toList(),
+                    ),
                   ),
                 ),
-              ],
-            ),
+                Container(
+                  padding: EdgeInsets.only(top: 10),
+                  child: sortButton(_sortStatus[_sortStatusIndex], (){
+                    setState(() {
+                      _sortStatusIndex += 1; 
+                      _sortStatusIndex %= _sortStatus.length;
+                    });
+                  }),
+                ),
+                IconButton(
+                    onPressed: (){
+                      setState(() {
+                        // TODO: reverse sorter
+                        
+                      });
+                    },
+                    iconSize: 28,
+                    icon: Icon(Icons.import_export, color: Colors.blueGrey.shade100,)
+                ),
+                
+              ]
+            )
           ),
-          SizedBox(height: 8),
+          
+          SizedBox(height: 4),
           // anime list
           Expanded(
             child: ListView.separated(
@@ -183,7 +178,8 @@ class FilterPanel extends StatefulWidget {
   final Map typeTagStatus;
   final Map statusTagStatus;
   final Function notifyParent;
-  FilterPanel({required this.typeTagStatus, required this.statusTagStatus, required this.notifyParent});
+  final BuildContext parentContext;
+  FilterPanel({required this.typeTagStatus, required this.statusTagStatus, required this.notifyParent, required this.parentContext});
 
   @override
   State<FilterPanel> createState() => _FilterPanelState();
@@ -192,19 +188,19 @@ class FilterPanel extends StatefulWidget {
 class _FilterPanelState extends State<FilterPanel> {
   @override
   Widget build(BuildContext context) {
-    return filterPanel(context, setState, widget.typeTagStatus, widget.statusTagStatus, widget.notifyParent);
+    return filterPanel(context, setState, widget.typeTagStatus, widget.statusTagStatus, widget.notifyParent, widget.parentContext);
   }
 }
 
 
-Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus, Map statusTagStatus, Function notifyParent) {
+Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus, Map statusTagStatus, Function notifyParent, BuildContext parentContext) {
   return 
     Stack(
     // alignment: Alignment(-1, -1),
       children: [
         Positioned(
           left: 6,
-          top: 67,
+          top: 67 - MediaQuery.of(parentContext).viewPadding.top,
           child: Container(
             // height: 170,
             width: MediaQuery.of(context).size.width - 12,
@@ -260,7 +256,9 @@ Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus
                           children: typeTagStatus.entries.where((e)=>true).map((e) =>
                             tagButton(
                               e.key,
-                              (){setState(() {typeTagStatus[e.key] = !e.value;}); notifyParent();},
+                              (){
+                                setState(() {typeTagStatus[e.key] = !e.value;}); notifyParent();
+                              },
                               fill: e.value,
                             )
                           ).toList(),
