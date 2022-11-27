@@ -8,6 +8,7 @@ import 'profile.dart';
 import 'utility.dart';
 import 'database.dart';
 import 'profileUtility.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -48,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
     _animeList = animedatabase.animeList;
     _userData = userdata.userData;
     _userList = userdatabase.userList;

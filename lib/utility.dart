@@ -221,6 +221,25 @@ Widget animeBlock(
     final PersonalInfo userData,
     final List<PersonalInfo> userList,
     BuildContext context) {
+
+  List<String> slicedTags = [];
+  var widthSum = 158;
+  var tagId = 0;
+  while(
+    tagId < data.Tags.length
+    && (data.Tags[tagId].length*8+9 + widthSum) < MediaQuery.of(context).size.width
+  ){
+    slicedTags.add(data.Tags[tagId]);
+    widthSum += data.Tags[tagId].length*8+9+8;
+    tagId += 1;
+  }
+  if(slicedTags.length < data.Tags.length){
+    if(MediaQuery.of(context).size.width - widthSum < 41){
+      slicedTags.removeLast();
+    }
+    slicedTags.add('•••');
+  }
+
   return GestureDetector(
     onTap: () {
       if(userData.SearchHistory.contains(data.AnimeId)){
@@ -309,7 +328,7 @@ Widget animeBlock(
                     SizedBox(height: 4),
                     Wrap(
                       spacing: 8,
-                      children: (data.Tags as List)
+                      children: slicedTags
                           .map((name) => tagButton(name, () {}))
                           .toList(),
                     ),
