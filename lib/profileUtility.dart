@@ -390,7 +390,7 @@ Widget infoBlock(PersonalInfo data, BuildContext context, ValueNotifier<bool> _n
                   color: Colors.blueGrey.shade100,
                 )
               ),
-              Icon(Icons.more_vert, color: Colors.blueGrey.shade100, size: 20),
+              // Icon(Icons.more_vert, color: Colors.blueGrey.shade100, size: 20),
             ],
           )
           : Container() 
@@ -648,7 +648,7 @@ class _ReviewList extends State<ReviewList> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  width: 190,
+                                  width: MediaQuery.of(context).size.width - 200,
                                   child: Text(widget.animeList[review.AnimeId].Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis,),
                                 ),
                                 // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),

@@ -275,9 +275,10 @@ Widget animeBlock(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(data.Name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 210,
+                      child: Text(data.Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis,),
+                    ),
                     // SizedBox(height: 4),
                     Text.rich(
                       TextSpan(
