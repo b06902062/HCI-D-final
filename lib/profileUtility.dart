@@ -390,7 +390,7 @@ Widget infoBlock(PersonalInfo data, BuildContext context, ValueNotifier<bool> _n
                   color: Colors.blueGrey.shade100,
                 )
               ),
-              Icon(Icons.more_vert, color: Colors.blueGrey.shade100, size: 20),
+              // Icon(Icons.more_vert, color: Colors.blueGrey.shade100, size: 20),
             ],
           )
           : Container() 
@@ -620,9 +620,14 @@ class _ReviewList extends State<ReviewList> {
                       // image
                       GestureDetector(
                           onTap: () {
-                            widget.userData.SearchHistory.removeLast();
-                            widget.userData.SearchHistory.insert(0, review.AnimeId);
-                            // print(widget.userData.SearchHistory);
+                            if(widget.userData.SearchHistory.contains(review.AnimeId)){
+                              widget.userData.SearchHistory.remove(review.AnimeId);
+                              widget.userData.SearchHistory.insert(0, review.AnimeId);
+                            }
+                            else{
+                              widget.userData.SearchHistory.removeLast();
+                              widget.userData.SearchHistory.insert(0, review.AnimeId);
+                            }
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: widget.animeList[review.AnimeId],  animeList: widget.animeList, userData: widget.userData, userList: widget.userList)),
@@ -643,7 +648,7 @@ class _ReviewList extends State<ReviewList> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  width: 190,
+                                  width: MediaQuery.of(context).size.width - 200,
                                   child: Text(widget.animeList[review.AnimeId].Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis,),
                                 ),
                                 // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),

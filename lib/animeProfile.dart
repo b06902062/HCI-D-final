@@ -120,6 +120,52 @@ class _AnimeProfileState extends State<AnimeProfile> {
     );
   }
 
+  Widget _newListPopup(PersonalInfo userData){
+    TextEditingController titleController = new TextEditingController();
+    return AlertDialog(
+      backgroundColor: Colors.blueGrey.shade900,
+      title: Text("Add list", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade100,),),
+      content: Container(
+        margin: EdgeInsets.only(top: 8, bottom: 4),
+        width: MediaQuery.of(context).size.width,
+        child: TextField(
+          style: TextStyle(color: Colors.blueGrey.shade100),
+          // keyboardType: TextInputType.multiline,
+          maxLines: 1,
+          controller: titleController,
+          textInputAction: TextInputAction.done,
+          decoration: InputDecoration(
+            labelText: "List Name",
+            labelStyle: TextStyle(color: Colors.blueGrey.shade400),
+          ),
+        ),
+      ),
+      actions: [
+        TextButton.icon(
+          onPressed: (){
+            Navigator.pop(context);
+          }, 
+          icon: Icon(Icons.close, color: Colors.red), 
+          label: Text("CANCEL", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade100,))
+        ),
+        TextButton.icon(
+          onPressed:  (){
+            if(!titleController.text.isEmpty){
+              userData.Lists.add(UserList(titleController.text, [widget.animeInfo]));
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }
+            else{
+              null;
+            }
+          },
+          icon: Icon(Icons.check, color: Colors.green), 
+          label: Text("OK", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade100,))
+        ),
+      ],
+    );
+  }
+
   Widget _listPopup(PersonalInfo userData){
     return Dialog(
       shape: RoundedRectangleBorder(side: BorderSide(width: 1, color: Colors.blueGrey.shade400),  borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -150,7 +196,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                         onTap: (){
                           int animeIndex = list.Results.indexWhere((result) => result.AnimeId == widget.animeInfo.AnimeId);
                           animeIndex != -1?
-                           Future.delayed(
+                          Future.delayed(
                             const Duration(seconds: 0),
                             () => showDialog(
                               context: context, 
@@ -173,8 +219,19 @@ class _AnimeProfileState extends State<AnimeProfile> {
                 ),
               ],
             ), 
-        )
-      )
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: (){
+            showDialog(
+              context: context, 
+              builder: (BuildContext context) {
+                return _newListPopup(widget.userData);
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 
@@ -186,6 +243,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
     _user_comment_controller.text = _user_rated ? widget.userData.Reviews[_user_review_index].Comments : '';
     _user_rating = _user_rated ? widget.userData.Reviews[_user_review_index].Score : -1;
     _user_review_time = _user_rated ? widget.userData.Reviews[_user_review_index].Time : _user_review_time;
+    _user_favorite = widget.userData.Favorite.contains(widget.animeInfo.AnimeId);
   }
 
   @override
@@ -326,6 +384,14 @@ class _AnimeProfileState extends State<AnimeProfile> {
                       '${widget.animeInfo.Favorites+(_user_favorite? 1 : 0)}', (){
                         setState(() {
                           _user_favorite = !_user_favorite;
+                          if(_user_favorite){
+                            widget.userData.Favorite.insert(0, widget.animeInfo.AnimeId);
+                            widget.userData.Lists.singleWhere((list) => list.Title == "My favorite").Results.add(widget.animeInfo);
+                          }
+                          else{
+                            widget.userData.Favorite.remove(widget.animeInfo.AnimeId);
+                            widget.userData.Lists.singleWhere((list) => list.Title == "My favorite").Results.remove(widget.animeInfo);
+                          }
                         });
                       }
                   ),

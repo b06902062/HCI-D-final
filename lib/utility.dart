@@ -182,9 +182,14 @@ Widget recommendationRow(
         children: animes
             .map((anime) => GestureDetector(
                 onTap: () {
-                  userData.SearchHistory.removeLast();
-                  userData.SearchHistory.insert(0, anime.AnimeId);
-                  // print(widget.userData.SearchHistory);
+                  if(userData.SearchHistory.contains(anime.AnimeId)){
+                    userData.SearchHistory.remove(anime.AnimeId);
+                    userData.SearchHistory.insert(0, anime.AnimeId);
+                  }
+                  else{
+                    userData.SearchHistory.removeLast();
+                    userData.SearchHistory.insert(0, anime.AnimeId);
+                  }
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -218,6 +223,14 @@ Widget animeBlock(
     BuildContext context) {
   return GestureDetector(
     onTap: () {
+      if(userData.SearchHistory.contains(data.AnimeId)){
+        userData.SearchHistory.remove(data.AnimeId);
+        userData.SearchHistory.insert(0, data.AnimeId);
+      }
+      else{
+        userData.SearchHistory.removeLast();
+        userData.SearchHistory.insert(0, data.AnimeId);
+      }
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -262,9 +275,10 @@ Widget animeBlock(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(data.Name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 210,
+                      child: Text(data.Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis,),
+                    ),
                     // SizedBox(height: 4),
                     Text.rich(
                       TextSpan(
