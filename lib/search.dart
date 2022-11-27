@@ -19,6 +19,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   var _statusTagStatus = {'in progress': true, 'ended': true, 'new season': true};
   var _sortStatus = ['score', 'time'];
   int _sortStatusIndex = 0;
+  bool _sortReverseOrder = false;
   var searchBarText = 'type here to search';
   List<AnimeInfo> _animeList = [];
   PersonalInfo _userData = PersonalInfo(-1, "", "", -1, -1, "", "", "", "", [], [], [], []);
@@ -108,7 +109,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                   // width: 200,
                   // color: Colors.blue,
                   child: Container(
-                    padding: EdgeInsets.only(top: 10),
+                    padding: EdgeInsets.only(top: 12),
                     // color: Colors.blue,
                     child: Wrap(
                       spacing: 4,
@@ -129,7 +130,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 10),
+                  padding: EdgeInsets.only(top: 12),
                   child: sortButton(_sortStatus[_sortStatusIndex], (){
                     setState(() {
                       _sortStatusIndex += 1; 
@@ -141,7 +142,9 @@ class _SearchWidgetState extends State<SearchWidget> {
                     onPressed: (){
                       setState(() {
                         // TODO: reverse sorter
-                        
+                        setState(() {
+                          _sortReverseOrder = !_sortReverseOrder;
+                        });
                       });
                     },
                     iconSize: 28,
@@ -172,7 +175,10 @@ class _SearchWidgetState extends State<SearchWidget> {
                   tags.every((tag) => anime.Tags.contains(tag))
                   && anime.Status.any((status)=>statuses.contains(status))
                 ).toList();
-                filtered.sort((b, a) => _sortStatusIndex == 0? a.Score.compareTo(b.Score) : a.Time.compareTo(b.Time));
+                if(_sortReverseOrder)
+                  filtered.sort((a, b) => _sortStatusIndex == 0? a.Score.compareTo(b.Score) : a.Time.compareTo(b.Time));
+                else
+                  filtered.sort((b, a) => _sortStatusIndex == 0? a.Score.compareTo(b.Score) : a.Time.compareTo(b.Time));
                 return animeBlock(filtered[index], _animeList, _userData, _userList, context,);
               },
               separatorBuilder: (BuildContext context, int index) => const Divider(),
