@@ -92,8 +92,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                             barrierColor: Colors.black54,
                             barrierDismissible: true,
                             barrierLabel: 'Label',
-                            builder: (BuildContext context) {
-                              return FilterPanel(typeTagStatus: _typeTagStatus, statusTagStatus: _statusTagStatus, notifyParent: refresh);
+                            builder: (BuildContext dialogContext) {
+                              return FilterPanel(typeTagStatus: _typeTagStatus, statusTagStatus: _statusTagStatus, notifyParent: refresh, parentContext: context);
                             },
                           );
                           
@@ -178,7 +178,8 @@ class FilterPanel extends StatefulWidget {
   final Map typeTagStatus;
   final Map statusTagStatus;
   final Function notifyParent;
-  FilterPanel({required this.typeTagStatus, required this.statusTagStatus, required this.notifyParent});
+  final BuildContext parentContext;
+  FilterPanel({required this.typeTagStatus, required this.statusTagStatus, required this.notifyParent, required this.parentContext});
 
   @override
   State<FilterPanel> createState() => _FilterPanelState();
@@ -187,19 +188,19 @@ class FilterPanel extends StatefulWidget {
 class _FilterPanelState extends State<FilterPanel> {
   @override
   Widget build(BuildContext context) {
-    return filterPanel(context, setState, widget.typeTagStatus, widget.statusTagStatus, widget.notifyParent);
+    return filterPanel(context, setState, widget.typeTagStatus, widget.statusTagStatus, widget.notifyParent, widget.parentContext);
   }
 }
 
 
-Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus, Map statusTagStatus, Function notifyParent) {
+Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus, Map statusTagStatus, Function notifyParent, BuildContext parentContext) {
   return 
     Stack(
     // alignment: Alignment(-1, -1),
       children: [
         Positioned(
           left: 6,
-          top: 67,
+          top: 67 - MediaQuery.of(parentContext).viewPadding.top,
           child: Container(
             // height: 170,
             width: MediaQuery.of(context).size.width - 12,
@@ -255,7 +256,9 @@ Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus
                           children: typeTagStatus.entries.where((e)=>true).map((e) =>
                             tagButton(
                               e.key,
-                              (){setState(() {typeTagStatus[e.key] = !e.value;}); notifyParent();},
+                              (){
+                                setState(() {typeTagStatus[e.key] = !e.value;}); notifyParent();
+                              },
                               fill: e.value,
                             )
                           ).toList(),
