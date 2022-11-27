@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'utility.dart';
+import 'lists.dart';
 import 'profileUtility.dart';
 
 class AnimeProfile extends StatefulWidget {
@@ -19,6 +20,8 @@ class _AnimeProfileState extends State<AnimeProfile> {
   bool _user_favorite = false;
   bool _user_rated = false;
   double _user_rating = -1;
+  int _user_review_index = -1; 
+  DateTime _user_review_time = DateTime.now().toUtc();
   final TextEditingController _user_comment_controller = new TextEditingController();
   // TODO: add to animeInfo
   // List<String> showingImages = ['assets/images/SPYxFamily00.jpg', 'assets/images/SPYxFamily01.jpg'];
@@ -57,6 +60,132 @@ class _AnimeProfileState extends State<AnimeProfile> {
           ],
         )
     );
+  }
+
+  Widget _ListCover(UserList list){
+    bool separate = list.Results.length != 1 ? true : false;
+    UserList DoubledList = new UserList(" ", []);
+    List<String> before = list.Results.map((result) => result.Name).toList();
+    DoubledList.Results.addAll(list.Results);
+    DoubledList.Results.addAll((list.Results.length == 2) ? list.Results.reversed : list.Results);
+    return Container(
+      height: 80,
+      width: 80,
+      child: separate ? 
+        Row(
+          children: [
+            Column(
+              children: [
+                imageCard('assets/images/${DoubledList.Results[0].Cover}', height: 40, width: 40, fit: false),
+                imageCard('assets/images/${DoubledList.Results[1].Cover}', height: 40, width: 40, fit: false),
+              ],
+            ),
+            Column(
+              children:[
+                imageCard('assets/images/${DoubledList.Results[2].Cover}', height: 40, width: 40, fit: false),
+                imageCard('assets/images/${DoubledList.Results[3].Cover}', height: 40, width: 40, fit: false),
+              ]
+            )
+          ],
+        )
+        : imageCard('assets/images/${DoubledList.Results[0].Cover}', height: 80, width: 80, fit: false),
+    );
+  }
+
+  Widget _ListBlock(UserList list){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children:[
+          _ListCover(list),
+          SizedBox(width: 10),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("${list.Title}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.blueGrey.shade100)),
+              // SizedBox(height: 5,),
+              Text("${list.Results.length} ${list.Results.length == 1 ? "anime" : "animes"}", style: TextStyle(color: Colors.blueGrey.shade400)),
+            ],
+          )
+      ]
+    );
+  }
+
+  Widget _existPopup(String name){
+    return AlertDialog(
+      content: Text("${name} is already in the list!"),
+      actions: [
+        TextButton(child: Text("Understood"), onPressed: (){Navigator.pop(context);}, )
+      ],
+    );
+  }
+
+  Widget _listPopup(PersonalInfo userData){
+    return Dialog(
+      shape: RoundedRectangleBorder(side: BorderSide(width: 1, color: Colors.blueGrey.shade400),  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      insetPadding: EdgeInsets.only(top: 100, bottom: 100, left: 50, right: 50),
+      child:Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blueGrey.shade900,
+          title: Text('Add to list'),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(4.0),
+            child: Container(
+                color: Colors.blueGrey.shade400,
+            ),
+        )
+        ),
+        body: Container(
+          color: Colors.blueGrey.shade900,
+          child: 
+            Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.all(12),
+                    children: userData.Lists.map((list) => list.Title == "My favorite"? 
+                      Container()
+                      : 
+                      GestureDetector(
+                        onTap: (){
+                          int animeIndex = list.Results.indexWhere((result) => result.AnimeId == widget.animeInfo.AnimeId);
+                          animeIndex != -1?
+                           Future.delayed(
+                            const Duration(seconds: 0),
+                            () => showDialog(
+                              context: context, 
+                              builder: (BuildContext context) {
+                                return _existPopup(widget.animeInfo.Name);
+                              },
+                            )
+                          )
+                          :
+                          list.Results.add(widget.animeInfo);
+                          Navigator.pop(context);
+                        },
+                      child: Container(
+                          padding: EdgeInsets.all(8),
+                          height: 100,  
+                          child: _ListBlock(list),),
+                        )
+                    ).toList(),
+                  ),
+                ),
+              ],
+            ), 
+        )
+      )
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _user_review_index = widget.userData.Reviews.indexWhere((review) => review.AnimeId == widget.animeInfo.AnimeId);
+    _user_rated = (_user_review_index != -1) ? true : false;
+    _user_comment_controller.text = _user_rated ? widget.userData.Reviews[_user_review_index].Comments : '';
+    _user_rating = _user_rated ? widget.userData.Reviews[_user_review_index].Score : -1;
+    _user_review_time = _user_rated ? widget.userData.Reviews[_user_review_index].Time : _user_review_time;
   }
 
   @override
@@ -204,7 +333,16 @@ class _AnimeProfileState extends State<AnimeProfile> {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
-                  child: clickableBlockWithLabel(Icon(Icons.playlist_add_outlined), '', 'Add to List', (){}),
+                  child: clickableBlockWithLabel(Icon(Icons.playlist_add_outlined), '', 
+                      'Add to List', (){
+                        showDialog(
+                          context: context, 
+                          builder: (BuildContext context) {
+                            return _listPopup(widget.userData);
+                          },
+                        );
+                      }
+                  ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
@@ -296,7 +434,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                           children: [
                             RatingBar.builder(
                               ignoreGestures: _user_rated,
-                              initialRating: 0,
+                              initialRating: (_user_rating != -1) ? _user_rating : 0,
                               minRating: 0,
                               direction: Axis.horizontal,
                               allowHalfRating: true,
@@ -309,6 +447,15 @@ class _AnimeProfileState extends State<AnimeProfile> {
                               onRatingUpdate: (rating) {
                                 setState(() {
                                   _user_rating = rating;
+                                  if(_user_review_index == -1){
+                                    widget.userData.Reviews.add(
+                                      Review(widget.animeInfo.AnimeId, _user_review_time, 0, _user_rating , _user_comment_controller.text)
+                                    );
+                                    _user_review_index = widget.userData.Reviews.length - 1;
+                                  }
+                                  else{
+                                    widget.userData.Reviews[_user_review_index].Score = _user_rating;
+                                  }
                                 });
                               },
                             ),
@@ -349,7 +496,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                   _user_rated ? Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(formatter.format(DateTime.now()), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14)),
+                      Text(formatter.format(_user_review_time), style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 14)),
                       SizedBox(width: 4,),
                       clickableBlockWithLabel(Icon(Icons.edit,), '', '', (){setState(() {_user_rated = false;});},),
                       SizedBox(width: 4,),
@@ -358,6 +505,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                     onPressed: _user_rating == -1 ? null : (){
                       setState(() {
                         _user_rated = true;
+                        widget.userData.Reviews[_user_review_index].Comments = _user_comment_controller.text;
                       });
                     },
                     child: Icon(Icons.send),
@@ -377,7 +525,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
               child: Text('2k+ comments', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
             ),
             Column(
-              children: widget.animeInfo.Comments.map((comment) => otherUserComment(widget.animeList, widget.userData, widget.userList, comment)).toList(),
+              children: widget.animeInfo.Comments.map((comment) => otherUserComment(widget.animeInfo, widget.animeList, widget.userData, widget.userList, comment)).toList(),
             ),
             SizedBox(height: 8),
           ],

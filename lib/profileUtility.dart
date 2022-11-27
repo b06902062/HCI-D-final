@@ -644,7 +644,7 @@ class _ReviewList extends State<ReviewList> {
                               children: [
                                 Container(
                                   width: 190,
-                                  child: Text(widget.animeList[review.AnimeId].Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                  child: Text(widget.animeList[review.AnimeId].Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis,),
                                 ),
                                 // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
                                 review.Comments.isEmpty?

@@ -304,7 +304,7 @@ Widget animeBlock(AnimeInfo data, List<AnimeInfo> animeList, final PersonalInfo 
   );
 }
 
-Widget otherUserComment(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, Comment comment) {
+Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, Comment comment) {
   ValueNotifier<bool> notifier = ValueNotifier(comment.Liked);
   return ValueListenableBuilder<bool>(
     builder: (BuildContext context, bool value, Widget? child) {
@@ -394,6 +394,10 @@ Widget otherUserComment(List<AnimeInfo> animeList, PersonalInfo userData, List<P
                               comment.Likes = comment.Liked
                                   ? comment.Likes + 1
                                   : comment.Likes - 1;
+                              var userReviewindex = userList[comment.UserId].Reviews.indexWhere((review) => review.AnimeId == animeInfo.AnimeId);
+                              userList[comment.UserId].Reviews[userReviewindex].Likes = comment.Liked
+                                  ? userList[comment.UserId].Reviews[userReviewindex].Likes + 1
+                                  : userList[comment.UserId].Reviews[userReviewindex].Likes - 1;
                               notifier.value = !notifier.value;
                             }),
                             Text(' ${comment.Likes}',
