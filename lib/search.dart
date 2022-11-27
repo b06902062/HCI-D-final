@@ -63,93 +63,88 @@ class _SearchWidgetState extends State<SearchWidget> {
               ],
             ),
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 4),
+
           // filter, sorter
           Container(
+            // color: Colors.orange,
             margin: EdgeInsets.only(left: 8, right: 8),
-            height: 36,
-            child: Stack(
-              alignment: Alignment.center,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // filter
-                Positioned(
-                  left: 0,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: (){
-                          setState(
-                            () {
-                              //TODO: show filter
-                              showDialog(
-                                context: context,
-                                barrierColor: Colors.black54,
-                                barrierDismissible: true,
-                                barrierLabel: 'Label',
-                                builder: (BuildContext context) {
-                                  return FilterPanel(typeTagStatus: _typeTagStatus, statusTagStatus: _statusTagStatus, notifyParent: refresh);
-                                },
-                              );
-                              
-                            }
+                Container(
+                  // color: Colors.green,
+                  child: IconButton(
+                    onPressed: (){
+                      setState(
+                        () {
+                          //TODO: show filter
+                          showDialog(
+                            context: context,
+                            barrierColor: Colors.black54,
+                            barrierDismissible: true,
+                            barrierLabel: 'Label',
+                            builder: (BuildContext context) {
+                              return FilterPanel(typeTagStatus: _typeTagStatus, statusTagStatus: _statusTagStatus, notifyParent: refresh);
+                            },
                           );
-                        },
-                        iconSize: 28,
-                        icon: Icon(Icons.sort, color: Colors.blueGrey.shade100),
-                      ),
-                      // tags button
-                      Wrap(
-                        spacing: 4,
-                        children: _typeTagStatus.entries.where((e)=>e.value).map((e) =>
-                          tagButton(
-                            e.key,
-                            (){setState(() {_typeTagStatus[e.key] = !e.value;});},
-                          )
-                        ).toList() + 
-                        _statusTagStatus.entries.where((e)=>e.value).map((e) =>
-                          tagButton(
-                            e.key,
-                            (){setState(() {_statusTagStatus[e.key] = !e.value;});},
-                          )
-                        ).toList(),
-                      ),
-                    ],
+                          
+                        }
+                      );
+                    },
+                    iconSize: 28,
+                    icon: Icon(Icons.sort, color: Colors.blueGrey.shade100,),
                   ),
                 ),
-                // sorter
-                Positioned(
-                  right: 0,
-                  child: Row(
-                    children: [
-                      // sorts button
-                      Wrap(
-                        spacing: 4,
-                        children: [
-                          sortButton(_sortStatus[_sortStatusIndex], (){
-                            setState(() {
-                              _sortStatusIndex += 1; 
-                              _sortStatusIndex %= _sortStatus.length;
-                            });
-                          })
-                        ]
-                      ),
-                      IconButton(
-                          onPressed: (){
-                            setState(() {
-                              // TODO: reverse sorter
-                              
-                            });
-                          },
-                          iconSize: 28,
-                          icon: Icon(Icons.import_export, color: Colors.blueGrey.shade100,)
-                      ),
-                    ]
+                Expanded(
+                  // width: 200,
+                  // color: Colors.blue,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10),
+                    // color: Colors.blue,
+                    child: Wrap(
+                      spacing: 4,
+                      runSpacing: 2,
+                      children: _typeTagStatus.entries.where((e)=>e.value).map((e) =>
+                        tagButton(
+                          e.key,
+                          (){setState(() {_typeTagStatus[e.key] = !e.value;});},
+                        )
+                      ).toList() + 
+                      _statusTagStatus.entries.where((e)=>e.value).map((e) =>
+                        tagButton(
+                          e.key,
+                          (){setState(() {_statusTagStatus[e.key] = !e.value;});},
+                        )
+                      ).toList(),
+                    ),
                   ),
                 ),
-              ],
-            ),
+                Container(
+                  padding: EdgeInsets.only(top: 10),
+                  child: sortButton(_sortStatus[_sortStatusIndex], (){
+                    setState(() {
+                      _sortStatusIndex += 1; 
+                      _sortStatusIndex %= _sortStatus.length;
+                    });
+                  }),
+                ),
+                IconButton(
+                    onPressed: (){
+                      setState(() {
+                        // TODO: reverse sorter
+                        
+                      });
+                    },
+                    iconSize: 28,
+                    icon: Icon(Icons.import_export, color: Colors.blueGrey.shade100,)
+                ),
+                
+              ]
+            )
           ),
-          SizedBox(height: 8),
+          
+          SizedBox(height: 4),
           // anime list
           Expanded(
             child: ListView.separated(
