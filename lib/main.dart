@@ -1,5 +1,6 @@
 import 'package:AniRate/database.dart';
 import 'package:AniRate/otherUserProfile.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'search.dart';
@@ -53,6 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
     _animeList = animedatabase.animeList;
     _userData = userdata.userData;
     _userList = userdatabase.userList;
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.bottom
+    ]);
   }
   
   @override

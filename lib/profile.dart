@@ -32,16 +32,11 @@ class _ProfilePageState extends State<ProfilePage> {
     _userData.Reviews.sort((b, a) => a.Likes.compareTo(b.Likes));
   }
 
-  refresh() {
-    // print("refresh");
-    setState(() {    });
-  }
-
   @override
   Widget build(BuildContext context) {
     _favorite.Title = "Favorite Anime (${_favorite.Results.length})";
-    _favorite.Results = _userData.Favorite.map((index) => animedatabase.animeList[index]).toList();
-    _history.Results = _userData.SearchHistory.map((index) => animedatabase.animeList[index]).toList();
+    _favorite.Results = _userData.Favorite.map((index) => animedatabase.animeList.where((anime) => anime.AnimeId == index).toList()[0]).toList();
+    _history.Results = _userData.SearchHistory.map((index) => animedatabase.animeList.where((anime) => anime.AnimeId == index).toList()[0]).toList();
 
     return Container(
       color: Colors.blueGrey.shade900,
@@ -55,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 recommendationRow(context, bracketTitle(_favorite.Title, 22), _favorite.Results, _animeList, _userData, _userList),
                 recommendationRow(context, bracketTitle(_history.Title, 22), _history.Results, _animeList, _userData, _userList),
-                reviewRow(_animeList, _userData, _userList, true, notifier: refresh),
+                reviewRow(_animeList, _userData, _userList, true),
               ]
             )
           ),

@@ -40,10 +40,6 @@ class _OtherUserProfile extends State<OtherUserProfile> {
     _userList[_id].Reviews.sort((b, a) => a.Likes.compareTo(b.Likes));
   }
 
-  refresh() {
-    setState(() {    });
-  }
-
   @override
   Widget build(BuildContext context) {
     ValueNotifier<bool> _notifier = ValueNotifier(false);
@@ -69,7 +65,7 @@ class _OtherUserProfile extends State<OtherUserProfile> {
                         children: [
                           recommendationRow(context, bracketTitle(_favorite.Title, 22), _favorite.Results, _animeList, _userData, _userList,),
                           recommendationRow(context, bracketTitle(_history.Title, 22), _history.Results, _animeList, _userData, _userList,),
-                          reviewRow(_animeList, _userData, _userList, false, id: _id, notifier: refresh),
+                          reviewRow(_animeList, _userData, _userList, false, id: _id),
                         ],
                       ),
                     )
