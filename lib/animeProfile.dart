@@ -56,7 +56,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
           children: [
             SizedBox(width: 4,),
             Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            Icon(Icons.navigate_next, color: Colors.blueGrey.shade900,)
+            // Icon(Icons.navigate_next, color: Colors.blueGrey.shade900,)
           ],
         )
     );
@@ -386,7 +386,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                           _user_favorite = !_user_favorite;
                           if(_user_favorite){
                             widget.userData.Favorite.insert(0, widget.animeInfo.AnimeId);
-                            widget.userData.Lists.singleWhere((list) => list.Title == "My favorite").Results.add(widget.animeInfo);
+                            widget.userData.Lists.singleWhere((list) => list.Title == "My favorite").Results.insert(0, widget.animeInfo);
                           }
                           else{
                             widget.userData.Favorite.remove(widget.animeInfo.AnimeId);

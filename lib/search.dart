@@ -17,7 +17,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   // action, adventure, comedy, monster, school, family, supernatural, sports, fantasy
   var _typeTagStatus = {'comedy': false, 'adventure': false, 'action': false, 'school': false, 'monster': false, 'family': false, 'fantasy': false, 'sports': false, 'supernatural': false};
   var _statusTagStatus = {'in progress': true, 'ended': true, 'new season': true};
-  var _sortStatus = ['score', 'time'];
+  var _sortStatus = ['score', 'recent'];
   int _sortStatusIndex = 0;
   bool _sortReverseOrder = false;
   var searchBarText = 'type here to search';
@@ -253,12 +253,22 @@ Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus
                   alignment: Alignment.centerLeft,
                   padding:
                       EdgeInsets.only(left: 10),
-                  child: Icon(
-                    Icons.sort,
-                    color:
-                        Colors.blueGrey.shade100,
-                    size: 28,
-                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent, 
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      onPressed: (){Navigator.pop(context);},
+                      icon: Icon(
+                        Icons.sort,
+                        color:
+                            Colors.blueGrey.shade100,
+                        size: 28,
+                      ),
+                    )
+                  )
                 ),
                 Container(
                   // height: 140,

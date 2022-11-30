@@ -60,6 +60,9 @@ class _ListPageState extends State<ListPage> {
     _userData = widget.userData;
     _userList = widget.userList;
     _user_lists = _userData.Lists;
+    for(int i = 0; i < _user_lists.length; i++){
+      _user_lists[i].isEditing = false;
+    }
   }
 
   Widget listRow(UserList userlist){
@@ -72,6 +75,7 @@ class _ListPageState extends State<ListPage> {
               Container(
                 height: 32,
                 width: MediaQuery.of(context).size.width - 160,
+                padding: EdgeInsets.only(left:10.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
                   color: Colors.white,
@@ -79,7 +83,7 @@ class _ListPageState extends State<ListPage> {
                 child: TextField(
                   maxLength: 16,
                   decoration: InputDecoration(
-                      counterText: ''
+                      counterText: '',
                   ),
                   textInputAction: TextInputAction.done,
                   controller: userlist._user_comment_controller,
@@ -89,10 +93,10 @@ class _ListPageState extends State<ListPage> {
                   });},
                 ),
               )
-                  : bracketTitle('${userlist.Title} (${userlist.Results.length})', 22),
+                  : bracketTitle('${userlist.Title} (${userlist.Results.length})', 18),
               Spacer(),
               (userlist.isEditing && userlist.Title != "My favorite") ?
-              clickableBlockWithLabel(Icon(Icons.delete, color: Colors.blueGrey.shade100,), '', '', (){
+              clickableBlockWithLabel(Icon(Icons.delete, color: Colors.red,), '', '', (){
                 showDialog(
                   context: context, 
                   builder: (BuildContext context) {
@@ -101,8 +105,8 @@ class _ListPageState extends State<ListPage> {
                 }
               )
               : Text(formatter.format(DateTime.now()), style: TextStyle(color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold, fontSize: 14)),
-              SizedBox(width: 4,),
-              clickableBlockWithLabel(Icon(Icons.edit, color: Colors.blueGrey.shade100,), '', '', (){setState(() {
+              (userlist.isEditing && userlist.Title != "My favorite") ? SizedBox(width: 20,) : SizedBox(width: 3,),
+              clickableBlockWithLabel(userlist.isEditing? Icon(Icons.check, color: Colors.green,): Icon(Icons.edit, color: Colors.blueGrey.shade100,), '', '', (){setState(() {
                 if(userlist.isEditing){
                   userlist.Title = userlist._user_comment_controller.text;
                 }
@@ -128,6 +132,9 @@ class _ListPageState extends State<ListPage> {
                         height: 20,
                         width: 110,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                          ), 
                           onPressed: (){setState(() {
                             if(userlist.Results.length == 1 && userlist.Title != "My favorite"){
                               _user_lists.remove(userlist);

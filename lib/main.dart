@@ -62,19 +62,24 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _panelIndex = index;
-          });
-        },
-        children: [
-          HomePage(animeList: _animeList, userData: _userData, userList: _userList, ),
-          SearchWidget(animeList: _animeList, userData: _userData, userList: _userList,),
-          ListPage(animeList: _animeList, userData: _userData, userList: _userList,),
-          ProfilePage(animeList: _animeList, userData: _userData, userList: _userList,),
-        ],
+      body: Container(
+        color: Colors.blueGrey.shade900,
+        child: SafeArea(
+          child: PageView(
+            controller: pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _panelIndex = index;
+              });
+            },
+            children: [
+              HomePage(animeList: _animeList, userData: _userData, userList: _userList, ),
+              SearchWidget(animeList: _animeList, userData: _userData, userList: _userList,),
+              ListPage(animeList: _animeList, userData: _userData, userList: _userList,),
+              ProfilePage(animeList: _animeList, userData: _userData, userList: _userList,),
+            ],
+          ),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

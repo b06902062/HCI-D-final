@@ -151,7 +151,7 @@ Widget clickableBlockWithLabel(Icon icon, String display, String label, func) {
 }
 
 Widget bracketTitle(String title, double fontSize) {
-  return Text('| ${title} 〉',
+  return Text('| ${title}',
       style: TextStyle(
           fontSize: fontSize,
           color: Colors.blueGrey.shade100,
@@ -169,7 +169,7 @@ Widget recommendationRow(
   double _padding_between = size == 'big' ? 12 : 8;
   double _height = size == 'big' ? 150 : 120;
   double _width = size == 'big' ? 110 : 88;
-  double _padding_bottom = size == 'big' ? 16 : 12;
+  double _padding_bottom = size == 'big' ? 18 : 12;
 
   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Title,
@@ -284,7 +284,7 @@ Widget animeBlock(
                     color: Colors.blueGrey.shade50),
                 child: Container(
                   margin: EdgeInsets.all(6),
-                  child: Text(data.Description, style: TextStyle(fontSize: 12),),
+                  child: Text(data.Description, style: TextStyle(fontSize: 12), overflow: TextOverflow.ellipsis, maxLines: 3,),
                 )),
           ),
           // information

@@ -369,7 +369,7 @@ Widget infoBlock(PersonalInfo data, BuildContext context, ValueNotifier<bool> _n
   return Container(
     color: Colors.blueGrey.shade800,
     padding: const EdgeInsets.all(12),
-    height: isUser? 200: 160,
+    // height: isUser? 200: 160,
     alignment: Alignment.centerLeft,
     child:
       Column(
@@ -438,13 +438,13 @@ Widget infoBlock(PersonalInfo data, BuildContext context, ValueNotifier<bool> _n
           ),
           SizedBox(height: 5),
           // social media
-          Expanded(
-            child: ListView(
-              scrollDirection: Axis.horizontal,
+          Container(
+            height: 20,
+            child: Row(
               children: medias.map(
                 (media) => socialMedia(media)
-              ).toList()
-            )
+              ).toList(),
+            ),
           )
         ]
       ),
@@ -646,10 +646,13 @@ class _ReviewList extends State<ReviewList> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width - 200,
+                                Expanded(
                                   child: Text(widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis,),
                                 ),
+                                // Container(
+                                //   width: MediaQuery.of(context).size.width - 200,
+                                //   child: Text(widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis,),
+                                // ),
                                 // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
                                 review.Comments.isEmpty?
                                 Container():
@@ -758,13 +761,13 @@ Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<Personal
   double _padding_between = size == 'big'? 12 : 8;
   double _height = size == 'big'? 150 : 120;
   double _width = size == 'big'? 110 : 88;
-  double _padding_bottom = size == 'big'? 16: 12;
+  double _padding_bottom = size == 'big'? 22: 18;
 
   ValueNotifier<bool> _notifier = ValueNotifier(false);
   return Stack(
     children: [
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('| Review 〉', style: TextStyle(fontSize: _fontSize, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
+        Text('| Review', style: TextStyle(fontSize: _fontSize, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

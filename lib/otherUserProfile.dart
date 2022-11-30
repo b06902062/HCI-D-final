@@ -34,9 +34,9 @@ class _OtherUserProfile extends State<OtherUserProfile> {
     _userData = widget.userData;
     _userList = widget.userList;
     _id = widget.id;
-    _favorite.Results = _userList[_id].Favorite.map((index) => animedatabase.animeList[index]).toList();
+    _favorite.Results = _userList[_id].Favorite.map((index) => animedatabase.animeList.where((anime) => anime.AnimeId == index).toList()[0]).toList();
     _favorite.Title = "${_favorite.Title} (${_favorite.Results.length})";
-    _history.Results = _userList[_id].SearchHistory.map((index) => animedatabase.animeList[index]).toList();
+    _history.Results = _userList[_id].SearchHistory.map((index) => animedatabase.animeList.where((anime) => anime.AnimeId == index).toList()[0]).toList();
     _userList[_id].Reviews.sort((b, a) => a.Likes.compareTo(b.Likes));
   }
 
@@ -64,7 +64,6 @@ class _OtherUserProfile extends State<OtherUserProfile> {
                       child: Column(
                         children: [
                           recommendationRow(context, bracketTitle(_favorite.Title, 22), _favorite.Results, _animeList, _userData, _userList,),
-                          recommendationRow(context, bracketTitle(_history.Title, 22), _history.Results, _animeList, _userData, _userList,),
                           reviewRow(_animeList, _userData, _userList, false, id: _id),
                         ],
                       ),

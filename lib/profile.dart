@@ -46,11 +46,11 @@ class _ProfilePageState extends State<ProfilePage> {
           infoBlockListener(_userData, context, true),
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.only(left:12, right: 12),
+              padding: const EdgeInsets.only(top:12, left:12, right: 12),
               children: [
-                recommendationRow(context, bracketTitle(_favorite.Title, 22), _favorite.Results, _animeList, _userData, _userList),
-                recommendationRow(context, bracketTitle(_history.Title, 22), _history.Results, _animeList, _userData, _userList),
-                reviewRow(_animeList, _userData, _userList, true),
+                recommendationRow(context, bracketTitle(_favorite.Title, 18), _favorite.Results, _animeList, _userData, _userList),
+                recommendationRow(context, bracketTitle(_history.Title, 18), _history.Results, _animeList, _userData, _userList),
+                reviewRow(_animeList, _userData, _userList, true, size: "small"),
               ]
             )
           ),
