@@ -647,7 +647,7 @@ class animedatabase {
       'BlueLock.jpg',
       ['BlueLock00.jpg', 'BlueLock01.jpg'],
       3.4,
-      'Japan keeps losing the World Cup, over and over. After Isagi Yoichi, a forward for a high school team, gets eliminated in the last game in the qualifier for nationals, gets invited to a program called "Blue Lock" Their coach will be Ego Jinpachi, who intends to "destroy Japanese loser football" by introducing a radical new training regimen: isolate 300 young forwards in a prison-like institution called "Blue Lock" and put them through rigorous training aimed at creating "the world\'s greatest egotist striker."',
+      'A high school team forward, Isagi Yoichi, who was eliminated in the last game in the qualifier for nationals, gets invited to a program called "Blue Lock". Which is the place for training "the world\'s greatest and egotist striker."',
       DateTime.utc(2022, 10, 9),
       ['new season', 'in progress'],
       80,

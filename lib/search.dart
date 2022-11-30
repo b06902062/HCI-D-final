@@ -15,7 +15,7 @@ class SearchWidget extends StatefulWidget {
 
 class _SearchWidgetState extends State<SearchWidget> {
   // action, adventure, comedy, monster, school, family, supernatural, sports, fantasy
-  var _typeTagStatus = {'comedy': false, 'adventure': false, 'action': false, 'school': false, 'monster': false, 'family': false, 'fantasy': false, 'sports': false, 'supernatural': false};
+  var _typeTagStatus = {'comedy': false, 'adventure': false, 'action': false, 'school': false, 'monster': false, 'fantasy': false, 'sports': false, 'supernatural': false};
   var _statusTagStatus = {'in progress': true, 'ended': true, 'new season': true};
   var _sortStatus = ['score', 'recent'];
   int _sortStatusIndex = 0;
@@ -35,6 +35,15 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   void refresh() {
     setState(() {    });
+  }
+
+  List<AnimeInfo> filteredList(List<AnimeInfo> animeList){
+    return animeList.where((anime) =>
+      _typeTagStatus.keys.where((e)=>_typeTagStatus[e] as bool).every((tag) => anime.Tags.contains(tag))
+      && anime.Status.any((status)=>
+        _statusTagStatus.keys.where((e)=>_statusTagStatus[e] as bool).contains(status)
+      )
+    ).toList();
   }
 
   @override
@@ -172,24 +181,23 @@ class _SearchWidgetState extends State<SearchWidget> {
           
           SizedBox(height: 4),
           // anime list
-          Expanded(
+          filteredList(_animeList).length == 0?
+          Container(
+            padding: EdgeInsets.only(left: 16, right: 16),
+            child: Text('Your search did not match any animes. Try other keywords or reduce some filters.',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.blueGrey.shade100,
+              )
+            ),
+          )
+          : Expanded(
             child: ListView.separated(
               padding: const EdgeInsets.all(0),
-              itemCount: _animeList.where(
-                (anime) =>
-                  _typeTagStatus.keys.where((e)=>_typeTagStatus[e] as bool).every((tag) => anime.Tags.contains(tag))
-                  && anime.Status.any((status)=>
-                    _statusTagStatus.keys.where((e)=>_statusTagStatus[e] as bool).contains(status)
-                  )
-              ).length,
+              itemCount: filteredList(_animeList).length,
 
               itemBuilder: (BuildContext context, int index) {
-                List<String> tags = _typeTagStatus.keys.where((e)=>_typeTagStatus[e] as bool).toList();
-                List<String> statuses = _statusTagStatus.keys.where((e)=>_statusTagStatus[e] as bool).toList();
-                List<AnimeInfo> filtered = _animeList.where((anime) =>
-                  tags.every((tag) => anime.Tags.contains(tag))
-                  && anime.Status.any((status)=>statuses.contains(status))
-                ).toList();
+                List<AnimeInfo> filtered = filteredList(_animeList);
                 if(_sortReverseOrder)
                   filtered.sort((a, b) => _sortStatusIndex == 0? a.Score.compareTo(b.Score) : a.Time.compareTo(b.Time));
                 else
@@ -274,29 +282,14 @@ Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus
                   // height: 140,
                   color: Colors.blueGrey.shade900,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 25,
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(left: 5),
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                          // color: Colors.red, 
-                          border: Border(
-                              left: BorderSide(
-                                color: Colors.blueGrey.shade100,
-                                width: 2,
-                              ),
-                          ),
-                        ),
-                        child: Text("Type 〉", style: TextStyle(fontSize: 16,color: Colors.blueGrey.shade100, fontWeight:FontWeight.bold),),
-                      ),
+                      bracketTitle('Type', 16),
                       Container(
                         alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 10),
-                        // color: Colors.blue, 
+                        padding: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 12),
                         child: Wrap(
-                          spacing: 4,
+                          spacing: 6,
                           runSpacing: 2,
                           children: typeTagStatus.entries.where((e)=>true).map((e) =>
                             tagButton(
@@ -309,28 +302,12 @@ Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus
                           ).toList(),
                         ),
                       ),
-                      Container(
-                        height: 25,
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(left: 5),
-                        padding: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                          // color: Colors.red, 
-                          border: Border(
-                              left: BorderSide(
-                                color: Colors.blueGrey.shade100,
-                                width: 2,
-                              ),
-                          ),
-                        ),
-                        child: Text("Status 〉", style: TextStyle(fontSize: 16,color: Colors.blueGrey.shade100, fontWeight:FontWeight.bold),),
-                      ),
+                      bracketTitle('Status', 16),
                       Container(
                         alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 10),
-                        // color: Colors.blue, 
+                        padding: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 12),
                         child: Wrap(
-                          spacing: 4,
+                          spacing: 6,
                           runSpacing: 2,
                           children: statusTagStatus.entries.where((e)=>true).map((e) =>
                             tagButton(
