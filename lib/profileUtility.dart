@@ -532,6 +532,14 @@ class _ReviewList extends State<ReviewList> {
   }
 
   @override
+  void didUpdateWidget(covariant oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    for(int i = 0; i < widget.userData.Reviews.length; i++){
+      widget.userData.Reviews[i].Edit = false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start, 
@@ -775,7 +783,7 @@ class _ReviewList extends State<ReviewList> {
 }
 
 Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, bool isUser,{ size: 'big' , int id: 0}) {
-  double _fontSize = size == 'big'? 22 : 16;
+  double _fontSize = size == 'big'? 22 : 18;
   double _padding_between = size == 'big'? 12 : 8;
   double _height = size == 'big'? 150 : 120;
   double _width = size == 'big'? 110 : 88;
