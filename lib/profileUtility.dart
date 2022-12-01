@@ -183,7 +183,6 @@ class EditPopup extends StatefulWidget{
 
 class _EditPopup extends State<EditPopup> {
   EditPopupController _user_name_controller = EditPopupController("User Name", new TextEditingController(), "user");
-  EditPopupController _user_photo_controller = EditPopupController("User Photo", new TextEditingController(), "person.png");
   EditPopupController _user_description_controller = EditPopupController("Description", new TextEditingController(), "description(max length: 90, max lines: 3))");
   EditPopupController _user_facebook_controller = EditPopupController("Facebook Username", new TextEditingController(), "facebook");
   EditPopupController _user_instagram_controller = EditPopupController("Instagram Username", new TextEditingController(), "@instagram");
@@ -192,9 +191,8 @@ class _EditPopup extends State<EditPopup> {
 
   @override void initState() {
     super.initState();
-    _controllers.addAll([_user_name_controller, _user_photo_controller, _user_description_controller, _user_facebook_controller, _user_instagram_controller, _user_twitter_controller]);
+    _controllers.addAll([_user_name_controller, _user_description_controller, _user_facebook_controller, _user_instagram_controller, _user_twitter_controller]);
     _user_name_controller.controller.text = widget.personalInfo.Name;
-    _user_photo_controller.controller.text = widget.personalInfo.Photo;
     _user_description_controller.controller.text = widget.personalInfo.Description;
     _user_facebook_controller.controller.text = widget.personalInfo.Facebook;
     _user_instagram_controller.controller.text = widget.personalInfo.Instagram;
@@ -242,7 +240,6 @@ class _EditPopup extends State<EditPopup> {
           onPressed: (){
             widget.notifier.value = !widget.notifier.value;
             widget.personalInfo.Name = _user_name_controller.controller.text;
-            widget.personalInfo.Photo = _user_photo_controller.controller.text;
             widget.personalInfo.Description = _user_description_controller.controller.text;
             widget.personalInfo.Facebook = _user_facebook_controller.controller.text;
             widget.personalInfo.Instagram = _user_instagram_controller.controller.text;
