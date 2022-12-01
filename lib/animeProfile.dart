@@ -40,7 +40,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
     Offset position = box.localToGlobal(Offset.zero);
     double y = position.dy;
     _controller.animateTo(
-      _controller.position.pixels+y-100,
+      _controller.position.pixels+y-96,
       duration: Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
     );
@@ -530,8 +530,8 @@ class _AnimeProfileState extends State<AnimeProfile> {
             // SizedBox(height: 16),
 
             // Comments
-            Container(key: _comment_key,),
             _title('Comments'),
+            Container(key: _comment_key,),
             // reference https://pub.dev/packages/flutter_rating_bar
             SizedBox(height: 12),
             // user comment
