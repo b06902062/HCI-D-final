@@ -60,11 +60,11 @@ class _OtherUserProfile extends State<OtherUserProfile> {
                   children:  [
                     infoBlockListener(_userList[_id], context, false),
                     Container(
-                      padding: const EdgeInsets.only(left:12, right: 12),
+                      padding: const EdgeInsets.only(top:12, left:12, right: 12),
                       child: Column(
                         children: [
-                          recommendationRow(context, bracketTitle(_favorite.Title, 22), _favorite.Results, _animeList, _userData, _userList,),
-                          reviewRow(_animeList, _userData, _userList, false, id: _id),
+                          recommendationRow(context, bracketTitle(_favorite.Title, 18), _favorite.Results, _animeList, _userData, _userList,),
+                          reviewRow(_animeList, _userData, _userList, false, id: _id, size:"small"),
                         ],
                       ),
                     )

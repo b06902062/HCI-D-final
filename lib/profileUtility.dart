@@ -217,7 +217,7 @@ class _EditPopup extends State<EditPopup> {
               style: TextStyle(color: Colors.blueGrey.shade100),
               // keyboardType: TextInputType.multiline,
               maxLines: controller.type == "Description"? null:1,
-              maxLength: controller.type == "Description"? 90:null,
+              maxLength: controller.type == "Description"? 90:10,
               controller: controller.controller,
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
@@ -328,18 +328,18 @@ Widget socialMedia(String media){
         children: [
           Icon(
             iconMap[_media], 
-            color: Colors.blueGrey.shade200,
+            color: Colors.blueGrey.shade100,
             size: 20
           ),
-          SizedBox(width: 5),
-          Text(
-            _url,
-            style: TextStyle( 
-              fontSize: 14,
-              color: Colors.blueGrey.shade300,
-            )
-          ),
-          SizedBox(width: 5),
+          SizedBox(width: 15),
+          // Text(
+          //   _url,
+          //   style: TextStyle( 
+          //     fontSize: 14,
+          //     color: Colors.blueGrey.shade300,
+          //   )
+          // ),
+          // SizedBox(width: 5),
         ],
       ),
     )
@@ -377,54 +377,72 @@ Widget infoBlock(PersonalInfo data, BuildContext context, ValueNotifier<bool> _n
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // title
-          isUser?
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                data.Name,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold, 
-                  fontSize: 24,
-                  color: Colors.blueGrey.shade100,
-                )
-              ),
-            ],
-          )
-          : Container() 
-          ,
+          //title
+          // isUser?
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text(
+          //       data.Name,
+          //       style: TextStyle(
+          //         fontWeight: FontWeight.bold, 
+          //         fontSize: 24,
+          //         color: Colors.blueGrey.shade100,
+          //       )
+          //     ),
+          //   ],
+          // )
+          // : Container() 
+          // ,
           //user photo, follow, edit button
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // user photo
-                Container(
-                  height: 72,
-                  child: imageCard('assets/images/${data.Photo}',
-                      height: 72, width: 72, radius: 36),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // user photo
+              Container(
+                height: 72,
+                child: imageCard('assets/images/${data.Photo}',
+                    height: 72, width: 72, radius: 36),
+              ),
+              SizedBox(width: 10),
+              //follow, edit button
+              Container(
+                alignment: Alignment.topLeft,
+                height: 72,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 32,
+                      child: Row(
+                        children: [
+                          isUser? Text(data.Name ,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.blueGrey.shade100,)) : followButton(context, data, _notifier),
+                          IconButton(
+                            onPressed: (){
+                              isUser?
+                              showDialog(
+                                context: context, 
+                                builder: (BuildContext context) {
+                                  return EditPopup(personalInfo: data, notifier: _notifier);
+                                },
+                              )
+                              :
+                              null;
+                            }, 
+                            icon: isUser ? Icon(Icons.edit, color: Colors.blueGrey.shade100, size: 20): Container())
+                        ]
+                      ),
+                    ),
+                    //follow
+                    follow(data.Follower, data.Following),
+                    SizedBox(height: 10,)
+                    //edit button
+                    // isUser? editButton(context, data, _notifier): followButton(context, data, _notifier),
+                  ],
                 ),
-                SizedBox(width: 10),
-                //follow, edit button
-                Container(
-                  height: 72,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //follow
-                      follow(data.Follower, data.Following),
-                      SizedBox(height:10),
-                      //edit button
-                      isUser? editButton(context, data, _notifier): followButton(context, data, _notifier),
-                    ],
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
           SizedBox(height: 5),
           // description
@@ -433,7 +451,7 @@ Widget infoBlock(PersonalInfo data, BuildContext context, ValueNotifier<bool> _n
             style: TextStyle(
               // fontWeight: FontWeight.bold, 
               fontSize: 14,
-              color: Colors.blueGrey.shade200,
+              color: Colors.blueGrey.shade300,
             )
           ),
           SizedBox(height: 5),
@@ -630,7 +648,7 @@ class _ReviewList extends State<ReviewList> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)],  animeList: widget.animeList, userData: widget.userData, userList: widget.userList)),
-                            );
+                            ).then((_){});
                           },
                           child: Container(
                             child: imageCard('assets/images/${widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Cover}', height: 120, width: 88),
@@ -756,7 +774,7 @@ class _ReviewList extends State<ReviewList> {
   }   
 }
 
-Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, bool isUser, { size: 'big' , int id: 0}) {
+Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, bool isUser,{ size: 'big' , int id: 0}) {
   double _fontSize = size == 'big'? 22 : 16;
   double _padding_between = size == 'big'? 12 : 8;
   double _height = size == 'big'? 150 : 120;

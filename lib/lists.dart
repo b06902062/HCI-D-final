@@ -26,7 +26,7 @@ class UserList {
 Widget _checkPopup(BuildContext context, List<UserList> _user_lists, UserList list){
   return AlertDialog(
     backgroundColor: Colors.blueGrey.shade900,
-    content: Row(children: [Text("Are you sure to delete ", style: TextStyle(color: Colors.blueGrey.shade100,)), Text("${list.Title}", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red,)), Text("?", style: TextStyle(color: Colors.blueGrey.shade100,))]),
+    content: Wrap(children: [Text("Are you sure to delete ", style: TextStyle(color: Colors.blueGrey.shade100,)), Text("${list.Title}", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red,)), Text("?", style: TextStyle(color: Colors.blueGrey.shade100,))]),
     actions: [
       TextButton.icon(
         onPressed: (){
@@ -95,7 +95,8 @@ class _ListPageState extends State<ListPage> {
               )
                   : bracketTitle('${userlist.Title} (${userlist.Results.length})', 18),
               Spacer(),
-              (userlist.isEditing && userlist.Title != "My favorite") ?
+              (userlist.isEditing) ?
+                (userlist.Title != "My favorite") ?
               clickableBlockWithLabel(Icon(Icons.delete, color: Colors.red,), '', '', (){
                 showDialog(
                   context: context, 
@@ -104,6 +105,7 @@ class _ListPageState extends State<ListPage> {
                   }).then((_){setState(() {});});
                 }
               )
+                : Container()
               : Text(formatter.format(DateTime.now()), style: TextStyle(color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold, fontSize: 14)),
               (userlist.isEditing && userlist.Title != "My favorite") ? SizedBox(width: 20,) : SizedBox(width: 3,),
               clickableBlockWithLabel(userlist.isEditing? Icon(Icons.check, color: Colors.green,): Icon(Icons.edit, color: Colors.blueGrey.shade100,), '', '', (){setState(() {

@@ -54,9 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _animeList = animedatabase.animeList;
     _userData = userdata.userData;
     _userList = userdatabase.userList;
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-      SystemUiOverlay.bottom
-    ]);
   }
   
   @override

@@ -113,9 +113,21 @@ class _AnimeProfileState extends State<AnimeProfile> {
 
   Widget _existPopup(String name){
     return AlertDialog(
-      content: Text("${name} is already in the list!"),
+      backgroundColor: Colors.blueGrey.shade900,
+      content: Wrap(
+        children:[RichText(
+            text: TextSpan(
+              text: "${name}",
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade100,),
+              children: [
+                TextSpan(text: " is already in the list!", style: TextStyle(color: Colors.blueGrey.shade100,)),
+              ],
+            ),
+          )
+        ]
+    ),
       actions: [
-        TextButton(child: Text("Understood"), onPressed: (){Navigator.pop(context);}, )
+        TextButton(child: Text("Understood", style: TextStyle(color: Colors.blueGrey.shade100,)), onPressed: (){Navigator.pop(context);}, )
       ],
     );
   }
@@ -169,11 +181,11 @@ class _AnimeProfileState extends State<AnimeProfile> {
   Widget _listPopup(PersonalInfo userData){
     return Dialog(
       shape: RoundedRectangleBorder(side: BorderSide(width: 1, color: Colors.blueGrey.shade400),  borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      insetPadding: EdgeInsets.only(top: 100, bottom: 100, left: 50, right: 50),
+      insetPadding: EdgeInsets.only(top: 100, bottom: 100, left: 30, right: 30),
       child:Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blueGrey.shade900,
-          title: Text('Add to list'),
+          title: Text('Add to list', style: TextStyle(color: Colors.blueGrey.shade50),),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(4.0),
             child: Container(
@@ -221,7 +233,10 @@ class _AnimeProfileState extends State<AnimeProfile> {
             ), 
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.blueGrey.shade100,
+          elevation: 0,
+          child: Icon(Icons.add_circle_outline_rounded, size:40),
           onPressed: (){
             showDialog(
               context: context, 
@@ -263,7 +278,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
             Row(
               // crossAxisAlignment: ,
               children: [
-                SizedBox(width: 48, child: TextButton(onPressed: (){
+                SizedBox(height: MediaQuery.of(context).size.width*2/3-64, width: 48, child: TextButton(onPressed: (){
                   setState(() {
                     _showing_image_index = (_showing_image_index+widget.animeInfo.LandScapes.length-1)%widget.animeInfo.LandScapes.length;
                   });
@@ -274,7 +289,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                   height: MediaQuery.of(context).size.width*2/3-64,
                   fit: false
                 ),
-                SizedBox(width: 48, child: TextButton(onPressed: (){
+                SizedBox(height: MediaQuery.of(context).size.width*2/3-64, width: 48, child: TextButton(onPressed: (){
                   setState(() {
                     _showing_image_index = (_showing_image_index+1)%widget.animeInfo.LandScapes.length;
                   });
