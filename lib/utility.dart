@@ -467,25 +467,28 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
                         )
                     )
                     :
-                    Column(
-                      children: [
-                        RatingBar.builder(
-                          ignoreGestures: true,
-                          initialRating: comment.Score,
-                          minRating: 0,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: specialTeal,
+                    Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          RatingBar.builder(
+                            ignoreGestures: true,
+                            initialRating: comment.Score,
+                            minRating: 0,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: specialTeal,
+                            ),
+                            onRatingUpdate: (rating) {
+                            },
                           ),
-                          onRatingUpdate: (rating) {
-                          },
-                        ),
-                      ]
-                    ),
+                        ]
+                      ),
+                    )
                   ],
                 ),
               ),
