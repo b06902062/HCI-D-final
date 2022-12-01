@@ -41,7 +41,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
     Offset position = box.localToGlobal(Offset.zero);
     double y = position.dy;
     _controller.animateTo(
-      _controller.position.pixels+y-100,
+      _controller.position.pixels+y-96,
       duration: Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
     );
