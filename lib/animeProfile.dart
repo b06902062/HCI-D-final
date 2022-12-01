@@ -120,7 +120,29 @@ class _AnimeProfileState extends State<AnimeProfile> {
               text: "${name}",
               style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade100,),
               children: [
-                TextSpan(text: " is already in the list!", style: TextStyle(color: Colors.blueGrey.shade100,)),
+                TextSpan(text: " is already in the list!", style: TextStyle(fontWeight: FontWeight.normal, color:Colors.blueGrey.shade100,)),
+              ],
+            ),
+          )
+        ]
+    ),
+      actions: [
+        TextButton(child: Text("Understood", style: TextStyle(color: Colors.blueGrey.shade100,)), onPressed: (){Navigator.pop(context);}, )
+      ],
+    );
+  }
+
+  Widget _donePopup(String animeName, String listName){
+    return AlertDialog(
+      backgroundColor: Colors.blueGrey.shade900,
+      content: Wrap(
+        children:[RichText(
+            text: TextSpan(
+              text: "${animeName}",
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade100,),
+              children: [
+                TextSpan(text: " successfully added to ", style: TextStyle(fontWeight: FontWeight.normal, color:Colors.blueGrey.shade100,)),
+                TextSpan(text: "${listName}", style: TextStyle(fontWeight: FontWeight.bold, color:Colors.blueGrey.shade100,)),
               ],
             ),
           )
@@ -182,71 +204,85 @@ class _AnimeProfileState extends State<AnimeProfile> {
     return Dialog(
       shape: RoundedRectangleBorder(side: BorderSide(width: 1, color: Colors.blueGrey.shade400),  borderRadius: BorderRadius.all(Radius.circular(10.0))),
       insetPadding: EdgeInsets.only(top: 100, bottom: 100, left: 30, right: 30),
-      child:Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blueGrey.shade900,
-          title: Text('Add to list', style: TextStyle(color: Colors.blueGrey.shade50),),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(4.0),
-            child: Container(
-                color: Colors.blueGrey.shade400,
-            ),
-        )
-        ),
-        body: Container(
-          color: Colors.blueGrey.shade900,
-          child: 
-            Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(12),
-                    children: userData.Lists.map((list) => list.Title == "My favorite"? 
-                      Container()
-                      : 
-                      GestureDetector(
-                        onTap: (){
-                          int animeIndex = list.Results.indexWhere((result) => result.AnimeId == widget.animeInfo.AnimeId);
-                          animeIndex != -1?
-                          Future.delayed(
-                            const Duration(seconds: 0),
-                            () => showDialog(
-                              context: context, 
-                              builder: (BuildContext context) {
-                                return _existPopup(widget.animeInfo.Name);
-                              },
-                            )
-                          )
-                          :
-                          list.Results.add(widget.animeInfo);
-                          Navigator.pop(context);
-                        },
-                      child: Container(
-                          padding: EdgeInsets.all(8),
-                          height: 100,  
-                          child: _ListBlock(list),),
-                        )
-                    ).toList(),
-                  ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child:
+          Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.blueGrey.shade900,
+              title: Text('Add to list', style: TextStyle(color: Colors.blueGrey.shade50),),
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(1.0),
+                child: Container(
+                    color: Colors.blueGrey.shade400,
                 ),
-              ],
-            ), 
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.transparent,
-          foregroundColor: Colors.blueGrey.shade100,
-          elevation: 0,
-          child: Icon(Icons.add_circle_outline_rounded, size:40),
-          onPressed: (){
-            showDialog(
-              context: context, 
-              builder: (BuildContext context) {
-                return _newListPopup(widget.userData);
+            )
+            ),
+            body: Container(
+              color: Colors.blueGrey.shade900,
+              child: 
+                Column(
+                  children: [
+                    Expanded(
+                      child: ListView(
+                        padding: const EdgeInsets.all(12),
+                        children: userData.Lists.map((list) => list.Title == "My favorite"? 
+                          Container()
+                          : 
+                          GestureDetector(
+                            onTap: (){
+                              int animeIndex = list.Results.indexWhere((result) => result.AnimeId == widget.animeInfo.AnimeId);     
+                              if(animeIndex != -1){
+                                Future.delayed(
+                                  const Duration(seconds: 0),
+                                  () => showDialog(
+                                    context: context, 
+                                    builder: (BuildContext context) {
+                                      return _existPopup(widget.animeInfo.Name);
+                                    },
+                                  )
+                                );
+                              }
+                              else{
+                                list.Results.add(widget.animeInfo);
+                                Future.delayed(
+                                  const Duration(seconds: 0),
+                                  () => showDialog(
+                                    context: context, 
+                                    builder: (BuildContext context) {
+                                      return _donePopup(widget.animeInfo.Name, list.Title);
+                                    },
+                                  )
+                                );
+                              }
+                            },
+                            child: Container(
+                                padding: EdgeInsets.all(8),
+                                height: 100,  
+                                child: _ListBlock(list),),
+                          )
+                        ).toList(),
+                      ),
+                    ),
+                  ],
+                ), 
+            ),
+            floatingActionButton: FloatingActionButton(
+              // backgroundColor: Colors.transparent,
+              // foregroundColor: Colors.blueGrey.shade100,
+              // elevation: 0,
+              child: Icon(Icons.add),
+              onPressed: (){
+                showDialog(
+                  context: context, 
+                  builder: (BuildContext context) {
+                    return _newListPopup(widget.userData);
+                  },
+                );
               },
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+      )
     );
   }
 
@@ -326,7 +362,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                       text: 'Author: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                       children: <TextSpan>[
-                        TextSpan(text: widget.animeInfo.Author, style: TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.normal)),
+                        TextSpan(text: widget.animeInfo.Author, style: TextStyle(fontWeight: FontWeight.normal)),
                       ],
                     ),
                   ),
@@ -338,7 +374,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                       text: 'Director: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                       children: <TextSpan>[
-                        TextSpan(text: widget.animeInfo.Director, style: TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.normal)),
+                        TextSpan(text: widget.animeInfo.Director, style: TextStyle(fontWeight: FontWeight.normal)),
                       ],
                     ),
                   ),

@@ -184,7 +184,7 @@ class EditPopup extends StatefulWidget{
 class _EditPopup extends State<EditPopup> {
   EditPopupController _user_name_controller = EditPopupController("User Name", new TextEditingController(), "user");
   EditPopupController _user_photo_controller = EditPopupController("User Photo", new TextEditingController(), "person.png");
-  EditPopupController _user_description_controller = EditPopupController("Description", new TextEditingController(), "description(max length: 90))");
+  EditPopupController _user_description_controller = EditPopupController("Description", new TextEditingController(), "description(max length: 90, max lines: 3))");
   EditPopupController _user_facebook_controller = EditPopupController("Facebook Username", new TextEditingController(), "facebook");
   EditPopupController _user_instagram_controller = EditPopupController("Instagram Username", new TextEditingController(), "@instagram");
   EditPopupController _user_twitter_controller = EditPopupController("Twitter Username", new TextEditingController(), "@twitter");
@@ -452,7 +452,9 @@ Widget infoBlock(PersonalInfo data, BuildContext context, ValueNotifier<bool> _n
               // fontWeight: FontWeight.bold, 
               fontSize: 14,
               color: Colors.blueGrey.shade300,
-            )
+            ),
+            overflow: TextOverflow.ellipsis, 
+            maxLines: 3,
           ),
           SizedBox(height: 5),
           // social media
@@ -552,7 +554,7 @@ class _ReviewList extends State<ReviewList> {
                       Row(
                         children: [
                           SizedBox(width: 8,),
-                          imageCard('assets/images/${widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Cover}', height: 120, width: 88),
+                          imageCard('assets/images/${widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Cover}', height: 90, width: 66),
                           // rating star
                           Expanded(
                             child: Column(
@@ -651,7 +653,7 @@ class _ReviewList extends State<ReviewList> {
                             ).then((_){});
                           },
                           child: Container(
-                            child: imageCard('assets/images/${widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Cover}', height: 120, width: 88),
+                            child: imageCard('assets/images/${widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Cover}', height: 90, width: 66),
                           )
                       ),
                       SizedBox(width: 8,),
@@ -688,7 +690,6 @@ class _ReviewList extends State<ReviewList> {
                             review.Comments.isEmpty?
                             Column(
                               children: [
-                                SizedBox(height: 15,),
                                 RatingBar.builder(
                                   ignoreGestures: true,
                                   initialRating: review.Score,
@@ -706,7 +707,6 @@ class _ReviewList extends State<ReviewList> {
                                     });
                                   },
                                 ),
-                                SizedBox(height: 15,),
                               ]
                             )
                             :

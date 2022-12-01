@@ -309,7 +309,7 @@ Widget animeBlock(
                               TextSpan(
                                   text: data.Author,
                                   style: TextStyle(
-                                      decoration: TextDecoration.underline,
+                                      // decoration: TextDecoration.underline,
                                       fontSize: 12)),
                             ],
                           ),
@@ -327,7 +327,7 @@ Widget animeBlock(
                             TextSpan(
                                 text: data.Director,
                                 style: TextStyle(
-                                    decoration: TextDecoration.underline,
+                                    // decoration: TextDecoration.underline,
                                     fontSize: 12)),
                           ],
                         ),
