@@ -456,6 +456,7 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
                     ),
                     // Comment
                     comment.Comments.isNotEmpty? Container(
+                        width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
                           color: Colors.white,
