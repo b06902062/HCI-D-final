@@ -248,7 +248,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                                     builder: (BuildContext context) {
                                       return _existPopup(widget.animeInfo.Name);
                                     },
-                                  )
+                                  ).then((_){Navigator.pop(context);})
                                 );
                               }
                               else{
@@ -260,7 +260,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                                     builder: (BuildContext context) {
                                       return _donePopup(widget.animeInfo.Name, list.Title);
                                     },
-                                  )
+                                  ).then((_){Navigator.pop(context);})
                                 );
                               }
                             },
@@ -307,9 +307,6 @@ class _AnimeProfileState extends State<AnimeProfile> {
 
   @override
   Widget build(BuildContext context) {
-    double _original_score = widget.animeInfo.Score;
-    int _original_len = widget.animeInfo.Comments.length;
-    double _anime_score =  (_original_score * _original_len + (_user_rated? widget.userData.Reviews[_user_review_index].Score : 0)) / (_original_len + (_user_rated? 1 : 0));
     return Scaffold(
         backgroundColor: Colors.blueGrey.shade100,
         appBar: AppBar(
@@ -439,7 +436,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
                   child: clickableBlockWithLabel(_user_rated? Icon(Icons.star, color: specialTeal,) : Icon(Icons.star_border), '',
-                      '${roundDouble(_anime_score)} (${widget.animeInfo.Comments.length + (_user_rated ? 1 : 0)})', _scrollDown
+                      '${roundDouble(widget.animeInfo.Score)} (${widget.animeInfo.Comments.length + (_user_rated ? 1 : 0)})', _scrollDown
                   ),
                 ),
                 SizedBox(
@@ -577,12 +574,16 @@ class _AnimeProfileState extends State<AnimeProfile> {
                                 setState(() {
                                   _user_rating = rating;
                                   if(_user_review_index == -1){
+                                    widget.animeInfo.Score = (widget.animeInfo.Score * widget.animeInfo.Comments.length + rating) / (widget.animeInfo.Comments.length + 1);
                                     widget.userData.Reviews.add(
                                       Review(widget.animeInfo.AnimeId, _user_review_time, 0, _user_rating , _user_comment_controller.text)
                                     );
                                     _user_review_index = widget.userData.Reviews.length - 1;
                                   }
                                   else{
+                                    print("before ${widget.animeInfo.Score}");
+                                    widget.animeInfo.Score += (_user_rating - widget.userData.Reviews[_user_review_index].Score) / (widget.animeInfo.Comments.length + 1);
+                                    print("after ${widget.animeInfo.Score}");
                                     widget.userData.Reviews[_user_review_index].Score = _user_rating;
                                   }
                                 });

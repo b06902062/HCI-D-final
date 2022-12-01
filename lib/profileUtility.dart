@@ -217,7 +217,7 @@ class _EditPopup extends State<EditPopup> {
               style: TextStyle(color: Colors.blueGrey.shade100),
               // keyboardType: TextInputType.multiline,
               maxLines: controller.type == "Description"? null:1,
-              maxLength: controller.type == "Description"? 90:10,
+              maxLength: controller.type == "Description"? 90: controller.type == "User Name" ?10 : null,
               controller: controller.controller,
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
@@ -512,7 +512,8 @@ class ReviewList extends StatefulWidget {
   final List<PersonalInfo> userList;
   final bool isUser;
   final int id;
-  const ReviewList({required this.animeList, required this.userData, required this.userList, required this.isUser, required this.id});
+  final Function? func;
+  const ReviewList({required this.animeList, required this.userData, required this.userList, required this.isUser, required this.id, this.func});
   @override
   _ReviewList createState() => _ReviewList();
 }
@@ -658,7 +659,7 @@ class _ReviewList extends State<ReviewList> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)],  animeList: widget.animeList, userData: widget.userData, userList: widget.userList)),
-                            ).then((_){});
+                            ).then((_){setState(() {});}).then((_){widget.func!();});
                           },
                           child: Container(
                             child: imageCard('assets/images/${widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)].Cover}', height: 90, width: 66),
@@ -782,7 +783,7 @@ class _ReviewList extends State<ReviewList> {
   }   
 }
 
-Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, bool isUser,{ size: 'big' , int id: 0}) {
+Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, bool isUser,{ size: 'big' , int id: 0, Function? func: null}) {
   double _fontSize = size == 'big'? 22 : 18;
   double _padding_between = size == 'big'? 12 : 8;
   double _height = size == 'big'? 150 : 120;
@@ -805,7 +806,7 @@ Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<Personal
           builder: (BuildContext context, bool value, Widget? child) {
             // This builder will only get called when the _counter
             // is updated.
-            return ReviewList(animeList: animeList, userData: userData, userList: userList, isUser: isUser, id: id);
+            return ReviewList(animeList: animeList, userData: userData, userList: userList, isUser: isUser, id: id, func: func,);
           },
           valueListenable: _notifier,
           // The child parameter is most helpful if the child is

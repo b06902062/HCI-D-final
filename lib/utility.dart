@@ -164,7 +164,7 @@ Widget recommendationRow(
     List<AnimeInfo> animeList,
     final PersonalInfo userData,
     final List<PersonalInfo> userList,
-    {size: 'big'}) {
+    {size: 'big', Function? func: null}) {
   double _padding_between = size == 'big' ? 12 : 8;
   double _height = size == 'big' ? 150 : 120;
   double _width = size == 'big' ? 110 : 88;
@@ -199,7 +199,7 @@ Widget recommendationRow(
                               userData: userData,
                               userList: userList,
                             )),
-                  );
+                  ).then((_){func!();});
                 },
                 child: Container(
                   padding: EdgeInsets.only(left: 16),
