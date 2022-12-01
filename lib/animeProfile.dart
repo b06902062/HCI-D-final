@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'utility.dart';
 import 'lists.dart';
 import 'profileUtility.dart';
@@ -30,6 +31,8 @@ class _AnimeProfileState extends State<AnimeProfile> {
   //reference https://stackoverflow.com/questions/43485529/programmatically-scrolling-to-the-end-of-a-listview
   //reference https://stackoverflow.com/questions/54291245/get-y-position-of-container-on-flutter
   final ScrollController _controller = ScrollController();
+  final CarouselController _image_controller = CarouselController();
+
   GlobalKey _comment_key = GlobalKey();
 
   void _scrollDown() {
@@ -260,46 +263,48 @@ class _AnimeProfileState extends State<AnimeProfile> {
           children: [
             // Cover
             SizedBox(height: 16,),
-            Row(
-              // crossAxisAlignment: ,
-              children: [
-                SizedBox(width: 48, child: TextButton(onPressed: (){
-                  setState(() {
-                    _showing_image_index = (_showing_image_index+widget.animeInfo.LandScapes.length-1)%widget.animeInfo.LandScapes.length;
-                  });
-                }, child: Icon(Icons.keyboard_arrow_left)),),
-                imageCard(
-                  'assets/images/${widget.animeInfo.LandScapes[_showing_image_index]}',
-                  width: MediaQuery.of(context).size.width-96,
-                  height: MediaQuery.of(context).size.width*2/3-64,
-                  fit: false
+            Column(children: [
+              CarouselSlider(
+                items: widget.animeInfo.LandScapes.map((fp) =>
+                  imageCard(
+                    'assets/images/${fp}',
+                    width: MediaQuery.of(context).size.width-96,
+                    height: MediaQuery.of(context).size.width*2/3-64,
+                    fit: false
+                  )
+                ).toList(),
+                carouselController: _image_controller,
+                options: CarouselOptions(
+                    autoPlay: true,
+                    enlargeCenterPage: true,
+                    aspectRatio: 2.0,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        _showing_image_index = index;
+                      });
+                    }),
                 ),
-                SizedBox(width: 48, child: TextButton(onPressed: (){
-                  setState(() {
-                    _showing_image_index = (_showing_image_index+1)%widget.animeInfo.LandScapes.length;
-                  });
-                }, child: Icon(Icons.keyboard_arrow_right)),)
-              ],
-            ),
-            SizedBox(height: 8,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: widget.animeInfo.LandScapes.map((fp) =>
-                Container(
-                  margin: EdgeInsets.only(left: 2, right: 2),
-                  height: 8, width: 8,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: fp == widget.animeInfo.LandScapes[_showing_image_index] ? Colors.blueGrey : null,
-                    border: Border.all(
-                      color: Colors.blueGrey,
-                      width: 2,
-                    ),
-                  ),
-                )
-              ).toList(),
-            ),
-            SizedBox(height: 12,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: widget.animeInfo.LandScapes.asMap().entries.map((entry) {
+                  return GestureDetector(
+                    onTap: () => _image_controller.animateToPage(entry.key),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                      height: 8, width: 8,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          color: _showing_image_index == entry.key ? Colors.blueGrey : null,
+                          border: Border.all(
+                            color: Colors.blueGrey,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                  );}).toList(),
+              ),
+            ]),
+            // SizedBox(height: 12,),
 
             // Author, Director
             Wrap(
@@ -421,14 +426,14 @@ class _AnimeProfileState extends State<AnimeProfile> {
             _title('Platforms'),
             SizedBox(height: 12),
             Container(
-              height: 108,
+              height: 86,
               child: ListView(
                 clipBehavior: Clip.none,
                 scrollDirection: Axis.horizontal,
                 children: ['amazon.png', 'anigamer.png', 'disney.jpg', 'HBO.png', 'netflix.png'].map((fp) =>
                     Container(
-                      padding: EdgeInsets.only(left: 12),
-                      child: imageCard('assets/images/${fp}', height: 108, width: 108),
+                      padding: EdgeInsets.only(left: 12, right: 4),
+                      child: imageCard('assets/images/${fp}', height: 86, width: 86),
                     )
                 ).toList(),
               ),
@@ -440,16 +445,16 @@ class _AnimeProfileState extends State<AnimeProfile> {
             SizedBox(height: 12),
             Container(
               // FIX: take off fix height
-              height: 162,
+              height: 136,
               child: ListView(
                 clipBehavior: Clip.none,
                 scrollDirection: Axis.horizontal,
                 children: widget.animeInfo.CastingInfos.map((mapping) =>
                     Container(
-                      padding: EdgeInsets.only(left: 12),
+                      padding: EdgeInsets.only(left: 12, right: 4),
                       child: Column(
                         children: [
-                          imageCard('assets/images/${mapping['img']}', height: 108, width: 108, radius: 59, fit: false),
+                          imageCard('assets/images/${mapping['img']}', height: 86, width: 86, radius: 59, fit: false),
                           Text.rich(
                               TextSpan(
                                 text: mapping['name'],
@@ -492,7 +497,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                   Row(
                     children: [
                       SizedBox(width: 8,),
-                      imageCard('assets/images/person.jpg', height: 72, width: 72, radius: 36),
+                      imageCard('assets/images/person.jpg', height: 56, width: 56, radius: 28),
                       // rating star
                       Expanded(
                         child: Column(
