@@ -381,26 +381,45 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // image
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => OtherUserProfile(
-                              animeList: animeList,
-                              userData: userData,
-                              userList: userList,
-                              id: comment.UserId)),
-                    );
-                  },
-                  child: Container(
-                    child: imageCard('assets/images/person.jpg',
-                        height: 72, width: 72, radius: 36),
-                  )),
-              SizedBox(
-                width: 8,
+              Column(
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OtherUserProfile(
+                                  animeList: animeList,
+                                  userData: userData,
+                                  userList: userList,
+                                  id: comment.UserId)),
+                        );
+                      },
+                      child: Container(
+                        child: imageCard('assets/images/person.jpg',
+                            height: 56, width: 56, radius: 28),
+                      )
+                  ),
+                  SizedBox(height: 8),
+                  clickableBlockWithLabel(
+                    comment.Liked ?
+                      Icon(Icons.thumb_up, color: specialIndigo, size: 20)
+                      : Icon(Icons.thumb_up_alt_outlined, size: 20),
+                    ' ${comment.Likes}',
+                    '',
+                    () {
+                      comment.Liked = !comment.Liked;
+                      comment.Likes = comment.Liked? comment.Likes + 1 : comment.Likes - 1;
+                      var userReviewindex = userList[comment.UserId].Reviews.indexWhere((review) => review.AnimeId == animeInfo.AnimeId);
+                      userList[comment.UserId].Reviews[userReviewindex].Likes = comment.Liked?
+                      userList[comment.UserId].Reviews[userReviewindex].Likes + 1
+                      : userList[comment.UserId].Reviews[userReviewindex].Likes - 1;
+                      notifier.value = !notifier.value;
+                    }
+                  ),
+                ],
               ),
+              SizedBox( width: 8 ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -442,59 +461,7 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
                           margin: EdgeInsets.all(6),
                           child: Text(comment.Comments,
                               style: TextStyle(fontSize: 12)),
-                        )),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          children: [
-                            clickableBlockWithLabel(
-                                comment.Liked
-                                    ? Icon(Icons.thumb_up,
-                                        color: specialIndigo, size: 20)
-                                    : Icon(Icons.thumb_up_alt_outlined,
-                                        size: 20),
-                                '',
-                                '', () {
-                              comment.Liked = !comment.Liked;
-                              comment.Likes = comment.Liked
-                                  ? comment.Likes + 1
-                                  : comment.Likes - 1;
-                              var userReviewindex = userList[comment.UserId]
-                                  .Reviews
-                                  .indexWhere((review) =>
-                                      review.AnimeId == animeInfo.AnimeId);
-                              userList[comment.UserId]
-                                      .Reviews[userReviewindex]
-                                      .Likes =
-                                  comment.Liked
-                                      ? userList[comment.UserId]
-                                              .Reviews[userReviewindex]
-                                              .Likes +
-                                          1
-                                      : userList[comment.UserId]
-                                              .Reviews[userReviewindex]
-                                              .Likes -
-                                          1;
-                              notifier.value = !notifier.value;
-                            }),
-                            Text(' ${comment.Likes}',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16)),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.reply, size: 20),
-                            Text(' reply',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16)),
-                          ],
-                        ),
-                      ],
+                        )
                     ),
                   ],
                 ),
