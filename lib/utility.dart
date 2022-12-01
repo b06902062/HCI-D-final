@@ -106,12 +106,15 @@ Widget tagButton(String tagName, func, {bool fill: false}) {
     height: 24,
     width: tagName.length * 8 + 9, // TODO : find better solution
     child: OutlinedButton(
-      style: TextButton.styleFrom(
-          primary: specialTeal,
-          padding: EdgeInsets.all(0),
-          side: BorderSide(color: specialTeal, width: 2),
-          shape: StadiumBorder(),
-          backgroundColor: fill? Colors.blueGrey.shade50 : null),
+      style:
+      OutlinedButton.styleFrom(
+        foregroundColor: specialTeal,
+        padding: EdgeInsets.all(0),
+        side: BorderSide(color: specialTeal, width: 2),
+        shape: StadiumBorder(),
+        backgroundColor: fill? Colors.blueGrey.shade50 : null,
+        disabledForegroundColor: specialTeal,
+      ),
       onPressed: func,
       child: Text(tagName,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
@@ -125,7 +128,7 @@ Widget sortButton(String sortName, func) {
       width: sortName.length * 8 + 9,
       child: ElevatedButton(
         style: TextButton.styleFrom(
-          primary: Colors.white,
+          foregroundColor: Colors.white,
           padding: EdgeInsets.all(0),
           shape: StadiumBorder(),
         ),
@@ -344,7 +347,7 @@ Widget animeBlock(
                     Wrap(
                       spacing: 8,
                       children: slicedTags
-                          .map((name) => tagButton(name, () {}))
+                          .map((name) => tagButton(name, null))
                           .toList(),
                     ),
                   ])),

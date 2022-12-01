@@ -406,7 +406,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                   Wrap(
                     spacing: 8,
                     children: (widget.animeInfo.Tags as List).map((name) =>
-                        tagButton(name, (){})
+                        tagButton(name, null)
                     ).toList(),
                   ),
                 ]
