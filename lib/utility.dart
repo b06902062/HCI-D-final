@@ -38,7 +38,7 @@ class AnimeInfo {
   // key string：name role img
   // Format： img = Cover +C1, C2, ...
   final List<String> Tags;
-  //action, adventure, comedy, monster, school, family, supernatural, sports, fantasy
+  //action, adventure, comedy, monster, school, supernatural, sports, fantasy
   final String Cover;
   final List<String> LandScapes;
   // Format：LandScape = Cover +00, 01, ...
@@ -105,9 +105,7 @@ Widget tagButton(String tagName, func, {bool fill: false}) {
           padding: EdgeInsets.all(0),
           side: BorderSide(color: specialTeal, width: 2),
           shape: StadiumBorder(),
-          backgroundColor: fill
-              ? Colors.blueGrey.shade100
-              : Color.fromARGB(0, 207, 216, 220)),
+          backgroundColor: fill? Colors.blueGrey.shade50 : null),
       onPressed: func,
       child: Text(tagName,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),

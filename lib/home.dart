@@ -58,7 +58,15 @@ class _HomePageState extends State<HomePage> {
       color: Colors.blueGrey.shade900,
       child: ListView(
         padding: const EdgeInsets.all(12),
-        children: _recommendations.map((recommendation)=>
+        children: <Widget>[Container(
+          padding: EdgeInsets.only(bottom: 8),
+          child: Text('Welcome back, User',
+              style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.blueGrey.shade100,
+                  fontWeight: FontWeight.bold)
+          ),
+        )] + _recommendations.map((recommendation)=>
           recommendationRow(context, bracketTitle(recommendation.Title, 18), recommendation.Results, _animeList, _userData, _userList,)
         ).toList(),
       ),
