@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'utility.dart';
 import 'lists.dart';
 import 'profileUtility.dart';
+import 'dart:math';
 
 class AnimeProfile extends StatefulWidget {
   final AnimeInfo animeInfo;
@@ -44,6 +45,10 @@ class _AnimeProfileState extends State<AnimeProfile> {
       duration: Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
     );
+  }
+
+  double roundDouble(double value){ 
+    return ((value * 10).round().toDouble() / 10); 
   }
 
   Widget _title(String title){
@@ -302,6 +307,9 @@ class _AnimeProfileState extends State<AnimeProfile> {
 
   @override
   Widget build(BuildContext context) {
+    double _original_score = widget.animeInfo.Score;
+    int _original_len = widget.animeInfo.Comments.length;
+    double _anime_score =  (_original_score * _original_len + (_user_rated? widget.userData.Reviews[_user_review_index].Score : 0)) / (_original_len + (_user_rated? 1 : 0));
     return Scaffold(
         backgroundColor: Colors.blueGrey.shade100,
         appBar: AppBar(
@@ -431,7 +439,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
                   child: clickableBlockWithLabel(_user_rated? Icon(Icons.star, color: specialTeal,) : Icon(Icons.star_border), '',
-                      '${widget.animeInfo.Score} (2k+)', _scrollDown
+                      '${roundDouble(_anime_score)} (${widget.animeInfo.Comments.length + (_user_rated ? 1 : 0)})', _scrollDown
                   ),
                 ),
                 SizedBox(
@@ -509,7 +517,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                           Text.rich(
                               TextSpan(
                                 text: mapping['name'],
-                                style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               )
                           ),
                           Text.rich(
@@ -531,7 +539,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
 
             // Comments
             Container(key: _comment_key,),
-            _title('Comments'),
+            _title('Comments (${widget.animeInfo.Comments.length + (_user_rated ? 1 : 0)})'),
             // reference https://pub.dev/packages/flutter_rating_bar
             SizedBox(height: 12),
             // user comment
@@ -643,7 +651,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                   bottom: BorderSide(color: Colors.black, width: 2,),
                 ),
               ),
-              child: Text('2k+ comments', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+              child: Container(),//Text('2k+ comments', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
             ),
             Column(
               children: widget.animeInfo.Comments.map((comment) => otherUserComment(widget.animeInfo, widget.animeList, widget.userData, widget.userList, comment)).toList(),

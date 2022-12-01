@@ -1358,7 +1358,7 @@ class userdata {
         DateTime.utc(2022, 11, 6),
         113,
         4.0,
-        "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot..",
+        "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.",
       ),
       Review(
         1,

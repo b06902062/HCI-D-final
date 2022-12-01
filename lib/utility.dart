@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'animeProfile.dart';
 import 'package:intl/intl.dart';
 import 'profileUtility.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 /*
   Class:
@@ -42,7 +43,7 @@ class AnimeInfo {
   final String Cover;
   final List<String> LandScapes;
   // Format：LandScape = Cover +00, 01, ...
-  final double Score;
+  double Score;
   final String Description;
   final DateTime Time;
   final List<String> Status;
@@ -432,6 +433,7 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16)),
                         // Text(data['Title'], style: TextStyle(fontWeight: FontWeight.bold, color: specialIndigo, fontSize: 16)),
+                        comment.Comments.isNotEmpty? 
                         Row(
                           children: [
                             Icon(Icons.star, color: specialTeal, size: 20),
@@ -440,19 +442,20 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
                                     fontWeight: FontWeight.bold, fontSize: 16)),
                             Text('/5', style: TextStyle(fontSize: 16)),
                           ],
-                        ),
+                        )
+                        :Container(),
                       ],
                     ),
                     Text(formatter.format(comment.Time),
                         style: TextStyle(
                             color: Colors.blueGrey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 14)),
+                            fontSize: 12)),
                     SizedBox(
                       height: 4,
                     ),
                     // Comment
-                    Container(
+                    comment.Comments.isNotEmpty? Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
                           color: Colors.white,
@@ -462,6 +465,26 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
                           child: Text(comment.Comments,
                               style: TextStyle(fontSize: 12)),
                         )
+                    )
+                    :
+                    Column(
+                      children: [
+                        RatingBar.builder(
+                          ignoreGestures: true,
+                          initialRating: comment.Score,
+                          minRating: 0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: specialTeal,
+                          ),
+                          onRatingUpdate: (rating) {
+                          },
+                        ),
+                      ]
                     ),
                   ],
                 ),
