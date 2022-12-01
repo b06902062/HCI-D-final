@@ -202,7 +202,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                   filtered.sort((a, b) => _sortStatusIndex == 0? a.Score.compareTo(b.Score) : a.Time.compareTo(b.Time));
                 else
                   filtered.sort((b, a) => _sortStatusIndex == 0? a.Score.compareTo(b.Score) : a.Time.compareTo(b.Time));
-                return animeBlock(filtered[index], _animeList, _userData, _userList, context,);
+                return animeBlock(filtered[index], _animeList, _userData, _userList, refresh, context);
               },
               separatorBuilder: (BuildContext context, int index) => const Divider(),
             ),

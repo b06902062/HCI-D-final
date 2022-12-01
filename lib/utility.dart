@@ -29,6 +29,11 @@ Color specialIndigo = Color.fromRGBO(101, 115, 195, 1);
 
 DateFormat formatter = DateFormat('yyyy-MM-dd');
 
+double roundDouble(double value){ 
+  return ((value * 10).round().toDouble() / 10); 
+}
+
+
 // TODO: add rating/comment information
 class AnimeInfo {
   final int AnimeId;
@@ -220,6 +225,7 @@ Widget animeBlock(
     List<AnimeInfo> animeList,
     final PersonalInfo userData,
     final List<PersonalInfo> userList,
+    final Function refresh,
     BuildContext context) {
 
   List<String> slicedTags = [];
@@ -259,7 +265,7 @@ Widget animeBlock(
                   userData: userData,
                   userList: userList,
                 )),
-      );
+      ).then((_){refresh();});
     },
     child: Container(
       margin: EdgeInsets.only(left: 16, right: 16),
@@ -354,7 +360,7 @@ Widget animeBlock(
             child: Row(
               children: [
                 Icon(Icons.star, color: specialTeal, size: 20),
-                Text(' ${data.Score}',
+                Text(' ${roundDouble(data.Score)}',
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               ],

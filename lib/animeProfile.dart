@@ -4,7 +4,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'utility.dart';
 import 'lists.dart';
 import 'profileUtility.dart';
-import 'dart:math';
 
 class AnimeProfile extends StatefulWidget {
   final AnimeInfo animeInfo;
