@@ -1245,50 +1245,9 @@ class userdata {
     "facebook",
     "",
     "@twitter",
-    animedatabase.animeList
-        .where((anime) => anime.Score > 4.3)
-        .toList()
-        .map(((favorite) => animedatabase.animeList.indexOf(favorite)))
-        .toList(),
-    [
-      UserList('My favorite',
-          animedatabase.animeList.where((anime) => anime.Score > 4.3).toList()),
-      UserList(
-          'Relax',
-          animedatabase.animeList
-              .where((anime) => anime.Tags.contains('comedy'))
-              .toList()),
-      UserList(
-          'Satisfying',
-          animedatabase.animeList
-              .where((anime) => anime.Tags.contains('monster'))
-              .toList()),
-    ],
+    [],
+    [ UserList('My favorite', []), ],
     [8, 6, 7, 4, 12],
-    [
-      Review(
-        0,
-        DateTime.utc(2022, 11, 6),
-        113,
-        4.0,
-        "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.",
-      ),
-      Review(
-        1,
-        DateTime.utc(2022, 11, 24),
-        257,
-        3.5,
-        "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.",
-      ),
-      Review(
-        2,
-        DateTime.utc(2022, 11, 17),
-        446,
-        5.0,
-        "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.",
-      ),
-      Review(3, DateTime.utc(2022, 11, 20), 335, 3,
-          "Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot.Incredible, I honestly have to say that this could be the best anime ever due to its development and plot."),
-    ],
+    [],
   );
 }

@@ -158,11 +158,18 @@ Widget clickableBlockWithLabel(Icon icon, String display, String label, func) {
 }
 
 Widget bracketTitle(String title, double fontSize) {
-  return Text('| ${title}',
-      style: TextStyle(
-          fontSize: fontSize,
-          color: Colors.blueGrey.shade100,
-          fontWeight: FontWeight.bold));
+  return Container(
+    decoration: BoxDecoration(
+        border: Border(left: BorderSide(color: specialTeal, width: 6))
+    ),
+    child: Row(
+      children: [
+        SizedBox(width: 6,),
+        Text(title, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade100, fontSize: fontSize)),
+        // Icon(Icons.navigate_next, color: Colors.blueGrey.shade900,)
+      ],
+    )
+  );
 }
 
 Widget recommendationRow(
@@ -181,6 +188,14 @@ Widget recommendationRow(
   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Title,
     SizedBox(height: _padding_between),
+    animes.length == 0 ?
+    Container(
+      padding: EdgeInsets.only(left: 16, right: 16),
+      child: Text(
+        'You don\'t have any favorites yet, explore and add one now！',
+        style: TextStyle(fontSize: 18, color: Colors.blueGrey.shade100,)
+      ),
+    ) :
     Container(
       height: _height,
       child: ListView(

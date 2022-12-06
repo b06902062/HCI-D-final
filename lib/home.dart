@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'utility.dart';
 import 'profileUtility.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'animeProfile.dart';
 
 class HomePage extends StatefulWidget {
   final List<AnimeInfo> animeList;
@@ -26,6 +28,9 @@ class _HomePageState extends State<HomePage> {
   PersonalInfo _userData = PersonalInfo(-1, "", "", -1, -1, "", "", "", "", [], [], [], []);
   List<PersonalInfo> _userList = [];
 
+  int _showing_image_index = 0;
+  final CarouselController _image_controller = CarouselController();
+
   @override
   void initState() {
     super.initState();
@@ -33,8 +38,6 @@ class _HomePageState extends State<HomePage> {
     _userData = widget.userData;
     _userList = widget.userList;
 
-    _animeList.sort((b, a) =>a.Time.compareTo(b.Time));
-    _recommendations.add(new Recommendation('Trending Now', _animeList.sublist(0, 5)));
     _animeList.sort((b, a) =>a.Score.compareTo(b.Score));
     _recommendations.add(new Recommendation('Recommended to You', _animeList.sublist(0, 5)));
     _recommendations += [
@@ -58,15 +61,61 @@ class _HomePageState extends State<HomePage> {
       color: Colors.blueGrey.shade900,
       child: ListView(
         padding: const EdgeInsets.all(12),
-        children: <Widget>[Container(
-          padding: EdgeInsets.only(bottom: 8),
-          child: Text('Welcome back, User',
-              style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.blueGrey.shade100,
-                  fontWeight: FontWeight.bold)
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: Text.rich(
+              TextSpan(
+                children: <InlineSpan>[
+                  WidgetSpan(child: Image.asset('assets/icon/icon.png', width: 28, height: 28,)),
+                  TextSpan(text: ' AniRate', style: TextStyle(fontSize: 24, color: Colors.blueGrey.shade100,fontWeight: FontWeight.bold)),
+                ],
+              ),
+            ),
           ),
-        )] + _recommendations.map((recommendation)=>
+          Container(
+            padding: EdgeInsets.only(top: 12, bottom: 16),
+            child: CarouselSlider(
+              items: _animeList.sublist(0, 5).map((anime) =>
+                GestureDetector(
+                  onTap: () {
+                    if(_userData.SearchHistory.contains(anime.AnimeId)){
+                      _userData.SearchHistory.remove(anime.AnimeId);
+                      _userData.SearchHistory.insert(0, anime.AnimeId);
+                    } else {
+                      _userData.SearchHistory.removeLast();
+                      _userData.SearchHistory.insert(0, anime.AnimeId);
+                    }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => new AnimeProfile(
+                          animeInfo: anime,
+                          animeList: _animeList,
+                          userData: _userData,
+                          userList: _userList,
+                        )
+                      ),
+                    ).then((_){null!();});
+                  },
+                  child: imageCard('assets/images/${anime.Cover}', fit: false),
+                )
+              ).toList(),
+              carouselController: _image_controller,
+              options: CarouselOptions(
+                aspectRatio: 11/5,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                enlargeStrategy: CenterPageEnlargeStrategy.scale,
+                viewportFraction: 1/3,
+                onPageChanged: (index, reason) {
+                  setState(() {_showing_image_index = index;});
+                }
+              ),
+            ),
+          ),
+        ] + _recommendations.map((recommendation)=>
           recommendationRow(context, bracketTitle(recommendation.Title, 18), recommendation.Results, _animeList, _userData, _userList,)
         ).toList(),
       ),

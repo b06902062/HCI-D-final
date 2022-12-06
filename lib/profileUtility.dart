@@ -791,7 +791,7 @@ Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<Personal
   return Stack(
     children: [
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('| Review', style: TextStyle(fontSize: _fontSize, color: Colors.blueGrey.shade100, fontWeight: FontWeight.bold)),
+        bracketTitle('Review', 18),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

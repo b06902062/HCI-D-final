@@ -56,12 +56,12 @@ class _AnimeProfileState extends State<AnimeProfile> {
         height: 36,
         decoration: BoxDecoration(
             color: Colors.blueGrey.shade300,
-            border: Border(left: BorderSide(color: Colors.blueGrey.shade900, width: 4))
+            border: Border(left: BorderSide(color: Colors.blueGrey.shade900, width: 6))
         ),
         alignment: Alignment.centerLeft,
         child: Row(
           children: [
-            SizedBox(width: 4,),
+            SizedBox(width: 6,),
             Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             // Icon(Icons.navigate_next, color: Colors.blueGrey.shade900,)
           ],
