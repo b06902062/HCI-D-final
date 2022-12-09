@@ -4,6 +4,7 @@ import 'animeProfile.dart';
 import 'package:intl/intl.dart';
 import 'profileUtility.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'search.dart';
 
 /*
   Class:
@@ -101,7 +102,7 @@ Widget imageCard(String imageSrc,
   );
 }
 
-Widget tagButton(String tagName, func, {bool fill: false}) {
+Widget tagButton(String tagName, Function func, {bool fill: false, bool redirect: false, String realTagName: ""}) {
   return SizedBox(
     height: 24,
     width: tagName.length * 8 + 9, // TODO : find better solution
@@ -115,7 +116,7 @@ Widget tagButton(String tagName, func, {bool fill: false}) {
         backgroundColor: fill? Colors.blueGrey.shade50 : null,
         disabledForegroundColor: specialTeal,
       ),
-      onPressed: func,
+      onPressed: (){func(); redirect? realTagName.isEmpty ? SearchTypeStatus.typeTagStatus[tagName] = true: SearchTypeStatus.typeTagStatus[realTagName] = true :null;},
       child: Text(tagName,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
     ),
@@ -179,7 +180,7 @@ Widget recommendationRow(
     List<AnimeInfo> animeList,
     final PersonalInfo userData,
     final List<PersonalInfo> userList,
-    {size: 'big', Function? func: null}) {
+    {size: 'big', Function? func: null, Function? redirect: null}) {
   double _padding_between = size == 'big' ? 12 : 8;
   double _height = size == 'big' ? 150 : 120;
   double _width = size == 'big' ? 110 : 88;
@@ -221,6 +222,7 @@ Widget recommendationRow(
                               animeList: animeList,
                               userData: userData,
                               userList: userList,
+                              redirect:redirect,
                             )),
                   ).then((_){func!();});
                 },
@@ -244,7 +246,8 @@ Widget animeBlock(
     final PersonalInfo userData,
     final List<PersonalInfo> userList,
     final Function refresh,
-    BuildContext context) {
+    BuildContext context,
+    final Function redirect) {
 
   List<String> slicedTags = [];
   var widthSum = 158;
@@ -282,6 +285,7 @@ Widget animeBlock(
                   animeList: animeList,
                   userData: userData,
                   userList: userList,
+                  redirect: redirect,
                 )),
       ).then((_){refresh();});
     },
@@ -362,7 +366,7 @@ Widget animeBlock(
                     Wrap(
                       spacing: 8,
                       children: slicedTags
-                          .map((name) => tagButton(name, null))
+                          .map((name) => tagButton(name, refresh, redirect:true, realTagName:(name == "•••")? data.Tags.last : ""))
                           .toList(),
                     ),
                   ])),
@@ -391,7 +395,7 @@ Widget animeBlock(
 }
 
 Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
-    PersonalInfo userData, List<PersonalInfo> userList, Comment comment) {
+    PersonalInfo userData, List<PersonalInfo> userList, Comment comment, Function? redirect) {
   ValueNotifier<bool> notifier = ValueNotifier(comment.Liked);
   return ValueListenableBuilder<bool>(
     builder: (BuildContext context, bool value, Widget? child) {
@@ -417,7 +421,8 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
                                   animeList: animeList,
                                   userData: userData,
                                   userList: userList,
-                                  id: comment.UserId)),
+                                  id: comment.UserId,
+                                  redirect: redirect)),
                         );
                       },
                       child: Container(
@@ -523,3 +528,13 @@ Widget otherUserComment(AnimeInfo animeInfo, List<AnimeInfo> animeList,
     valueListenable: notifier,
   );
 }
+
+Widget undonePopup(BuildContext context){
+    return AlertDialog(
+      backgroundColor: Colors.blueGrey.shade900,
+      content: Text("This feature is currently undone. Thanks for your understanding.", style: TextStyle(fontWeight: FontWeight.normal, color:Colors.blueGrey.shade100,)),
+      actions: [
+        TextButton(child: Text("Understood", style: TextStyle(color: Colors.blueGrey.shade100,)), onPressed: (){Navigator.pop(context);}, )
+      ],
+    );
+  }

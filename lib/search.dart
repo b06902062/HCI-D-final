@@ -6,8 +6,9 @@ class SearchWidget extends StatefulWidget {
   final List<AnimeInfo> animeList;
   final PersonalInfo userData;
   final List<PersonalInfo> userList;
+  final Function redirect;
 
-  SearchWidget({super.key, required this.animeList, required this.userData, required this.userList});
+  SearchWidget({super.key, required this.animeList, required this.userData, required this.userList, required this.redirect});
 
   @override
   _SearchWidgetState createState() => _SearchWidgetState();
@@ -16,7 +17,7 @@ class SearchWidget extends StatefulWidget {
 class _SearchWidgetState extends State<SearchWidget> {
   // action, adventure, comedy, monster, school, family, supernatural, sports, fantasy
   var _typeTagStatus = {'comedy': false, 'adventure': false, 'action': false, 'school': false, 'monster': false, 'fantasy': false, 'sports': false, 'supernatural': false};
-  var _statusTagStatus = {'in progress': true, 'ended': true, 'new season': true};
+  var _statusTagStatus = {'in progress': false, 'ended': false, 'new season': false, 'all': true};
   var _sortStatus = ['score', 'recent'];
   int _sortStatusIndex = 0;
   bool _sortReverseOrder = false;
@@ -38,6 +39,11 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 
   List<AnimeInfo> filteredList(List<AnimeInfo> animeList){
+    if(_statusTagStatus['all']!){
+      return animeList.where((anime) =>
+        _typeTagStatus.keys.where((e)=>_typeTagStatus[e] as bool).every((tag) => anime.Tags.contains(tag))
+      ).toList();
+    }
     return animeList.where((anime) =>
       _typeTagStatus.keys.where((e)=>_typeTagStatus[e] as bool).every((tag) => anime.Tags.contains(tag))
       && anime.Status.any((status)=>
@@ -48,6 +54,12 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   @override
   Widget build(BuildContext context) {
+    for (String key in _typeTagStatus.keys) {
+      if(SearchTypeStatus.typeTagStatus[key]!){
+         _typeTagStatus[key] = true;
+      }
+      SearchTypeStatus.typeTagStatus[key] = false;
+    }
     return Container(
       color: Colors.blueGrey.shade900,
       child: Column(
@@ -66,6 +78,12 @@ class _SearchWidgetState extends State<SearchWidget> {
               children: [
                 IconButton(
                   onPressed: (){
+                    showDialog(
+                      context: context, 
+                      builder: (BuildContext context) {
+                        return undonePopup(context);
+                      },
+                    );
                     setState(() {
                       // TODO: Search function
                     });
@@ -202,7 +220,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                   filtered.sort((a, b) => _sortStatusIndex == 0? a.Score.compareTo(b.Score) : a.Time.compareTo(b.Time));
                 else
                   filtered.sort((b, a) => _sortStatusIndex == 0? a.Score.compareTo(b.Score) : a.Time.compareTo(b.Time));
-                return animeBlock(filtered[index], _animeList, _userData, _userList, refresh, context);
+                return animeBlock(filtered[index], _animeList, _userData, _userList, refresh, context, widget.redirect);
               },
               separatorBuilder: (BuildContext context, int index) => const Divider(),
             ),
@@ -312,7 +330,7 @@ Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus
                           children: statusTagStatus.entries.where((e)=>true).map((e) =>
                             tagButton(
                               e.key,
-                              (){setState(() {statusTagStatus[e.key] = !e.value;}); notifyParent();},
+                              (){setState(() {for (String key in statusTagStatus.keys) {statusTagStatus[key] = false;} statusTagStatus[e.key] = true;}); notifyParent();},
                               fill: e.value,
                             )
                           ).toList(),
@@ -327,4 +345,18 @@ Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus
         )
       ],
     );
+}
+
+class SearchTypeStatus {
+  static var typeTagStatus = 
+  {
+    'comedy': false, 
+    'adventure': false, 
+    'action': false, 
+    'school': false, 
+    'monster': false, 
+    'fantasy': false, 
+    'sports': false, 
+    'supernatural': false
+  };
 }

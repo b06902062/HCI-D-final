@@ -10,8 +10,9 @@ class ProfilePage extends StatefulWidget {
   final List<AnimeInfo> animeList;
   final PersonalInfo userData;
   final List<PersonalInfo> userList;
+  final Function redirect;
 
-  const ProfilePage({super.key, required this.animeList, required this.userData, required this.userList});
+  const ProfilePage({super.key, required this.animeList, required this.userData, required this.userList, required this.redirect});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -56,9 +57,9 @@ class _ProfilePageState extends State<ProfilePage> {
             child: ListView(
               padding: const EdgeInsets.only(top:12, left:12, right: 12),
               children: [
-                recommendationRow(context, bracketTitle(_favorite.Title, 18), _favorite.Results, _animeList, _userData, _userList, func:refresh),
-                recommendationRow(context, bracketTitle(_history.Title, 18), _history.Results, _animeList, _userData, _userList, func:refresh),
-                reviewRow(_animeList, _userData, _userList, true, size: "small", func:refresh),
+                recommendationRow(context, bracketTitle(_favorite.Title, 18), _favorite.Results, _animeList, _userData, _userList, func:refresh, redirect: widget.redirect),
+                recommendationRow(context, bracketTitle(_history.Title, 18), _history.Results, _animeList, _userData, _userList, func:refresh, redirect: widget.redirect),
+                reviewRow(_animeList, _userData, _userList, true, size: "small", func:refresh, redirect: widget.redirect),
               ]
             )
           ),

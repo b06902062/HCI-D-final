@@ -8,8 +8,9 @@ class OtherUserProfile extends StatefulWidget {
   final PersonalInfo userData;
   final List<PersonalInfo> userList;
   final int id;
+  final Function? redirect;
 
-  OtherUserProfile({super.key, required this.animeList, required this.userData, required this.userList, required this.id});
+  OtherUserProfile({super.key, required this.animeList, required this.userData, required this.userList, required this.id, this.redirect});
 
   @override
   _OtherUserProfile createState() => _OtherUserProfile();
@@ -63,8 +64,8 @@ class _OtherUserProfile extends State<OtherUserProfile> {
                       padding: const EdgeInsets.only(top:12, left:12, right: 12),
                       child: Column(
                         children: [
-                          recommendationRow(context, bracketTitle(_favorite.Title, 18), _favorite.Results, _animeList, _userData, _userList,),
-                          reviewRow(_animeList, _userData, _userList, false, id: _id, size:"small"),
+                          recommendationRow(context, bracketTitle(_favorite.Title, 18), _favorite.Results, _animeList, _userData, _userList, redirect: widget.redirect),
+                          reviewRow(_animeList, _userData, _userList, false, id: _id, size:"small", redirect: widget.redirect),
                         ],
                       ),
                     )

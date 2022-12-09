@@ -296,7 +296,12 @@ Widget followButton(BuildContext context, PersonalInfo data, ValueNotifier<bool>
         shape: StadiumBorder(),
       ),
       onPressed: (){
-
+        showDialog(
+          context: context, 
+          builder: (BuildContext context) {
+            return undonePopup(context);
+          },
+        );
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -510,7 +515,8 @@ class ReviewList extends StatefulWidget {
   final bool isUser;
   final int id;
   final Function? func;
-  const ReviewList({required this.animeList, required this.userData, required this.userList, required this.isUser, required this.id, this.func});
+  final Function? redirect;
+  const ReviewList({required this.animeList, required this.userData, required this.userList, required this.isUser, required this.id, this.func, this.redirect});
   @override
   _ReviewList createState() => _ReviewList();
 }
@@ -655,7 +661,7 @@ class _ReviewList extends State<ReviewList> {
                             }
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)],  animeList: widget.animeList, userData: widget.userData, userList: widget.userList)),
+                              MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: widget.animeList[widget.animeList.indexWhere((anime) => anime.AnimeId == review.AnimeId)],  animeList: widget.animeList, userData: widget.userData, userList: widget.userList, redirect:widget.redirect)),
                             ).then((_){setState(() {});}).then((_){widget.func!();});
                           },
                           child: Container(
@@ -780,7 +786,7 @@ class _ReviewList extends State<ReviewList> {
   }   
 }
 
-Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, bool isUser,{ size: 'big' , int id: 0, Function? func: null}) {
+Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<PersonalInfo> userList, bool isUser,{ size: 'big' , int id: 0, Function? func: null, Function? redirect: null}) {
   double _fontSize = size == 'big'? 22 : 18;
   double _padding_between = size == 'big'? 12 : 8;
   double _height = size == 'big'? 150 : 120;
@@ -803,7 +809,15 @@ Widget reviewRow(List<AnimeInfo> animeList, PersonalInfo userData, List<Personal
           builder: (BuildContext context, bool value, Widget? child) {
             // This builder will only get called when the _counter
             // is updated.
-            return ReviewList(animeList: animeList, userData: userData, userList: userList, isUser: isUser, id: id, func: func,);
+            return (userData.Reviews.length == 0?
+            Container(
+              padding: EdgeInsets.only(left: 16, right: 16),
+              child: Text(
+                'You don\'t have any reviews yet, go rate an anime now！',
+                style: TextStyle(fontSize: 18, color: Colors.blueGrey.shade100,)
+              ),
+            ) :
+            ReviewList(animeList: animeList, userData: userData, userList: userList, isUser: isUser, id: id, func: func, redirect: redirect));
           },
           valueListenable: _notifier,
           // The child parameter is most helpful if the child is

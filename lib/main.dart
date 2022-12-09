@@ -55,7 +55,14 @@ class _MyHomePageState extends State<MyHomePage> {
     _userData = userdata.userData;
     _userList = userdatabase.userList;
   }
-  
+
+  void redirectSearch(){
+    setState(() {
+      _panelIndex = 1;
+      pageController.animateToPage(1, duration: Duration(milliseconds: 500), curve: Curves.ease);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,10 +77,10 @@ class _MyHomePageState extends State<MyHomePage> {
               });
             },
             children: [
-              HomePage(animeList: _animeList, userData: _userData, userList: _userList, ),
-              SearchWidget(animeList: _animeList, userData: _userData, userList: _userList,),
-              ListPage(animeList: _animeList, userData: _userData, userList: _userList,),
-              ProfilePage(animeList: _animeList, userData: _userData, userList: _userList,),
+              HomePage(animeList: _animeList, userData: _userData, userList: _userList, redirect: redirectSearch),
+              SearchWidget(animeList: _animeList, userData: _userData, userList: _userList, redirect: redirectSearch),
+              ListPage(animeList: _animeList, userData: _userData, userList: _userList, redirect: redirectSearch),
+              ProfilePage(animeList: _animeList, userData: _userData, userList: _userList, redirect: redirectSearch),
             ],
           ),
         ),
@@ -83,8 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.blueGrey.shade700,
         selectedItemColor: Colors.blueGrey.shade100,
         unselectedItemColor: Colors.blueGrey.shade900,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
         currentIndex: _panelIndex,
         onTap: (index) {
           setState(() {

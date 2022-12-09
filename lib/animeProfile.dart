@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import 'utility.dart';
 import 'lists.dart';
 import 'profileUtility.dart';
@@ -10,8 +11,9 @@ class AnimeProfile extends StatefulWidget {
   final List<AnimeInfo> animeList;
   final PersonalInfo userData;
   final List<PersonalInfo> userList;
+  final Function? redirect;
 
-  AnimeProfile({super.key, required this.animeInfo, required this.animeList, required this.userData, required this.userList});
+  AnimeProfile({super.key, required this.animeInfo, required this.animeList, required this.userData, required this.userList, this.redirect});
 
   @override
   _AnimeProfileState createState() => _AnimeProfileState();
@@ -27,6 +29,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
   // TODO: add to animeInfo
   // List<String> showingImages = ['assets/images/SPYxFamily00.jpg', 'assets/images/SPYxFamily01.jpg'];
   int _showing_image_index = 0;
+  ValueNotifier<bool> _notifier = ValueNotifier(false);
 
   //reference https://stackoverflow.com/questions/43485529/programmatically-scrolling-to-the-end-of-a-listview
   //reference https://stackoverflow.com/questions/54291245/get-y-position-of-container-on-flutter
@@ -34,6 +37,11 @@ class _AnimeProfileState extends State<AnimeProfile> {
   final CarouselController _image_controller = CarouselController();
 
   GlobalKey _comment_key = GlobalKey();
+
+  void _popNavigator(){
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    widget.redirect!();
+  }
 
   void _scrollDown() {
     RenderBox box = _comment_key.currentContext?.findRenderObject() as RenderBox;
@@ -66,6 +74,41 @@ class _AnimeProfileState extends State<AnimeProfile> {
             // Icon(Icons.navigate_next, color: Colors.blueGrey.shade900,)
           ],
         )
+    );
+  }
+
+  Widget _commentSwitch(List<Comment> comments, func){
+    return ToggleSwitch(
+      minWidth: 80.0,
+      minHeight: 24,
+      initialLabelIndex: 0,
+      cornerRadius: 20.0,
+      activeFgColor: Colors.blueGrey.shade100,
+      inactiveBgColor: Colors.blueGrey.shade700,
+      inactiveFgColor: Colors.blueGrey.shade100,
+      totalSwitches: 2,
+      labels: ['Popular', 'Recent'],
+      customTextStyles: [
+        TextStyle(
+          fontSize: 14,
+          color: Colors.blueGrey.shade100,
+        ),
+        TextStyle(
+          fontSize: 14,
+          color: Colors.blueGrey.shade100,
+        )
+      ],
+      activeBgColors: [[Colors.teal],[Colors.teal]],
+      onToggle: (index) {
+        if(index == 0){
+          comments.sort((b, a) => a.Likes.compareTo(b.Likes));
+          func();
+        }
+        else{
+          comments.sort((b, a) => a.Time.compareTo(b.Time));
+          func();
+        }
+      },
     );
   }
 
@@ -302,6 +345,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
     _user_rating = _user_rated ? widget.userData.Reviews[_user_review_index].Score : -1;
     _user_review_time = _user_rated ? widget.userData.Reviews[_user_review_index].Time : _user_review_time;
     _user_favorite = widget.userData.Favorite.contains(widget.animeInfo.AnimeId);
+    widget.animeInfo.Comments.sort((b, a) => a.Likes.compareTo(b.Likes));
   }
 
   @override
@@ -406,7 +450,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                   Wrap(
                     spacing: 8,
                     children: (widget.animeInfo.Tags as List).map((name) =>
-                        tagButton(name, null)
+                        tagButton(name, _popNavigator, redirect:true)
                     ).toList(),
                   ),
                 ]
@@ -471,7 +515,14 @@ class _AnimeProfileState extends State<AnimeProfile> {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width/4,
-                  child: clickableBlockWithLabel(Icon(Icons.share), '', 'Share', (){}),
+                  child: clickableBlockWithLabel(Icon(Icons.share), '', 'Share', (){
+                    showDialog(
+                      context: context, 
+                      builder: (BuildContext context) {
+                        return undonePopup(context);
+                      },
+                    );
+                  }),
                 )
               ],
             ),
@@ -580,9 +631,7 @@ class _AnimeProfileState extends State<AnimeProfile> {
                                     _user_review_index = widget.userData.Reviews.length - 1;
                                   }
                                   else{
-                                    print("before ${widget.animeInfo.Score}");
                                     widget.animeInfo.Score += (_user_rating - widget.userData.Reviews[_user_review_index].Score) / (widget.animeInfo.Comments.length + 1);
-                                    print("after ${widget.animeInfo.Score}");
                                     widget.userData.Reviews[_user_review_index].Score = _user_rating;
                                   }
                                 });
@@ -653,8 +702,19 @@ class _AnimeProfileState extends State<AnimeProfile> {
               ),
               child: Container(),//Text('2k+ comments', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
             ),
-            Column(
-              children: widget.animeInfo.Comments.map((comment) => otherUserComment(widget.animeInfo, widget.animeList, widget.userData, widget.userList, comment)).toList(),
+            SizedBox(height: 8),
+            Container(
+              margin: EdgeInsets.only(left: 16, right: 16),
+              alignment: Alignment.centerRight,
+              child: _commentSwitch(widget.animeInfo.Comments, () => _notifier.value = !_notifier.value),
+            ),
+            ValueListenableBuilder<bool>(
+              builder: (BuildContext context, bool value, Widget? child) {
+                return  Column(
+                  children: widget.animeInfo.Comments.map((comment) => otherUserComment(widget.animeInfo, widget.animeList, widget.userData, widget.userList, comment, widget.redirect)).toList(),
+                );
+              },
+              valueListenable: _notifier,
             ),
             SizedBox(height: 8),
           ],

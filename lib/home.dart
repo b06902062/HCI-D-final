@@ -8,8 +8,9 @@ class HomePage extends StatefulWidget {
   final List<AnimeInfo> animeList;
   final PersonalInfo userData;
   final List<PersonalInfo> userList;
+  final Function redirect;
 
-  HomePage({super.key, required this.animeList, required this.userData, required this.userList});
+  HomePage({super.key, required this.animeList, required this.userData, required this.userList, required this.redirect});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -95,6 +96,7 @@ class _HomePageState extends State<HomePage> {
                           animeList: _animeList,
                           userData: _userData,
                           userList: _userList,
+                          redirect: widget.redirect,
                         )
                       ),
                     ).then((_){null!();});
@@ -116,7 +118,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ] + _recommendations.map((recommendation)=>
-          recommendationRow(context, bracketTitle(recommendation.Title, 18), recommendation.Results, _animeList, _userData, _userList,)
+          recommendationRow(context, bracketTitle(recommendation.Title, 18), recommendation.Results, _animeList, _userData, _userList, redirect: widget.redirect)
         ).toList(),
       ),
     );

@@ -7,8 +7,9 @@ class ListPage extends StatefulWidget {
   final List<AnimeInfo> animeList;
   final PersonalInfo userData;
   final List<PersonalInfo> userList;
+  final Function redirect;
 
-  ListPage({super.key, required this.animeList, required this.userData, required this.userList});
+  ListPage({super.key, required this.animeList, required this.userData, required this.userList, required this.redirect});
 
   @override
   _ListPageState createState() => _ListPageState();
@@ -166,7 +167,7 @@ class _ListPageState extends State<ListPage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: anime, animeList: _animeList, userData: _userData, userList: _userList,)),
+                          MaterialPageRoute(builder: (context) => new AnimeProfile(animeInfo: anime, animeList: _animeList, userData: _userData, userList: _userList, redirect:widget.redirect)),
                         ).then((_){setState(() {});});
                       },
                       child: Container(
