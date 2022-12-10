@@ -58,7 +58,9 @@ class _SearchWidgetState extends State<SearchWidget> {
       if(SearchTypeStatus.typeTagStatus[key]!){
          _typeTagStatus[key] = true;
       }
-      SearchTypeStatus.typeTagStatus[key] = false;
+      else{
+        _typeTagStatus[key] = false;
+      }
     }
     return Container(
       color: Colors.blueGrey.shade900,
@@ -144,7 +146,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                       children: _typeTagStatus.entries.where((e)=>e.value).map((e) =>
                         tagButton(
                           e.key,
-                          (){setState(() {_typeTagStatus[e.key] = !e.value;});},
+                          (){setState(() {_typeTagStatus[e.key] = !e.value; SearchTypeStatus.typeTagStatus[e.key] = !e.value;});},
                         )
                       ).toList(),
                       // +_statusTagStatus.entries.where((e)=>e.value).map((e) =>
@@ -313,7 +315,7 @@ Widget filterPanel(BuildContext context, StateSetter setState, Map typeTagStatus
                             tagButton(
                               e.key,
                               (){
-                                setState(() {typeTagStatus[e.key] = !e.value;}); notifyParent();
+                                setState(() {typeTagStatus[e.key] = !e.value; SearchTypeStatus.typeTagStatus[e.key] = !e.value;}); notifyParent();
                               },
                               fill: e.value,
                             )

@@ -695,18 +695,18 @@ class _AnimeProfileState extends State<AnimeProfile> {
             Container(
               margin: EdgeInsets.only(left: 16, right: 16),
               alignment: Alignment.centerRight,
+              child: _commentSwitch(widget.animeInfo.Comments, () => _notifier.value = !_notifier.value),
+            ),
+            SizedBox(height: 8),
+            Container(
+              margin: EdgeInsets.only(left: 16, right: 16),
+              alignment: Alignment.centerRight,
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(color: Colors.black, width: 2,),
                 ),
               ),
               child: Container(),//Text('2k+ comments', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-            ),
-            SizedBox(height: 8),
-            Container(
-              margin: EdgeInsets.only(left: 16, right: 16),
-              alignment: Alignment.centerRight,
-              child: _commentSwitch(widget.animeInfo.Comments, () => _notifier.value = !_notifier.value),
             ),
             ValueListenableBuilder<bool>(
               builder: (BuildContext context, bool value, Widget? child) {

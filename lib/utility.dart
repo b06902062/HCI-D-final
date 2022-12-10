@@ -102,7 +102,7 @@ Widget imageCard(String imageSrc,
   );
 }
 
-Widget tagButton(String tagName, Function func, {bool fill: false, bool redirect: false, String realTagName: ""}) {
+Widget tagButton(String tagName, Function func, {bool fill: false, bool redirect: false}) {
   return SizedBox(
     height: 24,
     width: tagName.length * 8 + 9, // TODO : find better solution
@@ -116,7 +116,19 @@ Widget tagButton(String tagName, Function func, {bool fill: false, bool redirect
         backgroundColor: fill? Colors.blueGrey.shade50 : null,
         disabledForegroundColor: specialTeal,
       ),
-      onPressed: (){func(); redirect? realTagName.isEmpty ? SearchTypeStatus.typeTagStatus[tagName] = true: SearchTypeStatus.typeTagStatus[realTagName] = true :null;},
+      onPressed: (){
+        func(); 
+        if(redirect){
+          for(String key in SearchTypeStatus.typeTagStatus.keys) {
+            if(key == tagName){
+              SearchTypeStatus.typeTagStatus[key] = true;
+            }
+            else{
+              SearchTypeStatus.typeTagStatus[key] = false;
+            }
+          }
+        }
+      },
       child: Text(tagName,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
     ),
@@ -366,7 +378,7 @@ Widget animeBlock(
                     Wrap(
                       spacing: 8,
                       children: slicedTags
-                          .map((name) => tagButton(name, refresh, redirect:true, realTagName:(name == "•••")? data.Tags.last : ""))
+                          .map((name) => tagButton(name, (){refresh(); SearchTypeStatus.typeTagStatus[(name == "•••")? data.Tags.last: name] = true;}))
                           .toList(),
                     ),
                   ])),
