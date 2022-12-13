@@ -1,14 +1,7 @@
-# HCI-D-final
+# AniRate
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Member: Fashing Chen, Che-Wei Wang, Yu-Wei Chang, En-Huei Wu
+- Description: android hi-fi prototype of class NTU HCI+D 2022F
+- Website: https://b06902062.github.io/HCI-D-final/
+- Demo Video: https://youtu.be/56FU9JkYfzE
+- Poster: ![Poster](./website/images/Poster.png)
